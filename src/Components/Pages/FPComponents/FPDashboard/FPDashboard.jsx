@@ -27,7 +27,7 @@ function FPDashboard() {
     useSetTitle("Home")
 
     // 👉 API constants 👈
-    const { approvedList, marriageApplicationList } = ProjectApiList()
+    const { approvedList, api_getInfractionList } = ProjectApiList()
 
     // 👉 Roles constant 👈
     const allRole = getLocalStorageItemJsonParsed('userDetails')?.roles
@@ -55,7 +55,7 @@ function FPDashboard() {
     // 👉 Function 2 👈
     const fetchPendingList = () => {
         setisLoading2(true)
-        AxiosInterceptors.post(marriageApplicationList, {}, ApiHeader())
+        AxiosInterceptors.post(api_getInfractionList, {}, ApiHeader())
             .then(function (response) {
                 console.log('pending list data', response.data.data)
                 setpendingData(response.data.data)
@@ -103,7 +103,7 @@ function FPDashboard() {
 
                     <div className="w-full md:w-[40%]">
                         <ApplicationCard
-                            heading={"Approved Application"}
+                            heading={"Cleared Application"}
                             total={approvedData?.total}
                             loading={isLoading2}
                         />
@@ -116,14 +116,14 @@ function FPDashboard() {
                     <div className="w-full md:w-[50%]">
 
                         <ShortcutCard
-                            heading={"Marriage Application List"}
-                            path={'/application-marriage-list'}
+                            heading={"Application List"}
+                            path={'/fp-list'}
                         />
                     </div>
                     <div className="w-full md:w-[50%]">
 
                         <ShortcutCard
-                            heading={"Registered Marriage List"}
+                            heading={"Cleared List"}
                             path={'/registered-marriage-list'}
                         />
                     </div>
@@ -137,10 +137,10 @@ function FPDashboard() {
                 <div className="font-bold text-md mb-2 flex-1 text-gray-600"># Recent Applications</div>
                 <Table
                     loading={isLoading2}
-                    heading={['Application No.', 'Bride Name', 'Groom Name', 'Marriage Date', 'Marriage Place', 'Is BPL', 'Appointment Date']}
-                    dataKey={['application_no', 'bride_name', 'groom_name', 'marriage_date', 'marriage_place', 'is_bpl', 'appointment_date']}
+                    heading={['Application No.', 'Name', 'Mobile No.', 'Holding No.', 'Violatioin Name', 'Violation Section', 'Penalty Amount', 'Apply Date']}
+                    dataKey={['application_no', 'full_name', 'mobile_no', 'holding_no', 'violation_name', 'violation_section', 'penalty_amount', 'date']}
                     data={pendingData?.data ?? []}
-                    viewLink={'/marriage-details/'}
+                    viewLink={'/fp-form/'}
                 />
             </div>
 

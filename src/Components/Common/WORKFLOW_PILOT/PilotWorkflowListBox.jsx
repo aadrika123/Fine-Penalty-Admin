@@ -53,7 +53,7 @@ export default function PilotWorkflowListBox(props) {
       {/* Tab view which contains two tabs, which are List and Details */}
       <Box style={{ width: '100%',paddingLeft:'20px' }}>
         <Box style={{ borderBottom: 1, borderColor: 'divider' }}>
-          <div value={value} onChange={handleChange} className='flex gap-2 pl-4'>
+          <div value={value} onChange={handleChange} className='flex gap-2'>
             <Tab label="List" action={() => setIndex(0)} active={index == 0}/>
             <Tab label="Details" action={() => setIndex(1)} active={index == 1} />
             <div className="text-right float-right absolute right-4 top-4 text-white justify-center flex gap-4">

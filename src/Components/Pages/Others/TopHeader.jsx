@@ -74,9 +74,9 @@ const TopHeader = (props) => {
   return (
     <>
       {isLoading && <BarLoader />}
-      <div className='bg-white flex flex-row justify-between px-2 sm:px-6 border shadow-sm print:hidden py-3'>
-        <div className='flex items-center md:w-[15rem] justify-between gap-2 sm:gap-4'>
-          <span className='font-semibold text-xl '>{brand_tag}</span>
+      <div className='bg-white flex flex-row justify-between px-2 sm:px-6 border shadow-sm print:hidden py-3 z-50'>
+        <div className='flex items-center md:w-[20rem] w-full justify-between gap-2 sm:gap-4'>
+          <span className='font-semibold flex items-center gap-1'> <img src={ulb_data()?.state_logo} alt="" srcset="" className='w-9' /> <span className='text-lg md:text-xl '>Fines & Penalties</span></span>
           <div onClick={() => {
             settoggleBar(!toggleBar)
           }}>

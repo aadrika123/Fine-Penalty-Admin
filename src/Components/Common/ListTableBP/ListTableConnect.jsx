@@ -198,7 +198,7 @@ const ListTableConnect = (props) => {
 
             {/* 👉 Listtable Components 👈 */}
             {
-                (dataList != undefined && dataList?.length != 0) ?
+                (!loader && dataList != undefined && dataList?.length != 0) ?
 
                     <>
                             {/* 👉 Listtable 👈 */}

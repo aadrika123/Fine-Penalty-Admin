@@ -16,6 +16,7 @@ import 'animate.css'
 import { MdOutlineDashboard, MdOutlineSpaceDashboard } from 'react-icons/md';
 import { contextVar } from '@/Components/context/contextVar'
 import { BsBuildings, BsCaretRight } from 'react-icons/bs';
+import { GiTakeMyMoney } from 'react-icons/gi'
 
 const SideBar = (props) => {
 
@@ -56,7 +57,7 @@ const SideBar = (props) => {
               {/* 👉 ========logo========== 👈 */}
               <div class="text-center mb-4">
                 <div class="text-sm text-gray-200 flex flex-col items-start justify-center relative">
-                  <span className='flex justify-center w-full'> <span className='text-[40px] flex justify-center py-2 text-white'><BsBuildings /></span></span>
+                  <span className='flex justify-center w-full'> <span className='text-[50px] flex justify-center py-2 text-white'><GiTakeMyMoney /></span></span>
                   <span className='flex justify-center w-full'>{userDetails?.userName}</span>
                   <span className='flex justify-center w-full'>{userDetails?.roles?.map((elem) => elem)}</span>
                 </div>

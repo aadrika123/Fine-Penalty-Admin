@@ -18,7 +18,6 @@ import TransferPage from '@/Components/Pages/Others/TransferPage';
 import FPDashboard from '@/Components/Pages/FPComponents/FPDashboard/FPDashboard';
 import ChangePassword from '@/Components/Pages/Others/ChangePassword';
 import RegisteredMarriageList from '@/Components/Pages/FPComponents/MarriageWorkflow/RegisteredMarriageList';
-import MarriageApplicationList from '@/Components/Pages/FPComponents/MarriageWorkflow/MarriageApplicationList';
 import MarriageWorkflowEntry from '@/Components/Pages/FPComponents/MarriageWorkflow/MarriageWorkflowEntry';
 import MarriageDetails from '@/Components/Pages/FPComponents/MarriageWorkflow/MarriageDetails';
 import MarriagePayment from '@/Components/Pages/FPComponents/MarriagePayment';
@@ -26,6 +25,7 @@ import MarriageReceipt from '@/Components/Pages/FPComponents/MarriagePrint/Marri
 import FPTrack from '@/Components/Pages/FPComponents/FPTrack/FPTrack';
 import InfractionForm from '@/Components/Pages/FPComponents/FPForm/InfractionForm';
 import ViolationIndex from '@/Components/Pages/FPComponents/ViolationMaster/ViolationIndex';
+import FpApplicationList from '@/Components/Pages/FPComponents/FpList/FpApplicationList';
 
 function App() {
 
@@ -63,14 +63,15 @@ function App() {
     { path: '/transfer',                    element: <TransferPage />            },
     { path: '/change-password',             element: <ChangePassword />          },
     { path: '/track-fp',                    element: <FPTrack />                 },
-    { path: '/infraction-form/:id?',        element: <InfractionForm />          },
+    { path: '/fp-form/:id?',                element: <InfractionForm />          },
     { path: '/violation-master',            element: <ViolationIndex />          },
-    { path: '/application-marriage-list',   element: <MarriageApplicationList /> },
+    { path: '/fp-list',                     element: <FpApplicationList /> },
+    { path: '/fp-workflow',                 element: <MarriageWorkflowEntry />   },
+    
     { path: '/registered-marriage-list',    element: <RegisteredMarriageList />  },
     { path: '/marriage-details/:id',        element: <MarriageDetails />         },
     { path: '/marriage-pay/:id',            element: <MarriagePayment />         },
     { path: '/marriage-receipt/:tran',      element: <MarriageReceipt />         },
-    { path: '/marriage-workflow',           element: <MarriageWorkflowEntry />   },
 
   ]
 

@@ -91,7 +91,7 @@ const FPTrack = () => {
 
                             <div>
                                 <label className="form-label inline-block mb-1 text-gray-600 text-sm font-semibold">
-                                    Reference Number <span className="text-red-500">*</span>
+                                    Application Number <span className="text-red-500">*</span>
                                 </label>
                                 <input
                                     type="text"

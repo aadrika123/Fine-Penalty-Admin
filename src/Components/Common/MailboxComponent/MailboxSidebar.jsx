@@ -37,7 +37,7 @@ function MailboxSidebar(props) {
         <>
 
             <aside className="w-full overflow-auto" >
-                <div className=" rounded flex flex-row sm:flex-row space-x-4 py-2 pl-10 px-2 items-center">
+                <div className=" rounded flex flex-row sm:flex-row space-x-4 py-2 pt-4 md:px-6 px-2 items-center">
                     {
                         props.tabs.map((data) => (
                             <div onClick={() => tabSwitch(data.tabIndex)}><MailboxLink activeStatus={tabIndex == data.tabIndex ? true : false} title={data.title} /></div>

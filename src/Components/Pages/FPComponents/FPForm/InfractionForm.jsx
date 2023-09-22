@@ -2,7 +2,7 @@
 // 👉 Author      : R U Bharti
 // 👉 Component   : InfractionForm
 // 👉 Date        : 20-09-2023
-// 👉 Status      : Close
+// 👉 Status      : Open
 // 👉 Description : Infraction recording form for fines & penalty.
 // 👉 Functions   :  
 //                  1. buttonStyle             -> To style button by passing color name.
@@ -12,7 +12,9 @@
 //                  5. getViolationById        -> To fetch violation section and penalty amount by id.
 //                  6. getLocationFromImage    -> To fetch geo location from image.
 //                  7. handleChange            -> To handle dependent list on change.
+//                  8. feedFormData            -> To feed form when comes to edit.
 //                  8. fetchData               -> To fetch form data by id.
+//                  8. getDocListFun           -> To fetch document list by id.
 //                  9. submitFun               -> To final submit data.
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -37,7 +39,7 @@ import ApplicationSubmitScreen from '@/Components/Common/ApplicationSubmitScreen
 const InfractionForm = () => {
 
     // 👉 To set title 👈
-    useSetTitle("Infraction Recording Form")
+    useSetTitle("Fine & Penalty Form")
 
     // 👉 URL constants 👈
     const { id } = useParams()
@@ -46,7 +48,7 @@ const InfractionForm = () => {
     const navigate = useNavigate()
 
     // 👉 API constants 👈
-    const { api_submitInfractionForm, api_getViolationList, api_getInfractionById, api_getViolationById } = ProjectApiList()
+    const { api_submitInfractionForm, api_getViolationList, api_getInfractionById, api_getViolationById, api_updateInfractionForm, fpDocList } = ProjectApiList()
 
     // 👉 State constants 👈
     const [sloader, setSloader] = useState(false)
@@ -61,6 +63,8 @@ const InfractionForm = () => {
     const [errorState, setErrorState] = useState(false)
     const [submissionData, setSubmissionData] = useState(null)
     const [isSubmit, setIsSubmit] = useState(false)
+    const [formDetails, setFormDetails] = useState(null)
+    const [docList, setDocList] = useState(null)
 
     // 👉 CSS Constants 👈
     const labelStyle = 'text-gray-800 text-sm'
@@ -125,7 +129,7 @@ const InfractionForm = () => {
     // 👉 Formik validation schema 👈
     const schema = yup.object().shape(
         [...basicForm, ...addressForm, ...witnessForm, ...docForm, ...[
-            { title: "Geo Tagged Photo", key: "geoTaggedPhoto", type: 'file', hint: "Select geo tagged photo", accept: '.png, .jpg, .jpeg', required: true },
+            { title: "Geo Tagged Photo", key: "geoTaggedPhoto", type: 'file', hint: "Select geo tagged photo", accept: '.png, .jpg, .jpeg', required: id ? false : true },
             { key: "violationMade", type: 'text', hint: 'Select violation made', required: true },
         ]]?.reduce((acc, elem) => {
             if ((elem?.type != 'select' && elem?.type != 'option') && elem.required) {
@@ -155,7 +159,7 @@ const InfractionForm = () => {
 
     // 👉 Function 1 👈
     const buttonStyle = (color) => {
-        return `px-4 py-1 text-sm bg-${color}-500 hover:bg-${color}-600 select-none rounded-sm hover:drop-shadow-md text-white`
+        return `px-4 py-1 text-sm bg-${color}-500 hover:bg-${color}-600 select-none rounded-sm hover:drop-shadow-md text-white cursor-pointer`
     }
 
     // 👉 Function 2 👈
@@ -308,30 +312,98 @@ const InfractionForm = () => {
     }
 
     // 👉 Function 8 👈
+    const feedFormData = (data) => {
+        formik.setFieldValue('name', data?.full_name)
+        formik.setFieldValue('mobileNo', data?.mobile)
+        formik.setFieldValue('email', data?.email)
+        formik.setFieldValue('holdingNo', data?.holding_no)
+        formik.setFieldValue('streetAddress1', data?.street_address)
+        formik.setFieldValue('streetAddress2', data?.street_address_2)
+        formik.setFieldValue('city', data?.city)
+        formik.setFieldValue('region', data?.region)
+        formik.setFieldValue('pincode', data?.postal_code)
+        formik.setFieldValue('violationMade', data?.violation_id)
+        formik.setFieldValue('isWitness:', data?.witness)
+        formik.setFieldValue('witnessName', data?.witness_name)
+        formik.setFieldValue('witnessMobile', data?.witness_mobile)
+    }
+
+    // 👉 Function 9 👈
     const fetchData = () => {
+
+        setLoader(true)
+
         AxiosInterceptors
             .post(api_getInfractionById, { id: id }, ApiHeader())
             .then((res) => {
                 if (res?.data?.status) {
-
+                    feedFormData(res?.data?.data?.basic_details)
+                    setFormDetails(res?.data?.data)
+                    getViolationById(res?.data?.data?.basic_details?.violation_id)
                 } else {
-
+                    activateBottomErrorCard(true, checkErrorMessage(res?.data?.message))
                 }
+                console.log('fp form data response => ', res)
             })
             .catch((err) => {
-
+                activateBottomErrorCard(true, 'Server Error! Please try again later.')
+                console.log('error fp form data list => ', err)
             })
             .finally(() => {
-
+                setLoader(false)
             })
     }
 
-    // 👉 Function 9 👈
+    // 👉 Function 10 👈
+    const getDocListFun = () => {
+
+        setLoader(true)
+
+        AxiosInterceptors
+            .post(fpDocList, { id: id }, ApiHeader())
+            .then((res) => {
+                if (res?.data?.status) {
+                    setDocList(res?.data?.data?.uploadDocs)
+                } else {
+                    activateBottomErrorCard(true, checkErrorMessage(res?.data?.message))
+                }
+                console.log('fp document response => ', res)
+            })
+            .catch((err) => {
+                activateBottomErrorCard(true, 'Server Error! Please try again later.')
+                console.log('error fp document list => ', err)
+            })
+            .finally(() => {
+                setLoader(false)
+            })
+    }
+
+    // 👉 Function 11 👈
     const submitFun = (values) => {
 
         console.log(":::::::Submitting values::::::", values)
 
+        let url;
+
         let fd = new FormData()
+
+        if (id) {
+
+            url = api_updateInfractionForm;
+
+            fd.append('id', formDetails?.basic_details?.id)
+
+        } else {
+
+            url = api_submitInfractionForm;
+
+            fd.append('photo', geoTaggedImage);
+            fd.append('longitude', location?.longitude);
+            fd.append('latitude', location?.latitude);
+            fd.append('audioVideo', videoAudioFile);
+            fd.append('pdf', pdfDocument);
+
+        }
 
         fd.append('fullName', values?.name);
         fd.append('mobile', values?.mobileNo);
@@ -352,16 +424,11 @@ const InfractionForm = () => {
         fd.append('witnessName', values?.witnessName);
         fd.append('witnessMobile', values?.witnessMobile);
 
-        fd.append('photo', geoTaggedImage);
-        fd.append('longitude', location?.longitude);
-        fd.append('latitude', location?.latitude);
-        fd.append('audioVideo', videoAudioFile);
-        fd.append('pdf', pdfDocument);
 
         setLoader(true)
 
         AxiosInterceptors
-            .post(api_submitInfractionForm, fd, ApiHeader2())
+            .post(url, fd, ApiHeader2())
             .then((res) => {
                 setIsSubmit(res?.data?.status)
                 if (res?.data?.status) {
@@ -381,10 +448,17 @@ const InfractionForm = () => {
             })
     }
 
-    // 👉 To call function 4 and function 8 👈
+    const checkType = (path) => {
+        const splitPath = path?.split('.')[path?.split('.')?.length - 1]
+        const type = splitPath?.split('/')[0]
+        return type;
+    }
+
+    // 👉 To call function 4, function 9 and function 10 👈
     useEffect(() => {
         getViolationList()
-        id && typeof (parseInt(id)) == 'number' && fetchData()
+        id && fetchData()
+        id && getDocListFun()
     }, [id])
 
     return (
@@ -397,7 +471,7 @@ const InfractionForm = () => {
             {errorState && <BottomErrorCard activateBottomErrorCard={activateBottomErrorCard} errorTitle={errorMessage} />}
 
             {/* 👉 Application Submission Screen 👈 */}
-            <ApplicationSubmitScreen heading={"Infraction Recording Form"} appNo={submissionData?.application_no} openSubmit={isSubmit} refresh={() => navigate(`/home`)} />
+            <ApplicationSubmitScreen heading={"Fine & Penalty Form"} appNo={submissionData?.application_no} openSubmit={isSubmit} refresh={() => navigate(`/home`)} />
 
             {/* 👉 Header 👈 */}
             <header className='flex gap-2 bg-zinc-50 p-4 drop-shadow-sm justify-center items-center'>
@@ -498,29 +572,59 @@ const InfractionForm = () => {
                 </section>
 
                 {/* 👉 Evidence Documents 👈 */}
-                <section className='flex gap-4 flex-wrap my-6'>
+                {id ?
+                    <section className='flex gap-4 flex-wrap my-6'>
 
-                    <header className='w-full text-gray-700 -mb-3 font-semibold font-serif'>Evidence</header>
+                        <header className='w-full text-gray-700 -mb-3 font-semibold font-serif'>Evidence</header>
 
-                    <div className={`flex flex-col `}>
-                        <label htmlFor={'geoTaggedPhoto'} className={labelStyle}>Geo Tagged Photo <span className='text-red-500 text-xs font-bold'>*</span> : </label>
-                        <input type='file' accept='.png, .jpg, .jpeg' {...formik.getFieldProps('geoTaggedPhoto')} className={fileStyle + `${(formik.touched.geoTaggedPhoto && formik.errors.geoTaggedPhoto) ? ' border-red-200 placeholder:text-red-400 text-red-400 file:border-red-200 file:text-red-400' : ' focus:border-zinc-300 border-zinc-200 file:border-zinc-300 file:text-gray-600'}`} />
-                        {location != null && <>
-                            <div className='grid grid-cols-12 items-center mt-1'><span className={`col-span-6 ${labelStyle}`}>Longitude :</span><span className={`col-span-6 font-semibold ${labelStyle}`}>{location?.longitude}</span></div>
-                            <div className='grid grid-cols-12 items-center'><span className={`col-span-6 ${labelStyle}`}>Latitude :</span><span className={`col-span-6 font-semibold ${labelStyle}`}>{location?.latitude}</span></div>
-                        </>}
-                    </div>
+                        {
+                            Array.isArray(docList) && docList?.map((elem) =>
+                                <>
+                                    <div className={`flex flex-col `}>
+                                        <label className={labelStyle}>{elem?.doc_name} : <span className={buttonStyle('indigo') + ' text-sm'}>View</span></label>
+                                        {
+                                            checkType(elem?.document_path) == 'pdf' && <></>
+                                        }
+                                        {
+                                            ['jpg', 'jpeg', 'png'].includes(checkType(elem?.document_path)) && <></>
+                                        }
+                                        {
+                                            checkType(elem?.document_path) == 'pdf' && <></>
+                                        }
+                                        {elem?.location && <>
+                                            <div className='grid grid-cols-12 items-center mt-1'><span className={`col-span-6 ${labelStyle}`}>Longitude :</span><span className={`col-span-6 font-semibold ${labelStyle}`}>{location?.longitude}</span></div>
+                                            <div className='grid grid-cols-12 items-center'><span className={`col-span-6 ${labelStyle}`}>Latitude :</span><span className={`col-span-6 font-semibold ${labelStyle}`}>{location?.latitude}</span></div>
+                                        </>}
+                                    </div>
+                                </>
+                            )
+                        }
 
-                    {
-                        docForm?.map((elem) => {
-                            return inputBox(elem?.key, elem?.title, elem?.type, elem?.width, elem?.hint, elem?.required, elem?.accept)
-                        })
-                    }
+                    </section>
+                    :
+                    <section className='flex gap-4 flex-wrap my-6'>
 
-                </section>
+                        <header className='w-full text-gray-700 -mb-3 font-semibold font-serif'>Evidence</header>
+
+                        <div className={`flex flex-col `}>
+                            <label htmlFor={'geoTaggedPhoto'} className={labelStyle}>Geo Tagged Photo <span className='text-red-500 text-xs font-bold'>*</span> : </label>
+                            <input type='file' accept='.png, .jpg, .jpeg' {...formik.getFieldProps('geoTaggedPhoto')} className={fileStyle + `${(formik.touched.geoTaggedPhoto && formik.errors.geoTaggedPhoto) ? ' border-red-200 placeholder:text-red-400 text-red-400 file:border-red-200 file:text-red-400' : ' focus:border-zinc-300 border-zinc-200 file:border-zinc-300 file:text-gray-600'}`} />
+                            {location != null && <>
+                                <div className='grid grid-cols-12 items-center mt-1'><span className={`col-span-6 ${labelStyle}`}>Longitude :</span><span className={`col-span-6 font-semibold ${labelStyle}`}>{location?.longitude}</span></div>
+                                <div className='grid grid-cols-12 items-center'><span className={`col-span-6 ${labelStyle}`}>Latitude :</span><span className={`col-span-6 font-semibold ${labelStyle}`}>{location?.latitude}</span></div>
+                            </>}
+                        </div>
+
+                        {
+                            docForm?.map((elem) => {
+                                return inputBox(elem?.key, elem?.title, elem?.type, elem?.width, elem?.hint, elem?.required, elem?.accept)
+                            })
+                        }
+
+                    </section>}
 
                 <footer>
-                    <button type="submit" className={buttonStyle('green')}>Submit</button>
+                    <button type="submit" className={buttonStyle('green')}>{id ? 'Update' : 'Submit'}</button>
                 </footer>
 
             </form >

@@ -308,20 +308,38 @@ const ViolationIndex = () => {
                 {loader && <ShimmerEffectInline />}
 
                 {/* 👉 Table 👈 */}
-                {(!loader && (violationDataList?.length > 0)) &&
-                    <ListTable
-                        columns={COLUMNS}
-                        dataList={violationDataList}
-                    >
-                        <button
-                            onClick={() => handleModal('add')}
-                            className={addButton}
-                        >
-                            <CgPlayListAdd /> Add Violation
-                        </button>
-                    </ListTable>
+                {!loader &&
+                    <>
+                        {violationDataList?.length > 0 ?
 
-                }</div>
+                            <>
+                                <ListTable
+                                    columns={COLUMNS}
+                                    dataList={violationDataList}
+                                >
+                                    <button
+                                        onClick={() => handleModal('add')}
+                                        className={addButton}
+                                    >
+                                        <CgPlayListAdd /> Add Violation
+                                    </button>
+                                </ListTable>
+                            </>
+                            :
+                            <>
+                                <div className="flex justify-end mb-2">
+                                    <button
+                                        onClick={() => handleModal('add')}
+                                        className={addButton}
+                                    >
+                                        <CgPlayListAdd /> Add Violation
+                                    </button>
+                                </div>
+                                <div className="bg-red-100 text-red-500 py-2 text-lg font-semibold text-center border border-red-500 drop-shadow-sm">Oops! No Data Found.</div>
+                            </>}
+
+                    </>}
+            </div>
 
             {/* 👉 Dialog form 👈 */}
             <dialog ref={dialogRef} className="relative overflow-clip animate__animated animate__zoomIn animate__faster">

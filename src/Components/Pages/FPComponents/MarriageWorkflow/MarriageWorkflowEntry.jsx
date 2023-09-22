@@ -18,22 +18,22 @@ function MarriageWorkflowEntry() {
   useSetTitle("Marriage Workflow")
 
     // 👉 API constant 👈
-    const { marriageInbox, marriageDetails, api_workflowInfo, api_postDepartmental, getUploadedDocument, api_getDepartmentalData, appointSet, docVerify, approveReject, api_docUpload, api_getDocList, api_marriageNextLevel } = ProjectApiList()
+    const { fpInbox, marriageDetails, api_workflowInfo, api_postDepartmental, getUploadedDocument, api_getDepartmentalData, appointSet, docVerify, approveReject, api_docUpload, fpDocList, api_marriageNextLevel } = ProjectApiList()
 
     // 👉 Workflow data 👈
     const workflowRules = {
         api: {
             // 1 - API TO FETCH INBOX LIST
-            api_inboxList: { method: 'post', url: marriageInbox },
+            api_inboxList: { method: 'post', url: fpInbox },
             // 2 - API TO FETCH OUTBOX LIST
-            api_outboxList: { method: 'post', url: marriageInbox },
+            api_outboxList: { method: 'post', url: fpInbox },
             // 3 - API TO FETCH SPECIAL LIST
-            api_specialList: { method: 'post', url: marriageInbox },
+            api_specialList: { method: 'post', url: fpInbox },
             // 4 - API TO FETCH BACK TO CITIZEN LIST
-            apt_btcList: { method: 'post', url: marriageInbox },
+            apt_btcList: { method: 'post', url: fpInbox },
             // 5 - API TO FETCH FIELD VERIFICATION LIST
             // api_fieldVerificationList: , // ------not done
-            api_fieldVerificationList: { method: 'post', url: marriageInbox },
+            api_fieldVerificationList: { method: 'post', url: fpInbox },
             // 6 - API TO FETCH APPLICATION DETAILS BY ID 
             api_details: { method: 'post', url: marriageDetails },
             // 7 - API TO FETCH WORKFLOW RELATED DATA eg: - WORKFLOW CANDIDATED,WORKFLOW PERMISSIONS,PSEUDO USERS
@@ -53,7 +53,7 @@ function MarriageWorkflowEntry() {
             // 13 - API TO get DEPARTMENTAL COMMUNICATION DATA
             api_getDepartmentalData: { method: 'post', url: api_getDepartmentalData },
             // 14 - API TO SHOW DOCUMENTS WHICH HAS TO BE UPLOADED
-            api_uploadDocumentShow: { method: 'post', url: api_getDocList },
+            api_uploadDocumentShow: { method: 'post', url: fpDocList },
             // 14 - API TO UPLOAD DOCUMENTS 
             api_uploadDocument: { method: 'post', url: api_docUpload },
             // 15 - API TO VERIFY DOCUMENTS

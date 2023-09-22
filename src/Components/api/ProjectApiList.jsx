@@ -66,8 +66,10 @@ export default function ProjectApiList() {
 
         // 👉 ================ Fines & Penalties API List =================== 👈
         api_submitInfractionForm : `${baseUrl}/api/infrac-recod-form/crud/save`,
+        api_updateInfractionForm : `${baseUrl}/api/infrac-recod-form/crud/edit`,
         api_getInfractionById    : `${baseUrl}/api/infrac-recod-form/crud/show`,
         api_getViolationList     : `${baseUrl}/api/violation-section/crud/list`,        
+        api_getInfractionList     : `${baseUrl}/api/infrac-recod-form/crud/retrieve-all`,        
         
         api_violationMasterList : `${baseUrl}/api/violation/crud/list`,  
         api_getViolationById     : `${baseUrl}/api/violation-section/crud/get`,
@@ -75,6 +77,8 @@ export default function ProjectApiList() {
         api_addViolation        : `${baseUrl}/api/violation/crud/save`,
         api_deleteViolation     : `${baseUrl}/api/violation/crud/delete`,
 
+        fpInbox : baseUrl + '/api/infrac-recod-form/inbox',
+        fpDocList : baseUrl + '/api/infrac-recod-form/crud/show-document',
     }
 
 
