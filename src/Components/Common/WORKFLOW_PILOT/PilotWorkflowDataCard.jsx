@@ -16,14 +16,16 @@ import { GrHomeRounded } from 'react-icons/gr'
 function PilotWorkflowDataCard(props) {
 
     console.log('form url at ...', props?.workflow)
-    console.log('tab index in data card for ...', props?.tabIndex)
+    console.log('tab index in data card for ...', props?.tabIndex, props?.applicationData)
     return (
         <>
             <div className="bg-white">
-                <div className="container mx-auto my-5 md:p-5">
+                <div className="mx-auto my-5 md:p-5 ">
                     <div className="md:flex no-wrap md:-mx-2 ">
-                        <div className="w-full md:w-3/12 mx-2 md:shadow-xl flex md:justify-center items-center ">
-                            <div className="bg-white md:items-center my-auto ">
+
+                        <div className="border border-zinc-50 w-full md:w-3/12 mx-2 md:shadow-xl flex md:justify-center items-center py-4">
+                            
+                            <div className="bg-white md:items-center my-auto">
                                 <div className="image overflow-hidden md:text-center">
                                     <div className='text-indigo-600 font-bold text-2xl leading-8'>{nullToNA(props?.applicationData?.data?.application_no)}</div>
                                     <div className='text-sm text-gray-600'>Application No.</div>
@@ -35,8 +37,9 @@ function PilotWorkflowDataCard(props) {
                             </div>
 
                         </div>
-                        <div className="w-full md:w-9/12 mx-2 h-auto">
-                            <div className="bg-white mt-6 md:p-3 md:shadow-xl rounded-sm">
+                        
+                        <div className="w-full md:w-9/12 mx-2 border border-zinc-50 py-4 h-full bg-white md:shadow-xl">
+                            <div className=" mt-6 md:p-3  rounded-sm">
                                 <div className="flex items-center md:pl-4 space-x-2 font-semibold text-gray-900 leading-8">
                                     <span clas="text-green-500">
                                         <GrHomeRounded />
@@ -58,11 +61,8 @@ function PilotWorkflowDataCard(props) {
                                             ))
                                         }
                                     </div>
-                                    <div className='pb-2 mt-2 pl-4 flex'>
-                                        {props?.permissions?.can_view_form && <button className={`float-left mr-4 bg-white border border-indigo-500 text-indigo-500 px-4 py-1 shadow-lg hover:scale-105 rounded-sm hover:bg-indigo-500 hover:text-white whitespace-nowrap`} onClick={() => window.open(`${props?.workflow?.fullDetailsUrl}/${props?.id}`, '_blank')}>View Full Details</button>}
-                                        {/* <button className={`float-left mr-4 bg-white border border-indigo-500 text-indigo-500 px-4 py-1 shadow-lg hover:scale-105 rounded-sm hover:bg-indigo-500 hover:text-white`} onClick={() => navigate(`${props?.workflow?.fullDetailsUrl}/${props?.id}/workflow/${props?.tabIndex}`)}>View Full Details</button> */}
-                                        {props?.permissions?.can_edit && props?.boxType=='inbox' && <button className={`float-right mr-4 bg-white border border-indigo-500 text-indigo-500 px-4 py-1 shadow-lg hover:scale-105 rounded-sm hover:bg-indigo-500 hover:text-white whitespace-nowrap`} onClick={() => window.open(`${props?.workflow?.formUrl}/${props?.id}`, '_blank')}>Edit Form</button>}
-                                        {/* {props?.boxType=='inbox' && <button className={`float-right mr-4 bg-white border border-indigo-500 text-indigo-500 px-4 py-1 shadow-lg hover:scale-105 rounded-sm hover:bg-indigo-500 hover:text-white whitespace-nowrap`} onClick={() => window.open(`${props?.workflow?.fullEdit}/${props?.id}`, '_blank')}>Full Edit Form</button>} */}
+                                    <div className=' mt-6 -mb-6 pl-4 flex'>
+                                        {/* {props?.boxType=='inbox' && <button className={`float-right mr-4 bg-white border border-indigo-500 text-indigo-500 px-4 py-1 shadow-lg hover:scale-105 rounded-sm hover:bg-indigo-500 hover:text-white whitespace-nowrap`} onClick={() => window.open(`fp-form/${props?.id}`, '_blank')}>Edit Form</button>} */}
                                     </div>
                                 </div>
                             </div>

@@ -51,8 +51,8 @@ const ApplicationSubmitScreen = (props) => {
               </div>
 
               <div className="col-span-8 p-6 poppins font-normal">
-                <div className="poppins text-green-500 font-semibold 2xl:text-2xlxl text-lg">You have successfully applied the form.</div>
-                <div className="poppins mt-4 text-sm 2xl:text-lg">Application No. : <span className="poppins font-semibold">{nullToNA(props?.appNo)}</span></div>
+                <div className="poppins text-green-500 font-semibold 2xl:text-2xlxl text-lg">You have successfully verified the form.</div>
+                <div className="poppins mt-4 text-sm 2xl:text-lg">Challan No. : <span className="poppins font-semibold">{nullToNA(props?.appNo)}</span></div>
                 <div className="poppins mt-4 text-sm 2xl:text-lg"> You can track the your application through the application number. </div>
                 <div></div>
                 <div></div>
@@ -61,7 +61,7 @@ const ApplicationSubmitScreen = (props) => {
             </div>
 
             <div className="flex items-center justify-center my-6">
-                <button className="2xl:px-6 px-3 py-1.5 2xl:py-2.5 cursor-pointer bg-blue-500 text-white font-medium text-xs  poppins rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" onClick={closeModal}>Home</button>
+                <button className="2xl:px-6 px-3 py-1.5 2xl:py-2.5 cursor-pointer bg-blue-500 text-white font-medium text-xs  poppins rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" onClick={closeModal}>View Challan</button>
             </div>
 
           </div>

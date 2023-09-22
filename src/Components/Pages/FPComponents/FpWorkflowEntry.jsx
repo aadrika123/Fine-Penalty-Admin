@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 👉 Author      : R U Bharti
-// 👉 Component   : MarriageWorkflowEntry
+// 👉 Component   : FpWorkflowEntry
 // 👉 Status      : Close
 // 👉 Description : This is the entry screen for workflow
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -9,16 +9,16 @@
 import PilotWorkflowIndex from '@/Components/Common/WORKFLOW_PILOT/PilotWorkflowIndex'
 import BackendUrlAdvt from '@/Components/api/BackendUrl'
 import ProjectApiList from '@/Components/api/ProjectApiList'
-import { indianDate, nullToNA } from '@/Components/Common/PowerupFunctions'
+import { indianAmount, indianDate, nullToNA } from '@/Components/Common/PowerupFunctions'
 import useSetTitle from '@/Components/Common/useSetTitle'
 
-function MarriageWorkflowEntry() {
+function FpWorkflowEntry() {
 
   // 👉 To set title 👈
-  useSetTitle("Marriage Workflow")
+  useSetTitle("Fines & Penalties Workflow")
 
     // 👉 API constant 👈
-    const { fpInbox, marriageDetails, api_workflowInfo, api_postDepartmental, getUploadedDocument, api_getDepartmentalData, appointSet, docVerify, approveReject, api_docUpload, fpDocList, api_marriageNextLevel } = ProjectApiList()
+    const { fpInbox, fpDetails, api_workflowInfo, api_postDepartmental, getUploadedDocument, api_getDepartmentalData, appointSet, docVerify, approveReject, api_docUpload, fpDocList, api_marriageNextLevel } = ProjectApiList()
 
     // 👉 Workflow data 👈
     const workflowRules = {
@@ -26,16 +26,16 @@ function MarriageWorkflowEntry() {
             // 1 - API TO FETCH INBOX LIST
             api_inboxList: { method: 'post', url: fpInbox },
             // 2 - API TO FETCH OUTBOX LIST
-            api_outboxList: { method: 'post', url: fpInbox },
+            api_outboxList: { method: 'post', url: fpInbox+'3' },
             // 3 - API TO FETCH SPECIAL LIST
-            api_specialList: { method: 'post', url: fpInbox },
+            api_specialList: { method: 'post', url: fpInbox+'3' },
             // 4 - API TO FETCH BACK TO CITIZEN LIST
             apt_btcList: { method: 'post', url: fpInbox },
             // 5 - API TO FETCH FIELD VERIFICATION LIST
             // api_fieldVerificationList: , // ------not done
             api_fieldVerificationList: { method: 'post', url: fpInbox },
             // 6 - API TO FETCH APPLICATION DETAILS BY ID 
-            api_details: { method: 'post', url: marriageDetails },
+            api_details: { method: 'post', url: fpDetails },
             // 7 - API TO FETCH WORKFLOW RELATED DATA eg: - WORKFLOW CANDIDATED,WORKFLOW PERMISSIONS,PSEUDO USERS
             api_workflowInfo: { method: 'post', url: api_workflowInfo },
             // 8 - API TO SEND INDEPENDENT COMMENT
@@ -80,34 +80,44 @@ function MarriageWorkflowEntry() {
               Cell: ({ row }) => <div>{row?.index + 1}</div>
             },
             {
-              Header: "Application No",
+              Header: "Application No.",
               accessor: "application_no",
               Cell: ({ cell }) => (nullToNA(cell.row.original?.application_no))
             },
             {
-              Header: "Bride Name",
-              accessor: "bride_name",
-              Cell: ({ cell }) => (nullToNA(cell.row.original?.bride_name))
+              Header: "Name",
+              accessor: "full_name",
+              Cell: ({ cell }) => (nullToNA(cell.row.original?.full_name))
             },
             {
-              Header: "Groom Name",
-              accessor: "groom_name",
-              Cell: ({ cell }) => (nullToNA(cell.row.original?.groom_name))
+              Header: "Mobile No.",
+              accessor: "mobile",
+              Cell: ({ cell }) => (nullToNA(cell.row.original?.mobile))
             },
             {
-              Header: "Marriage Date",
-              accessor: "marriage_date",
-              Cell: ({ cell }) => (indianDate(cell.row.original?.marriage_date))
+              Header: "Holding No.",
+              accessor: "holding_no",
+              Cell: ({ cell }) => (nullToNA(cell.row.original?.holding_no))
             },
             {
-              Header: "Marriage Place",
-              accessor: "marriage_place",
-              Cell: ({ cell }) => (nullToNA(cell.row.original?.marriage_place))
+              Header: "Violation Name",
+              accessor: "violation_name",
+              Cell: ({ cell }) => (nullToNA(cell.row.original?.violation_name))
+            },
+            // {
+            //   Header: "Violation Section",
+            //   accessor: "violation_section",
+            //   Cell: ({ cell }) => (nullToNA(cell.row.original?.violation_section))
+            // },
+            {
+              Header: "Penalty Amount",
+              accessor: "penalty_amount",
+              Cell: ({ cell }) => (indianAmount(cell.row.original?.penalty_amount))
             },
             {
-              Header: "Appointment Date",
-              accessor: "appointment_date",
-              Cell: ({ cell }) => (indianDate(cell.row.original?.appointment_date))
+              Header: "Apply Date",
+              accessor: "date",
+              Cell: ({ cell }) => (indianDate(cell.row.original?.date))
             }
           ],
     }
@@ -117,4 +127,4 @@ function MarriageWorkflowEntry() {
     )
 }
 
-export default MarriageWorkflowEntry
+export default FpWorkflowEntry

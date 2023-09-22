@@ -73,23 +73,25 @@ function PilotWorkflowIndex(props) {
   }, [props?.workflowData])
 
   //FETCH WORKFLOW DATA INCLUDING PERMISSION
-  const fetchWorkflowPermission = (workflowId) => {
-    console.log('data at info...',workflowId)
-    let requestBody = {
-      workflowId: workflowId,
-    }
+  // const fetchWorkflowPermission = (workflowId) => {
+  //   console.log('data at info...',workflowId)
+  //   let requestBody = {
+  //     workflowId: workflowId,
+  //   }
 
-    console.log('before fetch workflow info... ', requestBody)
-    console.log('passed data app url... ', props?.workflowData?.api?.api_workflowInfo?.url)
-    axios[props?.workflowData?.api?.api_workflowInfo?.method](props?.workflowData?.api?.api_workflowInfo?.url, requestBody, ApiHeader())
-      .then(function (response) {
-        console.log("workflow data in workflow...", response.data?.data);
-        setworkflowInfo(response.data?.data)
-      })
-      .catch(function (error) {
-        console.log("workflow data error", error);
-      });
-  };
+  //   console.log('before fetch workflow info... ', requestBody)
+  //   console.log('passed data app url... ', props?.workflowData?.api?.api_workflowInfo?.url)
+  //   axios[props?.workflowData?.api?.api_workflowInfo?.method](props?.workflowData?.api?.api_workflowInfo?.url, requestBody, ApiHeader())
+  //     .then(function (response) {
+  //       console.log("workflow data in workflow...", response.data?.data);
+  //       setworkflowInfo(response.data?.data)
+  //     })
+  //     .catch(function (error) {
+  //       console.log("workflow data error", error);
+  //     });
+  // };
+
+  const fetchWorkflowPermission = () => {}
 
 
   // tabSwitch function receive tabIndex to switch between tabs called from Sidebar menu
@@ -101,7 +103,7 @@ function PilotWorkflowIndex(props) {
 
   return (
     <>
-      <div className="grid grid-cols-12 rounded-lg mt-0 shadow-xl broder-2 border-sky-200 bg-white">
+      <div className="grid grid-cols-12 rounded-lg mt-0 shadow-md bg-white ">
         <div className="col-span-12 sm:col-span-12 ">
           {isLoading && <h1>Looading ...</h1>}
           {!isLoading && !isError && (

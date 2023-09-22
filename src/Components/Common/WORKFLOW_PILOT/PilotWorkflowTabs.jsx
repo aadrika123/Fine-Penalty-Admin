@@ -188,7 +188,6 @@ export default function PilotWorkflowTabs(props) {
 
       {erroState && <BottomErrorCard activateBottomErrorCard={activateBottomErrorCard} errorTitle={erroMessage} />}
 
-      {/* <div>current role...{applicationData?.data?.current_role}</div> */}
       {isLoading && (
         <BarLoader />
       )}
@@ -228,28 +227,28 @@ export default function PilotWorkflowTabs(props) {
 
             {props?.workflowInfo?.permissions?.can_upload_document == true && (props?.boxType == 'inbox' || props?.boxType == 'btcbox') && <div onClick={() => changeTabFun(3)} className={`pb-3 flex-initial cursor-pointer ${activeTab == 3 ? 'border-b-2 border-blue-500 text-blue-500' : 'no-underline border-none'}`}><span>Upload Documents</span></div>}
             
-            {(props?.workflowInfo?.permissions?.can_view_document == true || props?.boxType == 'btcbox') && <div onClick={() => changeTabFun(1)} className={`pb-3 flex-initial cursor-pointer ${activeTab == 1 ? 'border-b-2 border-blue-500 text-blue-500' : 'no-underline border-none'}`}><span>View Documents</span></div>}
+            {<div onClick={() => changeTabFun(1)} className={`pb-3 flex-initial cursor-pointer ${activeTab == 1 ? 'border-b-2 border-blue-500 text-blue-500' : 'no-underline border-none'}`}><span>View Documents</span></div>}
 
-            {props?.workflowInfo?.permissions?.can_verify_document == true && props?.boxType == 'inbox' && <div onClick={() => changeTabFun(4)} className={`pb-3 flex-initial cursor-pointer ${activeTab == 4 ? 'border-b-2 border-blue-500 text-blue-500' : 'no-underline border-none'}`}><span>Verify Documents</span></div>}
+            {/* {props?.workflowInfo?.permissions?.can_verify_document == true && props?.boxType == 'inbox' && <div onClick={() => changeTabFun(4)} className={`pb-3 flex-initial cursor-pointer ${activeTab == 4 ? 'border-b-2 border-blue-500 text-blue-500' : 'no-underline border-none'}`}><span>Verify Documents</span></div>} */}
             
-            {(props?.boxType == 'inbox' || props?.boxType == 'btcbox') && <div onClick={() => changeTabFun(2)} className={`pb-3 flex-initial cursor-pointer ${activeTab == 2 ? 'border-b-2 border-blue-500 text-blue-500' : 'no-underline border-none'}`}><span>Action</span></div>}
+            {/* {(props?.boxType == 'inbox' || props?.boxType == 'btcbox') && <div onClick={() => changeTabFun(2)} className={`pb-3 flex-initial cursor-pointer ${activeTab == 2 ? 'border-b-2 border-blue-500 text-blue-500' : 'no-underline border-none'}`}><span>Action</span></div>} */}
 
-            {props?.workflowInfo?.permissions?.allow_free_communication == true && <div onClick={() => changeTabFun(5)} className={`pb-3 flex-initial cursor-pointer ${activeTab == 5 ? 'border-b-2 border-blue-500 text-blue-500' : 'no-underline border-none'}`}><span>Departmental Communication</span></div>}
+            {/* {props?.workflowInfo?.permissions?.allow_free_communication == true && <div onClick={() => changeTabFun(5)} className={`pb-3 flex-initial cursor-pointer ${activeTab == 5 ? 'border-b-2 border-blue-500 text-blue-500' : 'no-underline border-none'}`}><span>Departmental Communication</span></div>} */}
 
-            {props?.customTabs != null && <div onClick={() => changeTabFun(6)} className={`pb-3 flex-initial cursor-pointer ${activeTab == 6 ? 'border-b-2 border-blue-500 text-blue-500' : 'no-underline border-none'}`}><span>Custom Tab</span></div>}
+            {/* {props?.customTabs != null && <div onClick={() => changeTabFun(6)} className={`pb-3 flex-initial cursor-pointer ${activeTab == 6 ? 'border-b-2 border-blue-500 text-blue-500' : 'no-underline border-none'}`}><span>Custom Tab</span></div>} */}
           </div>
           {/* BO TABS */}
           <Box sx={{ width: "100%" }}>
           
             {activeTab == 0 && <CustomErrorBoundary errorMsg="Bug in PilotWorkflowFullDetailsTab" >
-              <PilotWorkflowFullDetailsTab applicationData={applicationData} id={applicationId} />
+              <PilotWorkflowFullDetailsTab applicationData={applicationData} id={applicationId} activateBottomErrorCard={activateBottomErrorCard} />
             </CustomErrorBoundary>}
-            {activeTab == 1 && (props?.workflowInfo?.permissions?.can_view_document == true || props?.boxType == 'btcbox') &&
+            {activeTab == 1 && 
               <CustomErrorBoundary errorMsg="Bug in PilotWorkflowDocumentViewTab" >
                 <PilotWorkflowDocumentViewTab applicationData={applicationData} api={props?.api} id={applicationId} />
               </CustomErrorBoundary>
             }
-            {activeTab == 2 && (props?.boxType == 'inbox' || props?.boxType == 'btcbox') &&
+            {/* {activeTab == 2 && (props?.boxType == 'inbox' || props?.boxType == 'btcbox') &&
               <CustomErrorBoundary errorMsg="Bug in PilotWorkflowActions" >
                 <PilotWorkflowActions allDocumentUploadStatus={allDocumentUploadStatus} allDocumentVerifyStatus={allDocumentVerifyStatus} handleChangeTabs={handleChangeTabs} api={props?.api}
                   toast={notify}
@@ -270,8 +269,8 @@ export default function PilotWorkflowTabs(props) {
                 />
               </CustomErrorBoundary>
 
-            }
-            {activeTab == 3 && props?.workflowInfo?.permissions?.can_upload_document == true && (props?.boxType == 'inbox' || props?.boxType == 'btcbox') &&
+            } */}
+            {/* {activeTab == 3 && props?.workflowInfo?.permissions?.can_upload_document == true && (props?.boxType == 'inbox' || props?.boxType == 'btcbox') &&
               <CustomErrorBoundary errorMsg="Bug in PilotWorkflowDocumentUpload" >
                 <PilotWorkflowDocumentUpload canUpload={props?.canUpload} allDocumentUploadStatus={allDocumentUploadStatus} setallDocumentUploadStatus={setallDocumentUploadStatus} allDocumentVerifyStatus={allDocumentVerifyStatus} handleChangeTabs={handleChangeTabs} api={props?.api} id={applicationId} applicationData={applicationData} applicationData2={applicationData2} refresh={() => setrefresh(refresh + 1)} activateBottomErrorCard={activateBottomErrorCard} isBtc={props?.boxType == 'btcbox' ? true : false}/>
               </CustomErrorBoundary>
@@ -294,7 +293,7 @@ export default function PilotWorkflowTabs(props) {
               <CustomErrorBoundary errorMsg="Bug in custom tab passed by you" >
                 {props?.customTabs?.tabComponent(applicationId, props?.workflowInfo)}
               </CustomErrorBoundary>
-            }
+            } */}
           </Box>
 
         </div>}

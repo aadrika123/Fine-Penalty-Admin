@@ -35,14 +35,17 @@ import ProjectApiList from '@/Components/api/ProjectApiList'
 import BottomErrorCard from '@/Components/Common/BottomErrorCard'
 import { toast } from 'react-hot-toast'
 import ApplicationSubmitScreen from '@/Components/Common/ApplicationSubmitScreen'
+import { FiAlertCircle } from 'react-icons/fi'
 
-const InfractionForm = () => {
+const InfractionForm = (props) => {
 
     // 👉 To set title 👈
     useSetTitle("Fine & Penalty Form")
 
-    // 👉 URL constants 👈
-    const { id } = useParams()
+    // 👉 PROPS constants 👈
+    const { type, id } = props
+
+    const dialogRef = useRef()
 
     // 👉 Navigate constants 👈
     const navigate = useNavigate()
@@ -64,7 +67,7 @@ const InfractionForm = () => {
     const [submissionData, setSubmissionData] = useState(null)
     const [isSubmit, setIsSubmit] = useState(false)
     const [formDetails, setFormDetails] = useState(null)
-    const [docList, setDocList] = useState(null)
+    const [canEdit, setcanEdit] = useState(false)
 
     // 👉 CSS Constants 👈
     const labelStyle = 'text-gray-800 text-sm'
@@ -128,8 +131,8 @@ const InfractionForm = () => {
 
     // 👉 Formik validation schema 👈
     const schema = yup.object().shape(
-        [...basicForm, ...addressForm, ...witnessForm, ...docForm, ...[
-            { title: "Geo Tagged Photo", key: "geoTaggedPhoto", type: 'file', hint: "Select geo tagged photo", accept: '.png, .jpg, .jpeg', required: id ? false : true },
+        [...basicForm, ...addressForm, ...docForm, ...[
+            { title: "Geo Tagged Photo", key: "geoTaggedPhoto", type: 'file', hint: "Select geo tagged photo", accept: '.png, .jpg, .jpeg', required: type == 'edit' ? false : true },
             { key: "violationMade", type: 'text', hint: 'Select violation made', required: true },
         ]]?.reduce((acc, elem) => {
             if ((elem?.type != 'select' && elem?.type != 'option') && elem.required) {
@@ -153,7 +156,9 @@ const InfractionForm = () => {
         enableReinitialize: true,
         validationSchema: schema,
         onSubmit: (values) => {
-            submitFun(values)
+            console.log('enterd')
+            type != 'edit' && submitFun(values)
+            type == 'edit' && dialogRef.current.showModal()
         }
     })
 
@@ -167,9 +172,10 @@ const InfractionForm = () => {
         return (
             <div className={`flex flex-col ${width} `}>
                 {title != '' && <label htmlFor={key} className={labelStyle}>{title} {required && <span className='text-red-500 text-xs font-bold'>*</span>} : </label>}
-                {type != 'select' && type != 'file' && <input {...formik.getFieldProps(key)} type={type} className={inputStyle + `${(formik.touched[key] && formik.errors[key]) ? ' border-red-200 placeholder:text-red-400 ' : ' focus:border-zinc-300 border-zinc-200'}`} name={key} id="" placeholder={hint} />}
-                {type == 'file' && <input {...formik.getFieldProps(key)} type={type} className={fileStyle + `${(formik.touched[key] && formik.errors[key]) ? ' border-red-200 placeholder:text-red-400 text-red-400 file:border-red-200 file:text-red-400' : ' focus:border-zinc-300 border-zinc-200 file:border-zinc-300 file:text-gray-600'}`} name={key} id="" placeholder={hint} accept={accept} />}
-                {type == 'select' && <select {...formik.getFieldProps(key)} className={inputStyle + `${(formik.touched[key] && formik.errors[key]) ? ' border-red-200 placeholder:text-red-400 ' : ' focus:border-zinc-300 border-zinc-200'}`}>
+                {type != 'select' && type != 'file' && <input disabled={!canEdit} {...formik.getFieldProps(key)} type={type} className={(canEdit ? inputStyle : 'font-semibold px-4 py-1') + ` ${(formik.touched[key] && formik.errors[key]) ? ' border-red-200 placeholder:text-red-400 ' : ' focus:border-zinc-300 border-zinc-200'}`} name={key} id="" placeholder={hint} />}
+                {type == 'file' && <input disabled={!canEdit} {...formik.getFieldProps(key)} type={type} className={(canEdit ? fileStyle : 'font-semibold px-4 py-1 ') + `${(formik.touched[key] && formik.errors[key]) ? ' border-red-200 placeholder:text-red-400 text-red-400 file:border-red-200 file:text-red-400' : ' focus:border-zinc-300 border-zinc-200 file:border-zinc-300 file:text-gray-600'}`} name={key} id="" placeholder={hint} accept={accept} />}
+                {type == 'select' && <select disabled={!canEdit} {...formik.getFieldProps(key)} className={(canEdit ? inputStyle : 'font-semibold px-4 py-1 appearance-none ') + ` ${(formik.touched[key] && formik.errors[key]) ? ' border-red-200 placeholder:text-red-400 ' : ' focus:border-zinc-300 border-zinc-200'}`}>
+                    <option value={null}>Select</option>
                     {
                         options?.map((elem) => <option value={elem?.value}>{elem?.title}</option>)
                     }
@@ -337,9 +343,9 @@ const InfractionForm = () => {
             .post(api_getInfractionById, { id: id }, ApiHeader())
             .then((res) => {
                 if (res?.data?.status) {
-                    feedFormData(res?.data?.data?.basic_details)
+                    feedFormData(res?.data?.data)
                     setFormDetails(res?.data?.data)
-                    getViolationById(res?.data?.data?.basic_details?.violation_id)
+                    getViolationById(res?.data?.data?.violation_id)
                 } else {
                     activateBottomErrorCard(true, checkErrorMessage(res?.data?.message))
                 }
@@ -354,31 +360,33 @@ const InfractionForm = () => {
             })
     }
 
-    // 👉 Function 10 👈
-    const getDocListFun = () => {
+    const editFun = () => {
 
-        setLoader(true)
+        console.log(violationData)
+        let payload = {
+            id:                 formDetails?.id,
+            fullName:           formik.values?.name,
+            mobile:             formik.values?.mobileNo,
+            email:              formik.values?.email,
+            holdingNo:          formik.values?.holdingNo,
+            streetAddress:      formik.values?.streetAddress1,
+            streetAddress2:     formik.values?.streetAddress2,
+            city:               formik.values?.city,
+            region:             formik.values?.region,
+            postalCode:         formik.values?.pincode,
+            violationId:        formik.values?.violationMade,
+            // violationSectionId: violationData?.violation_section,
+            penaltyAmount:      violationData?.penalty_amount,
+            isWitness:          formik.values?.isWitness,
+            witnessName:        formik.values?.witnessName,
+            witnessMobile:      formik.values?.witnessMobile,
+        }
 
-        AxiosInterceptors
-            .post(fpDocList, { id: id }, ApiHeader())
-            .then((res) => {
-                if (res?.data?.status) {
-                    setDocList(res?.data?.data?.uploadDocs)
-                } else {
-                    activateBottomErrorCard(true, checkErrorMessage(res?.data?.message))
-                }
-                console.log('fp document response => ', res)
-            })
-            .catch((err) => {
-                activateBottomErrorCard(true, 'Server Error! Please try again later.')
-                console.log('error fp document list => ', err)
-            })
-            .finally(() => {
-                setLoader(false)
-            })
+        props?.approve(payload)
+        dialogRef.current.close()
     }
 
-    // 👉 Function 11 👈
+    // 👉 Function 10 👈
     const submitFun = (values) => {
 
         console.log(":::::::Submitting values::::::", values)
@@ -391,7 +399,7 @@ const InfractionForm = () => {
 
             url = api_updateInfractionForm;
 
-            fd.append('id', formDetails?.basic_details?.id)
+            fd.append('id', formDetails?.id)
 
         } else {
 
@@ -448,17 +456,11 @@ const InfractionForm = () => {
             })
     }
 
-    const checkType = (path) => {
-        const splitPath = path?.split('.')[path?.split('.')?.length - 1]
-        const type = splitPath?.split('/')[0]
-        return type;
-    }
-
-    // 👉 To call function 4, function 9 and function 10 👈
+    // 👉 To call function 4 and function 9 👈
     useEffect(() => {
         getViolationList()
-        id && fetchData()
-        id && getDocListFun()
+        id && type == 'edit' && fetchData()
+        type == 'edit' && setcanEdit(false)
     }, [id])
 
     return (
@@ -474,7 +476,7 @@ const InfractionForm = () => {
             <ApplicationSubmitScreen heading={"Fine & Penalty Form"} appNo={submissionData?.application_no} openSubmit={isSubmit} refresh={() => navigate(`/home`)} />
 
             {/* 👉 Header 👈 */}
-            <header className='flex gap-2 bg-zinc-50 p-4 drop-shadow-sm justify-center items-center'>
+            {(!type || type != 'edit') && <header className='flex gap-2 bg-zinc-50 p-4 drop-shadow-sm justify-center items-center'>
 
                 {/* 👉 Image 👈 */}
                 <aside className='w-[9vh] drop-shadow-md'>
@@ -493,10 +495,18 @@ const InfractionForm = () => {
                     </article>
                 </main>
 
-            </header>
+            </header>}
 
             {/* 👉 Main 👈 */}
             <form onChange={(e) => (formik.handleChange(e), handleChange(e))} onSubmit={formik.handleSubmit} className='w-full h-full p-4 my-6 border border-zinc-200 bg-zinc-50'>
+
+                {
+                    type == 'edit' &&
+                    <header className='w-full flex justify-end gap-2 '>
+                        <span className={buttonStyle('indigo')} onClick={() => setcanEdit(true)}>Edit</span>
+                        <button type="submit" className={buttonStyle('green')} >Approve & Generate Challan</button>
+                    </header>
+                }
 
                 {/* 👉 Basic Details 👈 */}
                 <section className='flex gap-4 flex-wrap'>
@@ -529,7 +539,7 @@ const InfractionForm = () => {
 
                     <div className={`flex flex-col `}>
                         <label htmlFor={'violationMade'} className={labelStyle}>Violation Made (Name of the subject) <span className='text-red-500 text-xs font-bold'>*</span> : </label>
-                        <select {...formik.getFieldProps('violationMade')} className={inputStyle + `${(formik.touched.violationMade && formik.errors.violationMade) ? ' border-red-200 placeholder:text-red-400 text-red-400' : ' focus:border-zinc-300 border-zinc-200'}`}>
+                        <select {...formik.getFieldProps('violationMade')} disabled={!canEdit} className={(canEdit ? inputStyle : 'font-semibold px-4 py-1 appearance-none ') + `${(formik.touched.violationMade && formik.errors.violationMade) ? ' border-red-200 placeholder:text-red-400 text-red-400' : ' focus:border-zinc-300 border-zinc-200'}`}>
                             {
                                 loader ?
                                     <option>Loading...</option>
@@ -548,12 +558,12 @@ const InfractionForm = () => {
 
                     <div className={`flex flex-col `}>
                         <label htmlFor={'violationMadeUnderSection'} className={labelStyle}>Violation Made Under Section : </label>
-                        <input disabled className={inputStyle + ' focus:border-zinc-300 border-zinc-200'} value={sloader ? 'Loading...' : nullToNA(violationData?.violation_section)} />
+                        <input disabled className={(canEdit ? inputStyle : 'font-semibold px-4 py-1 ') + ' focus:border-zinc-300 border-zinc-200'} value={sloader ? 'Loading...' : nullToNA(violationData?.violation_section)} />
                     </div>
 
                     <div className={`flex flex-col `}>
                         <label htmlFor={'penaltyAmount'} className={labelStyle}>Penalty Amount : </label>
-                        <input disabled className={inputStyle + ' focus:border-zinc-300 border-zinc-200'} value={sloader ? 'Loading...' : indianAmount(violationData?.penalty_amount)} />
+                        <input disabled className={(canEdit ? inputStyle : 'font-semibold px-4 py-1 ') + ' focus:border-zinc-300 border-zinc-200'} value={sloader ? 'Loading...' : indianAmount(violationData?.penalty_amount)} />
                     </div>
 
                 </section>
@@ -572,36 +582,7 @@ const InfractionForm = () => {
                 </section>
 
                 {/* 👉 Evidence Documents 👈 */}
-                {id ?
-                    <section className='flex gap-4 flex-wrap my-6'>
-
-                        <header className='w-full text-gray-700 -mb-3 font-semibold font-serif'>Evidence</header>
-
-                        {
-                            Array.isArray(docList) && docList?.map((elem) =>
-                                <>
-                                    <div className={`flex flex-col `}>
-                                        <label className={labelStyle}>{elem?.doc_name} : <span className={buttonStyle('indigo') + ' text-sm'}>View</span></label>
-                                        {
-                                            checkType(elem?.document_path) == 'pdf' && <></>
-                                        }
-                                        {
-                                            ['jpg', 'jpeg', 'png'].includes(checkType(elem?.document_path)) && <></>
-                                        }
-                                        {
-                                            checkType(elem?.document_path) == 'pdf' && <></>
-                                        }
-                                        {elem?.location && <>
-                                            <div className='grid grid-cols-12 items-center mt-1'><span className={`col-span-6 ${labelStyle}`}>Longitude :</span><span className={`col-span-6 font-semibold ${labelStyle}`}>{location?.longitude}</span></div>
-                                            <div className='grid grid-cols-12 items-center'><span className={`col-span-6 ${labelStyle}`}>Latitude :</span><span className={`col-span-6 font-semibold ${labelStyle}`}>{location?.latitude}</span></div>
-                                        </>}
-                                    </div>
-                                </>
-                            )
-                        }
-
-                    </section>
-                    :
+                {type != 'edit' &&
                     <section className='flex gap-4 flex-wrap my-6'>
 
                         <header className='w-full text-gray-700 -mb-3 font-semibold font-serif'>Evidence</header>
@@ -623,11 +604,29 @@ const InfractionForm = () => {
 
                     </section>}
 
-                <footer>
-                    <button type="submit" className={buttonStyle('green')}>{id ? 'Update' : 'Submit'}</button>
-                </footer>
+                {type != 'edit' &&
+                    <footer>
+                        <button type="submit" className={buttonStyle('green')}>Submit</button>
+                    </footer>}
 
             </form >
+
+            {/* 👉 Dialog form 👈 */}
+            <dialog ref={dialogRef} className="relative overflow-clip animate__animated animate__zoomIn animate__faster">
+                <div className=' z-50 px-6 py-4 flex flex-col gap-4 '>
+                    <div className='flex items-center gap-6'>
+                        <span className='text-red-500 bg-red-100 p-2 block rounded-full drop-shadow-md shadow-red-300'><FiAlertCircle size={25} /></span>
+                        <div className='flex flex-col gap-2'>
+                            <span className='text-xl font-semibold border-b pb-1'>Confirmation Box</span>
+                            <span className='text-base'>Are you sure want to approve ?</span>
+                        </div>
+                    </div>
+                    <div className='flex justify-end gap-2'>
+                        <button className='text-white bg-slate-400 hover:bg-slate-500 px-4 py-1 text-sm ' onClick={() => dialogRef.current.close()}>No</button>
+                        <button className='text-white bg-red-500 hover:bg-red-600 px-4 py-1 text-sm ' onClick={() => editFun()}>Yes</button>
+                    </div>
+                </div>
+            </dialog>
 
         </>
     )

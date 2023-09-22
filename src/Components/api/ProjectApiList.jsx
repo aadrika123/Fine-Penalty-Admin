@@ -65,20 +65,22 @@ export default function ProjectApiList() {
         api_editMarriageApplication: `${baseUrl}/api/marriage/edit-application`,
 
         // 👉 ================ Fines & Penalties API List =================== 👈
-        api_submitInfractionForm : `${baseUrl}/api/infrac-recod-form/crud/save`,
-        api_updateInfractionForm : `${baseUrl}/api/infrac-recod-form/crud/edit`,
-        api_getInfractionById    : `${baseUrl}/api/infrac-recod-form/crud/show`,
-        api_getViolationList     : `${baseUrl}/api/violation-section/crud/list`,        
-        api_getInfractionList     : `${baseUrl}/api/infrac-recod-form/crud/retrieve-all`,        
+        api_submitInfractionForm : `${baseUrl}/api/penalty-record/crud/save`,
+        api_updateInfractionForm : `${baseUrl}/api/penalty-record/crud/edit`,
+        api_getInfractionById    : `${baseUrl}/api/penalty-record/crud/show`,
+        api_getViolationList     : `${baseUrl}/api/violation/crud/list`,        
+        api_getInfractionList     : `${baseUrl}/api/penalty-record/crud/active-all`,        
         
         api_violationMasterList : `${baseUrl}/api/violation/crud/list`,  
-        api_getViolationById     : `${baseUrl}/api/violation-section/crud/get`,
+        api_getViolationById     : `${baseUrl}/api/violation/crud/get`,
         api_updateViolation     : `${baseUrl}/api/violation/crud/edit`,
         api_addViolation        : `${baseUrl}/api/violation/crud/save`,
         api_deleteViolation     : `${baseUrl}/api/violation/crud/delete`,
 
-        fpInbox : baseUrl + '/api/infrac-recod-form/inbox',
-        fpDocList : baseUrl + '/api/infrac-recod-form/crud/show-document',
+        fpInbox : baseUrl + '/api/penalty-record/inbox',
+        fpDetails : baseUrl + '/api/penalty-record/detail',
+        fpDocList : baseUrl + '/api/penalty-record/crud/show-document',
+        fpApprove : baseUrl + '/api/penalty-record/approve',
     }
 
 

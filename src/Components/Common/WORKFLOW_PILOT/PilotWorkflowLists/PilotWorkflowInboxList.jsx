@@ -20,7 +20,7 @@ function PilotWorkflowInboxList(props) {
 
   // 👉 Getting props column 👈
   let columnSchema = [...props?.COLUMNS]
-  
+
   // 👉 Appending column 👈
   columnSchema = [
     ...columnSchema,
@@ -41,7 +41,7 @@ function PilotWorkflowInboxList(props) {
       ),
     }]
 
-    // 👉 State constans 👈
+  // 👉 State constans 👈
   const [requestBody, setrequestBody] = useState({})
   const [changeData, setchangeData] = useState(0)
   const [loader, setloader] = useState(false);
@@ -92,11 +92,11 @@ function PilotWorkflowInboxList(props) {
   return (
     <>
 
-{/* 👉 Searching Form 👈 */}
+      {/* 👉 Searching Form 👈 */}
       <form onSubmit={formik.handleSubmit} onChange={formik.handleChange} className="bg-white poppins">
 
         <div className="flex flex-row flex-wrap gap-x-4 items-center gap-y-2 pb-4 mb-2 border-b">
-          
+
           <div className='w-full md:w-[25%]'>
             <label className="form-label inline-block mb-1 text-gray-600 text-sm font-semibold">
               Filter By<span className="text-red-500">*</span>
@@ -106,7 +106,7 @@ function PilotWorkflowInboxList(props) {
               className={`${formik.errors.searchBy ? 'text-red-500 font-semibold border border-solid border-red-600 placeholder-red-300 shadow-red-100 ' : 'text-gray-700 font-normal border border-solid border-gray-400 placeholder-gray-400 '} cursor-pointer w-full px-3 py-1 text-sm  bg-white bg-clip-padding rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none shadow-md`}
             >
               <option value="">Select</option>
-              <option value="applicationNo">Application No.</option>
+              <option value="applicationNo">Application Number</option>
               <option value="name">Name</option>
             </select>
           </div>
@@ -171,7 +171,7 @@ function PilotWorkflowInboxList(props) {
         </div>
       </form>
 
-{/* 👉 Table 👈 */}
+      {/* 👉 Table 👈 */}
       <ListTableConnect
         api={props?.api?.url} // sending api
         columns={columnSchema} // sending column

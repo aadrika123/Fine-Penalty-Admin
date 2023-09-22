@@ -6,26 +6,27 @@
 
 // 👉 Importing Packages 👈
 import 'animate.css'
-import { useState } from 'react';
+import { useState, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Toaster, toast } from 'react-hot-toast';
 import { contextVar } from '@/Components/context/contextVar';
 import { getLocalStorageItemJsonParsed } from '@/Components/Common/localstorage';
-import Login from '@/Components/Pages/Others/Login';
-import ProtectedRoutes from '@/Components/Pages/Others/ProtectedRoutes';
-import ErrorPage from '@/Components/Pages/Others/404/ErrorPage';
-import TransferPage from '@/Components/Pages/Others/TransferPage';
-import FPDashboard from '@/Components/Pages/FPComponents/FPDashboard/FPDashboard';
-import ChangePassword from '@/Components/Pages/Others/ChangePassword';
-import RegisteredMarriageList from '@/Components/Pages/FPComponents/MarriageWorkflow/RegisteredMarriageList';
-import MarriageWorkflowEntry from '@/Components/Pages/FPComponents/MarriageWorkflow/MarriageWorkflowEntry';
-import MarriageDetails from '@/Components/Pages/FPComponents/MarriageWorkflow/MarriageDetails';
-import MarriagePayment from '@/Components/Pages/FPComponents/MarriagePayment';
-import MarriageReceipt from '@/Components/Pages/FPComponents/MarriagePrint/MarriageReceipt';
-import FPTrack from '@/Components/Pages/FPComponents/FPTrack/FPTrack';
-import InfractionForm from '@/Components/Pages/FPComponents/FPForm/InfractionForm';
-import ViolationIndex from '@/Components/Pages/FPComponents/ViolationMaster/ViolationIndex';
-import FpApplicationList from '@/Components/Pages/FPComponents/FpList/FpApplicationList';
+
+const Login                   = lazy(() => import('@/Components/Pages/Others/Login'));
+const ProtectedRoutes         = lazy(() => import('@/Components/Pages/Others/ProtectedRoutes'));
+const ErrorPage               = lazy(() => import('@/Components/Pages/Others/404/ErrorPage'));
+const TransferPage            = lazy(() => import('@/Components/Pages/Others/TransferPage'));
+const FPDashboard             = lazy(() => import('@/Components/Pages/FPComponents/FPDashboard/FPDashboard'));
+const ChangePassword          = lazy(() => import('@/Components/Pages/Others/ChangePassword'));
+const RegisteredMarriageList  = lazy(() => import('@/Components/Pages/FPComponents/MarriageWorkflow/RegisteredMarriageList'));
+const MarriageDetails         = lazy(() => import('@/Components/Pages/FPComponents/MarriageWorkflow/MarriageDetails'));
+const MarriagePayment         = lazy(() => import('@/Components/Pages/FPComponents/MarriagePayment'));
+const MarriageReceipt         = lazy(() => import('@/Components/Pages/FPComponents/MarriagePrint/MarriageReceipt'));
+const FPTrack                 = lazy(() => import('@/Components/Pages/FPComponents/FPTrack/FPTrack'));
+const InfractionForm          = lazy(() => import('@/Components/Pages/FPComponents/FPForm/InfractionForm'));
+const ViolationIndex          = lazy(() => import('@/Components/Pages/FPComponents/ViolationMaster/ViolationIndex'));
+const FpApplicationList       = lazy(() => import('@/Components/Pages/FPComponents/FpList/FpApplicationList'));
+const FpWorkflowEntry         = lazy(() => import('@/Components/Pages/FPComponents/FpWorkflowEntry'));
 
 function App() {
 
@@ -65,8 +66,8 @@ function App() {
     { path: '/track-fp',                    element: <FPTrack />                 },
     { path: '/fp-form/:id?',                element: <InfractionForm />          },
     { path: '/violation-master',            element: <ViolationIndex />          },
-    { path: '/fp-list',                     element: <FpApplicationList /> },
-    { path: '/fp-workflow',                 element: <MarriageWorkflowEntry />   },
+    { path: '/fp-list',                     element: <FpApplicationList />       },
+    { path: '/fp-workflow',                 element: <FpWorkflowEntry />         },
     
     { path: '/registered-marriage-list',    element: <RegisteredMarriageList />  },
     { path: '/marriage-details/:id',        element: <MarriageDetails />         },

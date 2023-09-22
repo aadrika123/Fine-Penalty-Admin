@@ -114,7 +114,7 @@ function ListTable2(props) {
                                     <tr {...headerGroup.getHeaderGroupProps()}>
                                         {
                                             headerGroup.headers.map((column) => (
-                                                <th {...column.getHeaderProps(column.getSortByToggleProps())} className={column?.className + " px-2 py-3 border-b border-gray-200 text-gray-800  text-left text-xs uppercase "}>{column.render('Header')}
+                                                <th {...column.getHeaderProps(column.getSortByToggleProps())} className={column?.className + " notranslate px-2 py-3 border-b border-gray-200 text-gray-800  text-left text-xs uppercase "}>{column.render('Header')}
                                                     <span>{column.isSorted ? (column.isSortedDesc ? '⬆️' : '⬇️') : ''}</span></th>
 
                                             ))
@@ -130,7 +130,7 @@ function ListTable2(props) {
                                 return (
                                     <tr {...row.getRowProps()} className="bg-white shadow-lg border-b border-gray-200">
                                         {row?.cells?.map((cell, index) => {
-                                            return <td {...cell.getCellProps()} className="px-2 py-2 text-sm text-left">{cell.render('Cell')}</td>
+                                            return <td {...cell.getCellProps()} className="notranslate px-2 py-2 text-sm text-left">{cell.render('Cell')}</td>
                                         })}
                                     </tr>
                                 )

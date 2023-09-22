@@ -67,7 +67,7 @@ const TopHeader = (props) => {
   }
 
   useEffect(() => {
-    fetchModuleList()
+    // fetchModuleList()
   },[])
 
 
@@ -83,7 +83,7 @@ const TopHeader = (props) => {
             <span className='cursor-pointer text-gray-700 text-xl' ><AiOutlineBars /></span>
           </div>
         </div>
-        <div className=' w-full ml-2 flex items-center'><span onClick={() => openModal2()} className='bg-gray-200 px-4 py-1 cursor-pointer transition-all duration-200 hover:shadow-md'>Modules</span> </div>
+        {/* <div className=' w-full ml-2 flex items-center'><span onClick={() => openModal2()} className='bg-gray-200 px-4 py-1 cursor-pointer transition-all duration-200 hover:shadow-md'>Modules</span> </div> */}
         <div className='flex items-center sm:gap-4 gap-2'>
           <span className='sm:visible flex items-center '>
           <Tooltip anchorId="logout" className='z-50' />
@@ -120,7 +120,7 @@ const TopHeader = (props) => {
 
       </Modal>
 
-      <Modal
+      {/* <Modal
         isOpen={modalIsOpen2}
         onRequestClose={closeModal}
         className="z-20 h-screen w-screen backdrop-blur-sm flex flex-row justify-center items-center overflow-auto animate__animated animate__zoomIn animate__faster"
@@ -128,7 +128,7 @@ const TopHeader = (props) => {
       >
         <PermittedModuleCard closeModuleModal={closeModal} permittedModuleList={permittedModuleList} loader={loader} />
 
-      </Modal>
+      </Modal> */}
       {
         notificationState && <NotificationComponent setnotificationState={setnotificationState} />
       }

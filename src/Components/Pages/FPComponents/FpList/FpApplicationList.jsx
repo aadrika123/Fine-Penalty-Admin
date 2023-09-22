@@ -32,11 +32,6 @@ const FpApplicationList = () => {
     // 👉 Navigate constant 👈
     const navigate = useNavigate()
 
-    // 👉 Role check constants 👈
-    const canPayRole = ['JSK']
-    const roles = JSON.parse(window.localStorage.getItem('roles'))
-    const canPay = useMemo(() => Array.isArray(roles) && roles.some(role => canPayRole.includes(role)), [roles]);
-
     // 👉 Column constant 👈
     const columns = [
         {
@@ -174,8 +169,8 @@ const FpApplicationList = () => {
                             className={`${formik.errors.searchBy ? 'text-red-400 font-semibold border border-solid border-red-400 placeholder-red-300 shadow-red-100 ' : 'text-gray-700 font-normal border border-solid border-gray-400 placeholder-gray-400 '} cursor-pointer w-full px-3 py-1 text-sm  bg-white bg-clip-padding rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none shadow-sm`}
                         >
                             <option value="">Select</option>
-                            <option value="applicationNo">Application No.</option>
-                            <option value="mobile">Mobile No.</option>
+                            <option value="applicationNo">Application Number</option>
+                            <option value="mobile">Mobile Number</option>
                         </select>
                     </div>
 
