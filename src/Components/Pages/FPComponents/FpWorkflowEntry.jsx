@@ -110,9 +110,9 @@ function FpWorkflowEntry() {
             //   Cell: ({ cell }) => (nullToNA(cell.row.original?.violation_section))
             // },
             {
-              Header: "Penalty Amount",
-              accessor: "penalty_amount",
-              Cell: ({ cell }) => (indianAmount(cell.row.original?.penalty_amount))
+              Header: "Amount",
+              accessor: "total_amount",
+              Cell: ({ cell }) => (indianAmount(cell.row.original?.total_amount))
             },
             {
               Header: "Apply Date",
