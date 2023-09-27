@@ -47,7 +47,11 @@ const ViolationWiseReport = () => {
         {
             Header: "Challan No",
             accessor: "challan_no",
-            Cell: ({ cell }) => (nullToNA(cell.row.original?.challan_no))
+            Cell: ({ cell }) => (
+                <div className='underline cursor-pointer' onClick={() => cell?.row?.original?.challan_id && navigate(`/challan/${cell?.row?.original?.challan_id}`)}>
+                    {nullToNA(cell.row.original?.challan_no)}
+                </div>
+            )
         },
         {
             Header: "Violation Made",
@@ -82,11 +86,11 @@ const ViolationWiseReport = () => {
     const inputStyle = 'border focus:outline-none drop-shadow-sm focus:drop-shadow-md px-4 py-1 text-gray-700 shadow-black placeholder:text-sm'
 
     const formDataList = [
-        { title: "From Date", key: "fromDate", width:'md:w-[20%] w-full', type: 'date', hint: "", required: true, options: '', okey: '', ovalue: '' },
-        { title: "Upto Date", key: "uptoDate", width:'md:w-[20%] w-full', type: 'date', hint: "", required: true, options: '', okey: '', ovalue: '' },
+        { title: "From Date", key: "fromDate", width: 'md:w-[20%] w-full', type: 'date', hint: "", required: true, options: '', okey: '', ovalue: '' },
+        { title: "Upto Date", key: "uptoDate", width: 'md:w-[20%] w-full', type: 'date', hint: "", required: true, options: '', okey: '', ovalue: '' },
         // { title: "Department", key: "department", width:'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: departmentList, okey: 'id', ovalue: 'department_name' },
         // { title: "Violation Section", key: "violationSection", width:'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: violationSectionList, okey: 'id', ovalue: 'section' },
-        { title: "Violation Made", key: "violationMade", width:'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: violationList, okey: 'id', ovalue: 'violation_name' },
+        { title: "Violation Made", key: "violationMade", width: 'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: violationList, okey: 'id', ovalue: 'violation_name' },
     ]
 
     const inputBox = (key, title = '', type, width = '', hint = '', required = false, options = [], okey = '', ovalue = '') => {
@@ -114,10 +118,10 @@ const ViolationWiseReport = () => {
     const schema = yup.object().shape(
         [...formDataList]?.reduce((acc, elem) => {
 
-                if (elem?.required) {
-                    acc[elem.key] = yup.string().required(elem?.hint)
-                }
-           
+            if (elem?.required) {
+                acc[elem.key] = yup.string().required(elem?.hint)
+            }
+
             return acc;
         }, {})
     );
@@ -126,8 +130,8 @@ const ViolationWiseReport = () => {
         fromDate: getCurrentDate(),
         uptoDate: getCurrentDate(),
         department: "",
-        violationMade : '',
-        violationSection : '',
+        violationMade: '',
+        violationSection: '',
     }
 
     // 👉 Formik constant 👈
@@ -158,11 +162,11 @@ const ViolationWiseReport = () => {
     const fetchData = (data) => {
         setviewAll(true)
         setrequestBody({
-            fromDate : data?.fromDate,
+            fromDate: data?.fromDate,
             uptoDate: data?.uptoDate,
             // departmentId : data?.department,
             // violationSectionId : data?.violationSection,
-            violationId : data?.violationMade
+            violationId: data?.violationMade
         })
 
         setchangeData(prev => prev + 1)
@@ -197,7 +201,7 @@ const ViolationWiseReport = () => {
         setsLoader(true)
 
         AxiosInterceptors
-            .post(api_getSectionList, {departmentId : value}, ApiHeader())
+            .post(api_getSectionList, { departmentId: value }, ApiHeader())
             .then((res) => {
                 if (res?.data?.status) {
                     setViolationSectionList(res?.data?.data)
@@ -218,8 +222,8 @@ const ViolationWiseReport = () => {
         setsLoader(true)
 
         let payload = {
-            sectionId : value,
-            departmentId : formik.values.department
+            sectionId: value,
+            departmentId: formik.values.department
         }
 
         AxiosInterceptors
@@ -243,11 +247,11 @@ const ViolationWiseReport = () => {
         const name = e.target.name;
         const value = e.target.value;
 
-        if(name == 'violationSection'){
+        if (name == 'violationSection') {
             getViolationList(value)
         }
 
-        if(name == 'department'){
+        if (name == 'department') {
             getViolationSectionList(value)
         }
     }
@@ -318,17 +322,17 @@ const ViolationWiseReport = () => {
             </form >
 
             {/* 👉 Table 👈 */}
-                {
-                    Object.keys(requestBody).length !== 0 &&
-                    <ListTableConnect
-                        api={api_ViolationWiseReport} // sending api
-                        columns={columns} // sending column
-                        requestBody={requestBody}
-                        changeData={changeData} // sending body
-                        search={false}
-                        loader={(status) => setloader(status)}
-                    />
-                }
+            {
+                Object.keys(requestBody).length !== 0 &&
+                <ListTableConnect
+                    api={api_ViolationWiseReport} // sending api
+                    columns={columns} // sending column
+                    requestBody={requestBody}
+                    changeData={changeData} // sending body
+                    search={false}
+                    loader={(status) => setloader(status)}
+                />
+            }
 
         </>
     );

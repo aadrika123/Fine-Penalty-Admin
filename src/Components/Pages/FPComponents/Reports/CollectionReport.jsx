@@ -44,7 +44,11 @@ const CollectionReport = () => {
         {
             Header: "Challan No",
             accessor: "challan_no",
-            Cell: ({ cell }) => (nullToNA(cell.row.original?.challan_no))
+            Cell: ({ cell }) => (
+                <div className='underline cursor-pointer' onClick={() => cell?.row?.original?.challan_id && navigate(`/challan/${cell?.row?.original?.challan_id}`)}>
+                    {nullToNA(cell.row.original?.challan_no)}
+                </div>
+            )
         },
         {
             Header: "Violation Made",
@@ -178,7 +182,7 @@ const CollectionReport = () => {
         setrequestBody({
             fromDate: data?.fromDate,
             uptoDate: data?.uptoDate,
-            paymentMode : data?.paymentMode
+            paymentMode: data?.paymentMode
         })
 
         setchangeData(prev => prev + 1)
