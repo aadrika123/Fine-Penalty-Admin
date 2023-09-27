@@ -65,8 +65,8 @@ function FpWorkflowEntry() {
       },
       {
         Header: "Penalty Amount",
-        accessor: "penalty_amount",
-        Cell: ({ cell }) => (indianAmount(cell.row.original?.penalty_amount))
+        accessor: "amount",
+        Cell: ({ cell }) => (indianAmount(cell.row.original?.amount))
       },
       {
         Header: "Apply Date",
