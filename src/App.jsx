@@ -78,7 +78,7 @@ function App() {
     { path: '/fp-pay/:id',                  element: <FpPayment />               },
     { path: '/fp-receipt/:tranNo',          element: <FpReceipt />               },
     { path: '/fp-apply-report',             element: <FpApplyReport />           },
-    { path: '/challan-generated-report',   element: <ChallanGeneratingReport /> },
+    { path: '/challan-generated-report',    element: <ChallanGeneratingReport /> },
     { path: '/violation-wise-report',       element: <ViolationWiseReport />     },
     { path: '/collection-report',           element: <CollectionReport />        },
 

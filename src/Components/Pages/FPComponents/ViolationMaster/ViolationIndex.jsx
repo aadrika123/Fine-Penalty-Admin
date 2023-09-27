@@ -36,11 +36,12 @@ const ViolationIndex = () => {
     useSetTitle('Violation Master')
 
     // 👉 API constants 👈
-    const { api_violationMasterList, api_updateViolation, api_deleteViolation, api_addViolation } = ProjectApiList()
+    const { api_violationMasterList, api_updateViolation, api_deleteViolation, api_addViolation, api_getViolationList, api_getSectionList, api_getDepartmentList  } = ProjectApiList()
 
+    
     // 👉 Dialog useRef 👈
     const dialogRef = useRef()
-
+    
     // 👉 State constants 👈
     const [violationDataList, setViolationDataList] = useState([])
     const [loader, setLoader] = useState(false)
@@ -50,6 +51,10 @@ const ViolationIndex = () => {
     const [modalType, setModalType] = useState('')
     const [vId, setvId] = useState(null)
     const [violationData, setviolationData] = useState(null)
+    const [violationSectionList, setViolationSectionList] = useState([])
+    const [departmentList, setDepartmentList] = useState([])
+    const [violationList, setViolationList] = useState([])
+    const [sLoader, setsLoader] = useState(false)
 
     // 👉 CSS constants 👈
     const editButton = "border border-sky-800 text-sky-800 mx-1 px-3 py-1 rounded-sm shadow-lg hover:shadow-xl hover:bg-sky-800 hover:text-white"
@@ -102,13 +107,18 @@ const ViolationIndex = () => {
             Cell: ({ row }) => <div className="pr-2">{row?.index + 1}</div>,
         },
         {
-            Header: "Violation Name",
-            Cell: ({ cell }) => (nullToNA(cell.row.original?.violation_name)),
+            Header: "Department",
+            Cell: ({ cell }) => (nullToNA(cell.row.original?.department_name)),
         },
         {
             Header: "Violation Section",
             Cell: ({ cell }) => (nullToNA(cell.row.original?.violation_section)),
         },
+        {
+            Header: "Violation Name",
+            Cell: ({ cell }) => (nullToNA(cell.row.original?.violation_name)),
+        },
+        
         {
             Header: "Penalty Amount",
             Cell: ({ cell }) => (indianAmount(cell.row.original?.penalty_amount)),
@@ -118,12 +128,12 @@ const ViolationIndex = () => {
             accessor: "id",
             Cell: ({ cell }) => (
                 <div className="flex flex-row flex-wrap gap-2">
-                    <button
+                    {/* <button
                         onClick={() => handleModal('edit', cell?.row?.original)}
                         className={editButton}
                     >
                         Edit
-                    </button>
+                    </button> */}
 
                     <button
                         onClick={() => handleModal('delete', cell?.row?.original?.id)}
@@ -138,32 +148,28 @@ const ViolationIndex = () => {
 
     // 👉 Form Fields JSON 👈
     const basicForm = [
-        { title: "Violation Name", key: "violationName", type: 'text', hint: "Enter violation name", required: true },
-        { title: "Violation Section", key: "violationSection", type: 'text', hint: "Enter violation section", required: true },
+        { title: "Department", key: "department", width:'md:w-[20%] w-full', type: 'text', hint: "Enter department", required: true, options: 'departmentList', okey: 'id', ovalue: 'department_name' },
+        { title: "Violation Section", key: "violationSection", width:'md:w-[20%] w-full', type: 'text', hint: "Enter violation section", required: true, options: 'violationSectionList', okey: 'id', ovalue: 'section' },
+        { title: "Violation Name", key: "violationMade", width: 'md:w-[20%] w-full', type: 'text', hint: "Enter violation name", required: true , options: 'violationList', okey: 'id', ovalue: 'violation_name' },
         { title: "Penalty Amount", key: "penaltyAmount", type: 'number', hint: "Enter penalty Amount", required: true },
     ]
 
     // 👉 Formik validation schema 👈
     const schema = yup.object().shape(
         [...basicForm]?.reduce((acc, elem) => {
-            if ((elem?.type != 'select' && elem?.type != 'option') && elem.required) {
-                acc[elem.key] = yup.string().required(elem.hint);
+
+            if (elem?.required) {
+                acc[elem.key] = yup.string().required(elem?.hint)
             }
-            if (elem?.type == 'select' || elem?.type == 'option') {
-                if (elem?.check) {
-                    acc[elem.key] = yup.string().when(elem?.check, {
-                        is: (value) => value == '1',
-                        then: () => elem?.required ? yup.string().required(elem?.hint) : yup.string()
-                    });
-                }
-            }
+
             return acc;
         }, {})
     );
 
     // 👉 Formik initial values 👈
     const initialValues = {
-        violationName: '',
+        department: "",
+        violationMade: '',
         violationSection: '',
         penaltyAmount: '',
     }
@@ -203,18 +209,24 @@ const ViolationIndex = () => {
     }
 
     // 👉 Function 4 👈
-    const inputBox = (key, title = '', type, width = '', hint = '', required = false, accept, options = []) => {
+    const inputBox = (key, title = '', type, width = '', hint = '', required = false, options = [], okey = '', ovalue = '') => {
         return (
             <div className={`flex flex-col ${width} `}>
                 {title != '' && <label htmlFor={key} className={labelStyle}>{title} {required && <span className='text-red-500 text-xs font-bold'>*</span>} : </label>}
-                {type != 'select' && type != 'file' && <input {...formik.getFieldProps(key)} type={type} className={inputStyle + `${(formik.touched[key] && formik.errors[key]) ? ' border-red-200 placeholder:text-red-400 ' : ' focus:border-zinc-300 border-zinc-200'}`} name={key} id="" placeholder={hint} />}
-                {type == 'file' && <input {...formik.getFieldProps(key)} type={type} className={fileStyle + `${(formik.touched[key] && formik.errors[key]) ? ' border-red-200 placeholder:text-red-400 text-red-400 file:border-red-200 file:text-red-400' : ' focus:border-zinc-300 border-zinc-200 file:border-zinc-300 file:text-gray-600'}`} name={key} id="" placeholder={hint} accept={accept} />}
-                {type == 'select' && <select {...formik.getFieldProps(key)} className={inputStyle + `${(formik.touched[key] && formik.errors[key]) ? ' border-red-200 placeholder:text-red-400 ' : ' focus:border-zinc-300 border-zinc-200'}`}>
+                {type != 'select' && type != 'file' && <input {...formik.getFieldProps(key)} type={type} className={inputStyle + ` ${(formik.touched[key] && formik.errors[key]) ? ' border-red-200 placeholder:text-red-400 ' : ' focus:border-zinc-300 border-zinc-200'}`} name={key} id="" placeholder={hint} />}
+                {type == 'select' && <select {...formik.getFieldProps(key)} className={inputStyle + ` ${(formik.touched[key] && formik.errors[key]) ? ' border-red-200 placeholder:text-red-400 text-red-400' : ' focus:border-zinc-300 border-zinc-200 '}`}>
                     {
-                        options?.map((elem) => <option value={elem?.value}>{elem?.title}</option>)
+                        sLoader ?
+                            <option>Loading...</option>
+                            :
+                            <>
+                                <option value={null}>Select</option>
+                                {
+                                    options?.map((elem) => <option className='' value={elem[okey]}>{elem[ovalue]}</option>)
+                                }
+                            </>
                     }
                 </select>}
-                {/* {(formik.touched[key] && formik.errors[key]) && <span className='text-xs text-red-500'>{formik.errors[key]}</span>} */}
             </div>
         );
     }
@@ -234,9 +246,10 @@ const ViolationIndex = () => {
         switch (modalType) {
             case 'add': {
                 payload = {
-                    violationName: values?.violationName,
+                    violationName: values?.violationMade,
                     violationSection: values?.violationSection,
-                    penaltyAmount: values?.penaltyAmount
+                    penaltyAmount: values?.penaltyAmount,
+                    department: values?.department
                 }
                 url = api_addViolation
             } break;
@@ -244,9 +257,10 @@ const ViolationIndex = () => {
             case 'edit': {
                 payload = {
                     id: violationData?.id,
-                    violationName: values?.violationName,
+                    violationName: values?.violationMade,
                     violationSection: values?.violationSection,
-                    penaltyAmount: values?.penaltyAmount
+                    penaltyAmount: values?.penaltyAmount,
+                    department: values?.department
                 }
                 url = api_updateViolation
             } break;
@@ -280,11 +294,94 @@ const ViolationIndex = () => {
             })
     }
 
+    // const getDepartmentList = () => {
+
+    //     setsLoader(true)
+
+    //     AxiosInterceptors
+    //         .post(api_getDepartmentList, {}, ApiHeader())
+    //         .then((res) => {
+    //             if (res?.data?.status) {
+    //                 setDepartmentList(res?.data?.data)
+    //             } else {
+    //             }
+    //             console.log('fp department list response => ', res)
+    //         })
+    //         .catch((err) => {
+    //             console.log('error fp department list => ', err)
+    //         })
+    //         .finally(() => {
+    //             setsLoader(false)
+    //         })
+    // }
+
+    // const getViolationSectionList = (value) => {
+
+    //     console.log(value)
+
+    //     setsLoader(true)
+
+    //     AxiosInterceptors
+    //         .post(api_getSectionList, { departmentId: value }, ApiHeader())
+    //         .then((res) => {
+    //             if (res?.data?.status) {
+    //                 setViolationSectionList(res?.data?.data)
+    //             } else {
+    //             }
+    //             console.log('fp violation section list response => ', res)
+    //         })
+    //         .catch((err) => {
+    //             console.log('error fp violation section list => ', err)
+    //         })
+    //         .finally(() => {
+    //             setsLoader(false)
+    //         })
+    // }
+
+    // const getViolationNameList = (value) => {
+
+    //     setsLoader(true)
+
+    //     let payload = {
+    //         sectionId: value,
+    //         departmentId: formik.values.department
+    //     }
+
+    //     AxiosInterceptors
+    //         .post(api_violationMasterList, {}, ApiHeader())
+    //         .then((res) => {
+    //             if (res?.data?.status) {
+    //                 setViolationList(res?.data?.data)
+    //             } else {
+    //             }
+    //             console.log('fp violation list response => ', res)
+    //         })
+    //         .catch((err) => {
+    //             console.log('error fp violation list => ', err)
+    //         })
+    //         .finally(() => {
+    //             setsLoader(false)
+    //         })
+    // }
+
+    const handleChange = (e) => {
+        // const name = e.target.name;
+        // const value = e.target.value;
+
+        // if (name == 'violationSection') {
+        //     getViolationNameList(value)
+        // }
+
+        // if (name == 'department') {
+        //     getViolationSectionList(value)
+        // }
+    }
+
     // 👉 To call Function 3 👈
     useEffect(() => {
+        // getDepartmentList()
         getViolationList()
     }, [])
-
 
     return (
         <>
@@ -342,20 +439,20 @@ const ViolationIndex = () => {
             </div>
 
             {/* 👉 Dialog form 👈 */}
-            <dialog ref={dialogRef} className="relative overflow-clip animate__animated animate__zoomIn animate__faster">
+            <dialog ref={dialogRef} className={`relative overflow-clip animate__animated animate__zoomIn animate__faster ${modalType != 'delete' && ' w-[90vw] md:max-w-[1080px]'}`}>
 
                 {/* 👉 Cross button 👈 */}
                 {modalType != 'delete' && <span onClick={() => (dialogRef.current.close(), formik.resetForm())} className="block p-1 bg-red-100 hover:bg-red-500 rounded-full hover:text-white cursor-pointer transition-all duration-200 absolute top-2 right-2"><RxCross2 /></span>}
 
                 {/* 👉 Form 👈 */}
-                {modalType != 'delete' && <form onChange={formik.handleChange} onSubmit={formik.handleSubmit} className="p-4 px-8 py-6 shadow-lg">
+                {modalType != 'delete' && <form onChange={(e) => (formik.handleChange(e), handleChange(e))} onSubmit={formik.handleSubmit} className="p-4 px-8 py-6 shadow-lg">
                     <section className='flex gap-4 flex-wrap'>
 
                         <header className='w-full font-semibold text-xl capitalize text-sky-700 border-b pb-1 text-center'>{modalType} Violation</header>
 
                         {
                             basicForm?.map((elem) => {
-                                return inputBox(elem?.key, elem?.title, elem?.type, '', elem?.hint, elem?.required)
+                                return inputBox(elem?.key, elem?.title, elem?.type, elem?.width, elem?.hint, elem?.required, elem?.options, elem?.okey, elem?.ovalue)
                             })
                         }
 

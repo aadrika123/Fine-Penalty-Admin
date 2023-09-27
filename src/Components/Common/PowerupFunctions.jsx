@@ -251,7 +251,7 @@ export const nullToNA = (value) => {
     // not defined
 
     if (value === undefined || value === null || typeof value === "undefined" || value === "") {
-        return "NA";
+        return "N/A";
     } else if (value === true) {
         return 'Yes';
     } else if (value === false) {
@@ -383,7 +383,7 @@ export const checkSizeValidation = (file) => {
 export const indianDate = (value) => {
 
     if (value === undefined || value === null || typeof value === "undefined" || value === "") {
-        return "NA";
+        return "N/A";
     } else if (value === true) {
         return 'Yes';
     } else if (value === false) {

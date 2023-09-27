@@ -70,8 +70,8 @@ const FpApplicationList = () => {
         },
         {
             Header: "Penalty Amount",
-            accessor: "total_amount",
-            Cell: ({ cell }) => (indianAmount(cell.row.original?.total_amount))
+            accessor: "amount",
+            Cell: ({ cell }) => (indianAmount(cell.row.original?.amount))
         },
         {
             Header: "Apply Date",

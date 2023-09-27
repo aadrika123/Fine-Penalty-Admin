@@ -11,13 +11,13 @@ function TitleBar(props) {
     const backFunction = () => {
         const currentURL = window.location.href;
         const referrerURL = document.referrer;
-        if (currentURL !== referrerURL) {
-          window.history.replaceState(null, null, ''); // Remove current URL from history
+        // if (currentURL !== referrerURL) {
+        //   window.history.replaceState(null, null, ''); // Remove current URL from history
           window.history.back(); // Navigate back in history
-        } else {
+        // } else {
           // Do nothing if current URL is the same as referrer URL
-          console.log('Already at the previous page.');
-        }
+        //   console.log('Already at the previous page.');
+        // }
       };
 
     

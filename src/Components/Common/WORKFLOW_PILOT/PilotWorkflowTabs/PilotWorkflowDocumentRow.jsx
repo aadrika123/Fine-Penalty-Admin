@@ -38,7 +38,7 @@ function PilotWorkflowDocumentRow(props) {
                 {/* 👉 Document Name 👈 */}
                 <td className="px-5 py-2 border-b border-gray-200 bg-white text-sm">
                     <p className="text-gray-900 whitespace-no-wrap">
-                        {nullToNA(props?.docList?.doc_code)}
+                        {nullToNA(props?.docList?.document_name)}
                     </p>
                 </td>
 

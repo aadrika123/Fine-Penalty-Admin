@@ -135,8 +135,8 @@ function FPDashboard() {
                 <div className="font-bold text-md mb-2 flex-1 text-gray-600"># Recent Applications</div>
                 <Table
                     loading={isLoading2}
-                    heading={['Application No.', 'Name', 'Mobile No.', 'Holding No.', 'Violation Name', 'Violation Section', 'Penalty Amount', 'Apply Date']}
-                    dataKey={['application_no', 'full_name', 'mobile_no', 'holding_no', 'violation_name', 'violation_section', 'penalty_amount', 'date']}
+                    heading={['Application No.', 'Name', 'Mobile No.', 'Holding No.', 'Violation Name', 'Violation Section', 'Amount (₹)', 'Apply Date']}
+                    dataKey={['application_no', 'full_name', 'mobile_no', 'holding_no', 'violation_name', 'violation_section', 'amount', 'date']}
                     data={pendingData?.data ?? []}
                     viewLink={'/fp-details/'}
                 />

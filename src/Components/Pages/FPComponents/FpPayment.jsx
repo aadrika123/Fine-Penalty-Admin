@@ -117,8 +117,8 @@ const FpPayment = () => {
                             <div>Challan Date </div>
                             <div className='font-semibold text-base'>{indianDate(details?.challan_date)}</div>
                         </div>
-                        <div className='flex flex-col flex-wrap justify-center w-full md:w-[22%]'>
-                            <div>Violation Type </div>
+                        <div className='flex flex-col flex-wrap justify-center w-full'>
+                            <div>Violation Made </div>
                             <div className='font-semibold text-base'>{nullToNA(details?.violation_name)}</div>
                         </div>
                         <div className='flex flex-col flex-wrap justify-center w-full md:w-[22%]'>

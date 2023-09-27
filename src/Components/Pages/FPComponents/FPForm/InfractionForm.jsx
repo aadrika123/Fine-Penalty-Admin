@@ -408,6 +408,7 @@ const InfractionForm = (props) => {
             isWitness: formik.values?.isWitness,
             witnessName: formik.values?.witnessName,
             witnessMobile: formik.values?.witnessMobile,
+            remarks: formik.values?.remarks,
         }
 
         props?.approve(payload)
@@ -433,11 +434,11 @@ const InfractionForm = (props) => {
 
             url = api_submitInfractionForm;
 
-            fd.append('photo', geoTaggedImage);
-            fd.append('longitude', location?.longitude);
-            fd.append('latitude', location?.latitude);
-            fd.append('audioVideo', videoAudioFile);
-            fd.append('pdf', pdfDocument);
+            fd.append('photo', geoTaggedImage || '');
+            fd.append('longitude', location?.longitude || '');
+            fd.append('latitude', location?.latitude || '');
+            fd.append('audioVideo', videoAudioFile || '');
+            fd.append('pdf', pdfDocument || '');
 
         }
 
@@ -455,7 +456,7 @@ const InfractionForm = (props) => {
 
         fd.append('violationId', values?.violationMade);
         fd.append('violationSectionId', violationData?.violation_id);
-        fd.append('violationPlace', data?.violationPlace);
+        fd.append('violationPlace', values?.violationPlace);
         fd.append('penaltyAmount', violationData?.penalty_amount);
 
         fd.append('isWitness:', values?.isWitness);

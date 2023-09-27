@@ -2,7 +2,6 @@ import React from 'react'
 import CommonModal from './CommonModal'
 
 function BottomErrorCard(props) {
-    console.log('hello mr botom error..')
     return (
         <CommonModal>
             <div className="bg-red-100 border border-red-400 text-red-700 pl-4 pr-16 py-3 rounded relative shadow-xl" role="alert">

@@ -15,8 +15,9 @@ import './SideBar.css'
 import 'animate.css'
 import { MdOutlineDashboard, MdOutlineSpaceDashboard } from 'react-icons/md';
 import { contextVar } from '@/Components/context/contextVar'
-import { BsBuildings, BsCaretRight } from 'react-icons/bs';
+import { BsCaretRight } from 'react-icons/bs';
 import { GiTakeMyMoney } from 'react-icons/gi'
+import { getLocalStorageItem, setLocalStorageItem } from '@/Components/Common/localstorage'
 
 const SideBar = (props) => {
 
@@ -24,19 +25,21 @@ const SideBar = (props) => {
   const { toggleBar, settoggleBar, userDetails } = useContext(contextVar)
 
   // 👉 State constants 👈
-  const [dropDown, setdropDown] = useState(false)
-  const [dropName, setdropName] = useState('')
+  const [dropDown, setdropDown] = useState(getLocalStorageItem('dropDown') || false)
+  const [dropName, setdropName] = useState(getLocalStorageItem('dropName') || '')
 
   // 👉 CSS constants 👈
-  const dropMenuBtn = `block w-full pl-7 py-2 px-6 clear-both whitespace-nowrap text-sm hover:bg-sky-100 hover:text-[#1A4D8C] rounded-md text-sm animate__animated animate__fadeIn animate__faster `
-  const mobileMenuBtn = `block py-3 px-4 hover:bg-sky-100 hover:text-[#1A4D8C] rounded-md animate__animated animate__fadeIn animate__faster `
-  const open1 = 'animate__animated animate__slideInLeft animate__faster bg-[#1A4D8C] w-[17rem] '
-  const open3 = 'animate__animated animate__fadeInLeft animate__faster '
-  const close1 = 'w-0 sm:w-3 bg-[#1A4D8C] animate__animated '
-  const close3 = 'animate__animated animate__fadeOutLeft animate__faster '
+  const dropMenuBtn   = `block w-full pl-7 py-2 px-6 clear-both whitespace-nowrap text-sm hover:bg-indigo-100 hover:text-[#1A4D8C] rounded-md text-sm animate__animated animate__fadeIn animate__faster `
+  const mobileMenuBtn = `block py-3 px-4 hover:bg-indigo-100 hover:text-[#1A4D8C] rounded-md animate__animated animate__fadeIn animate__faster `
+  const open1         = 'animate__animated animate__slideInLeft animate__faster bg-[#1A4D8C] w-[17rem] '
+  const open3         = 'animate__animated animate__fadeInLeft animate__faster '
+  const close1        = 'w-0 sm:w-3 bg-[#1A4D8C] animate__animated '
+  const close3        = 'animate__animated animate__fadeOutLeft animate__faster '
 
   // 👉 Function 1 👈
   const dropFun = (val) => {
+    setLocalStorageItem('dropDown', !dropDown)
+    setLocalStorageItem('dropName', val)
     setdropDown(!dropDown)
     setdropName(val)
   }

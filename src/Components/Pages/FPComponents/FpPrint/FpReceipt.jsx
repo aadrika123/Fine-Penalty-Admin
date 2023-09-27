@@ -140,11 +140,11 @@ const FpReceipt = () => {
 
                         <div className="col-span-12 flex gap-2">
                             <div className="">विभाग:- </div>
-                            <div className="font-normal">{nullToNA(receiptDetails?.violation_section)}</div>
+                            <div className="font-normal">{nullToNA(receiptDetails?.department)}</div>
                         </div>
 
                         <div className="col-span-12 flex gap-2">
-                            <div className="">कृत का विवरण:- </div>
+                            <div className="w-[15%] print:w-[35%]">कृत का विवरण:- </div>
                             <div className="font-normal">{nullToNA(receiptDetails?.violation_name)}</div>
                         </div>
 
