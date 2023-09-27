@@ -100,7 +100,7 @@ function Login() {
                 // return
                 if (response.data.status == true) {
                     setLocalStorageItemStrigified('menuList', response?.data?.data?.permission)
-                    setLocalStorageItemStrigified('userDetails', response?.data?.data?.userDetails)
+                    // setLocalStorageItemStrigified('userDetails', response?.data?.data?.userDetails)
 
                     setmenuList(response?.data?.data?.permission)
                     setuserDetails(response?.data?.data?.userDetails)
@@ -113,7 +113,7 @@ function Login() {
             })
             .catch(function (error) {
                 setLoaderStatus(false)
-                seterroState(true)
+                // seterroState(true)
                 console.log('--2--login error...', error)
             })
 

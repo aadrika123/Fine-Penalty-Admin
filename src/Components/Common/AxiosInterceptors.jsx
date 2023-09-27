@@ -9,8 +9,8 @@ AxiosInterceptors.interceptors.response.use(
         // window.location.href='/property/'
         console.log('data from axios interceptors....', response?.data)
         if (response?.data?.authenticated === false) {
-            localstorageRemoveEntire()
-            window.location.href = '/marriage'
+            // localstorageRemoveEntire()
+            // window.location.href = '/fp-penalty'
         }
         // Check if the response condition is met
         if (response.status === 200 && response.data.success) {

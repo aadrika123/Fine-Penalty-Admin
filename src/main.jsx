@@ -13,7 +13,7 @@ import CustomErrorBoundaryForRoutes from '@/Components/Common/CustomErrorBoundar
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter basename='fine-penalty'>
+    <BrowserRouter basename='fines'>
       <Suspense fallback={<div className="font-bold text-lg italic h-screen w-screen flex items-center justify-center">Loading...</div>}>
         <CustomErrorBoundaryForRoutes errorMsg="Something went wrong. Please try again later !">
           <App />

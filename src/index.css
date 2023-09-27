@@ -31,6 +31,8 @@ body * {
 
   * {
     visibility: hidden;
+    box-shadow: none !important;
+    text-shadow: none !important;
   }
 
   #printableArea,
@@ -38,6 +40,9 @@ body * {
     visibility: visible !important;
     box-shadow: none !important;
     text-shadow: none !important;
+    filter: none !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
   }
 
 }

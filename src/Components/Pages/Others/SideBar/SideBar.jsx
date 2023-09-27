@@ -58,7 +58,7 @@ const SideBar = (props) => {
               <div class="text-center mb-4">
                 <div class="text-sm text-gray-200 flex flex-col items-start justify-center relative">
                   <span className='flex justify-center w-full'> <span className='text-[50px] flex justify-center py-2 text-white'><GiTakeMyMoney /></span></span>
-                  <span className='flex justify-center w-full'>{userDetails?.userName}</span>
+                  <span className='flex justify-center w-full'>{userDetails?.user_name}</span>
                   <span className='flex justify-center w-full'>{userDetails?.roles?.map((elem) => elem)}</span>
                 </div>
                 <hr className='my-4' />
@@ -74,12 +74,12 @@ const SideBar = (props) => {
                           <NavLink to={item?.path == '' ? null : item?.path} className={({ isActive }) => ((isActive && item?.children?.length == 0) ? "bg-sky-100 text-[#133e71] " : " ") + `${mobileMenuBtn} ` + 'flex gap-4 items-center'} onClick={() => {
                             dropFun(item?.name)
                             dropName == item?.name && setdropName('')
-                          }}> <span><MdOutlineDashboard /></span> <div className='flex justify-between items-center flex-1'><span>{item?.name}</span>{item?.path == null && <span className={(dropName == item?.name) ? 'transition-all duration-200 ease-in-out rotate-90' : 'transition-all duration-200 ease-in-out rotate-0'}><BsCaretRight /></span>}</div> </NavLink>
+                          }}> <span><MdOutlineDashboard /></span> <div className='flex justify-between items-center flex-1'><span>{item?.name}</span>{(item?.path == null || item?.path == '') && <span className={(dropName == item?.name) ? 'transition-all duration-200 ease-in-out rotate-90' : 'transition-all duration-200 ease-in-out rotate-0'}><BsCaretRight /></span>}</div> </NavLink>
 
                           {(item?.children?.length > 0 && (dropName == item?.name)) && <ul class="block rounded rounded-t-none top-full py-0.5 ltr:text-left rtl:text-right mb-4 bg-[#133e71]" >
                             {
                               item?.children?.map((elem) => <>
-                                <li class="relative cursor-pointer" onClick={() => { window.innerWidth <= 763 && settoggleBar(!toggleBar) }}>
+                                <li class="relative cursor-pointer mt-1" onClick={() => { window.innerWidth <= 763 && settoggleBar(!toggleBar) }}>
                                   <NavLink to={elem?.path} className={({ isActive }) => (isActive ? "bg-sky-100 text-[#133e71] " : " ") + `${dropMenuBtn} ` + 'flex gap-3 items-center'}><span><MdOutlineSpaceDashboard /></span> <span className=''>{elem?.name}</span></NavLink>
                                 </li>
                               </>)

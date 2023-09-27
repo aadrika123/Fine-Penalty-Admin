@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import { MdTag } from 'react-icons/md'
-import { nullToNA } from '@/Components/Common/PowerupFunctions'
 import InfractionForm from '@/Components/Pages/FPComponents/FPForm/InfractionForm'
 import ApiHeader from '@/Components/api/ApiHeader'
 import AxiosInterceptors from '../../AxiosInterceptors'
@@ -11,35 +9,14 @@ import ProjectApiList from '@/Components/api/ProjectApiList'
 import { useNavigate } from 'react-router-dom'
 
 function PilotWorkflowFullDetailsTab(props) {
-    const [editStatus, seteditStatus] = useState(false)
-    const [btcStatus, setbtcStatus] = useState(false)
-    const [normalState, setnormalState] = useState(true)
-    const [selectList, setselectList] = useState([])
-    const [selectListToShow, setselectListToShow] = useState([])
     const [loader, setLoader] = useState(false)
     const [response, setResponse] = useState(false)
     const [submissionData, setsubmissionData] = useState(null)
 
-const {fpApprove} = ProjectApiList()
+    const { fpApprove } = ProjectApiList()
 
-const navigate = useNavigate()
+    const navigate = useNavigate()
 
-    const selectAction = (status, key, displayString) => {
-
-        console.log('id...', displayString)
-        // return
-        // ADD TO LIST IF CHECKED 
-        // if (status) {
-        let tempSelectList = [...selectList, key]
-        let tempSelectListToShow = [...selectListToShow, displayString]
-
-        setselectList(tempSelectList)
-        setselectListToShow(tempSelectListToShow)
-        // }
-
-        // REMOVE FORM LIST IF UNCHECKED
-
-    }
 
     const approveFun = (data) => {
         console.log(data)
@@ -67,12 +44,11 @@ const navigate = useNavigate()
             })
     }
 
-    console.log('lis....', selectListToShow, props?.applicationData)
     return (
         <>
 
             {loader && <BarLoader />}
-            <ApplicationSubmitScreen heading={"Fine & Penalty Workflow"} appNo={submissionData?.challanNo} openSubmit={response} refresh={() => navigate(`/challan/${submissionData?.id}`)} />
+            <ApplicationSubmitScreen heading={"Fine & Penalty Workflow"} appNo={submissionData?.challanNo} openSubmit={response} refresh={() => navigate(`/challan/${submissionData?.id}`)} button={'View Challan'} />
             <InfractionForm type={'edit'} id={props?.id} approve={(data) => approveFun(data)} />
         </>
     )

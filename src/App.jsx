@@ -11,6 +11,9 @@ import { Route, Routes } from 'react-router-dom';
 import { Toaster, toast } from 'react-hot-toast';
 import { contextVar } from '@/Components/context/contextVar';
 import { getLocalStorageItemJsonParsed } from '@/Components/Common/localstorage';
+import MarriagePayment from './Components/Pages/FPComponents/FpPayment';
+import FpPayment from './Components/Pages/FPComponents/FpPayment';
+import FpReceipt from './Components/Pages/FPComponents/FpPrint/FpReceipt';
 
 const Login                   = lazy(() => import('@/Components/Pages/Others/Login'));
 const ProtectedRoutes         = lazy(() => import('@/Components/Pages/Others/ProtectedRoutes'));
@@ -18,15 +21,17 @@ const ErrorPage               = lazy(() => import('@/Components/Pages/Others/404
 const TransferPage            = lazy(() => import('@/Components/Pages/Others/TransferPage'));
 const FPDashboard             = lazy(() => import('@/Components/Pages/FPComponents/FPDashboard/FPDashboard'));
 const ChangePassword          = lazy(() => import('@/Components/Pages/Others/ChangePassword'));
-const RegisteredMarriageList  = lazy(() => import('@/Components/Pages/FPComponents/MarriageWorkflow/RegisteredMarriageList'));
-const MarriageDetails         = lazy(() => import('@/Components/Pages/FPComponents/MarriageWorkflow/MarriageDetails'));
-const MarriagePayment         = lazy(() => import('@/Components/Pages/FPComponents/MarriagePayment'));
-const MarriageReceipt         = lazy(() => import('@/Components/Pages/FPComponents/MarriagePrint/MarriageReceipt'));
 const FPTrack                 = lazy(() => import('@/Components/Pages/FPComponents/FPTrack/FPTrack'));
 const InfractionForm          = lazy(() => import('@/Components/Pages/FPComponents/FPForm/InfractionForm'));
 const ViolationIndex          = lazy(() => import('@/Components/Pages/FPComponents/ViolationMaster/ViolationIndex'));
 const FpApplicationList       = lazy(() => import('@/Components/Pages/FPComponents/FpList/FpApplicationList'));
 const FpWorkflowEntry         = lazy(() => import('@/Components/Pages/FPComponents/FpWorkflowEntry'));
+const FpChallan2              = lazy(() => import('@/Components/Pages/FPComponents/FpPrint/FpChallan2'));
+const FpDetails               = lazy(() => import('@/Components/Pages/FPComponents/FpDetails'));
+const FpApplyReport           = lazy(() => import('@/Components/Pages/FPComponents/Reports/FpApplyReport'));
+const ChallanGeneratingReport = lazy(() => import('@/Components/Pages/FPComponents/Reports/ChallanGeneratingReport'));
+const ViolationWiseReport     = lazy(() => import('@/Components/Pages/FPComponents/Reports/ViolationWiseReport'));
+const CollectionReport        = lazy(() => import('@/Components/Pages/FPComponents/Reports/CollectionReport'));
 
 function App() {
 
@@ -63,16 +68,19 @@ function App() {
     { path: '/home',                        element: <FPDashboard />             },
     { path: '/transfer',                    element: <TransferPage />            },
     { path: '/change-password',             element: <ChangePassword />          },
-    { path: '/track-fp',                    element: <FPTrack />                 },
+    { path: '/search-challan',              element: <FPTrack />                 },
     { path: '/fp-form/:id?',                element: <InfractionForm />          },
+    { path: '/fp-details/:id',              element: <FpDetails />               },
     { path: '/violation-master',            element: <ViolationIndex />          },
     { path: '/fp-list',                     element: <FpApplicationList />       },
     { path: '/fp-workflow',                 element: <FpWorkflowEntry />         },
-    
-    { path: '/registered-marriage-list',    element: <RegisteredMarriageList />  },
-    { path: '/marriage-details/:id',        element: <MarriageDetails />         },
-    { path: '/marriage-pay/:id',            element: <MarriagePayment />         },
-    { path: '/marriage-receipt/:tran',      element: <MarriageReceipt />         },
+    { path: '/challan/:id',                 element: <FpChallan2 />              },
+    { path: '/fp-pay/:id',                  element: <FpPayment />               },
+    { path: '/fp-receipt/:tranNo',          element: <FpReceipt />               },
+    { path: '/fp-apply-report',             element: <FpApplyReport />           },
+    { path: '/challan-generated-report',   element: <ChallanGeneratingReport /> },
+    { path: '/violation-wise-report',       element: <ViolationWiseReport />     },
+    { path: '/collection-report',           element: <CollectionReport />        },
 
   ]
 

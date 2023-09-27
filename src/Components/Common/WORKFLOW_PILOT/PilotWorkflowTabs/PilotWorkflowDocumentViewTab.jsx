@@ -11,25 +11,10 @@ import PilotWorkflowDocumentRow from "./PilotWorkflowDocumentRow"
 import Modal from 'react-modal';
 import ApiHeader from '@/Components/api/ApiHeader'
 import axios from 'axios';
-import { ImCross } from 'react-icons/im';
 import BarLoader from '@/Components/Common/Loaders/BarLoader';
 import { RxCross2 } from 'react-icons/rx'
 
-const customStyles = {
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        backgroundColor: 'white',
-        border: 'none'
-    },
-};
-Modal.setAppElement('#root');
 function PropertySafDocumentView(props) {
-
 
     const [docList, setDocList] = useState()
     const [loader, setloader] = useState(false);
@@ -63,8 +48,6 @@ function PropertySafDocumentView(props) {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [docUrl, setDocUrl] = useState('')
     const [errorImage, seterrorImage] = useState(false)
-
-    let subtitle;
 
     const openModal = () => setIsOpen(true)
     const closeModal = () => setIsOpen(false)
@@ -100,12 +83,6 @@ function PropertySafDocumentView(props) {
                                         <th scope="col" className="px-5 py-2 border-b border-gray-200 text-gray-800  text-left text-sm capitalize">
                                             View
                                         </th>
-                                        <th scope="col" className="px-5 py-2 border-b border-gray-200 text-gray-800  text-left text-sm capitalize">
-                                            Status
-                                        </th>
-                                        <th scope="col" className="px-5 py-2 border-b border-gray-200 text-gray-800  text-left text-sm capitalize">
-                                            Remarks
-                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -126,7 +103,6 @@ function PropertySafDocumentView(props) {
                 isOpen={modalIsOpen}
                 onAfterOpen={afterOpenModal}
                 onRequestClose={closeModal}
-                // style={customStyles}
                 className='w-screen h-screen flex justify-center items-center'
                 contentLabel="Example Modal"
             >

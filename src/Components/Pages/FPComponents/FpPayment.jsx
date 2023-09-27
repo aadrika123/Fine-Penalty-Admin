@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 👉 Author      : R U Bharti
-// 👉 Component   : MarriagePayment
+// 👉 Component   : FpPayment
 // 👉 Status      : Close
 // 👉 Description : This component is for payment.
 // 👉 Functions   :  
@@ -16,18 +16,19 @@ import ProjectApiList from '@/Components/api/ProjectApiList'
 import ApiHeader3 from '@/Components/api/ApiHeader'
 import BarLoader from '@/Components/Common/Loaders/BarLoader'
 import BottomErrorCard from '@/Components/Common/BottomErrorCard'
-import { indianDate, nullToNA } from '@/Components/Common/PowerupFunctions'
+import { indianAmount, indianDate, nullToNA } from '@/Components/Common/PowerupFunctions'
 import AxiosInterceptors from '@/Components/Common/AxiosInterceptors'
 import PaymentCard from './PaymentCard'
 import useSetTitle from '@/Components/Common/useSetTitle'
+import ApiHeader from '@/Components/api/ApiHeader'
 
-const MarriagePayment = () => {
+const FpPayment = () => {
 
     // 👉 To set title 👈
     useSetTitle("Marriage Payment")
 
     // 👉 API constant 👈
-    const { api_getDetails } = ProjectApiList()
+    const { api_getChallanById } = ProjectApiList()
 
     // 👉 URL constant 👈
     const { id } = useParams()
@@ -53,7 +54,7 @@ const MarriagePayment = () => {
     // 👉 Function 2 👈
     const getDetailsFun = () => {
         setloader(true)
-        AxiosInterceptors.post(api_getDetails, { applicationId: id }, ApiHeader3())
+        AxiosInterceptors.post(api_getChallanById, { challanId: id }, ApiHeader())
             .then((res) => {
                 console.log("getting response of user data => ", res)
                 if (res?.data?.status) {
@@ -95,38 +96,38 @@ const MarriagePayment = () => {
 
                     {/* 👉 Heading 👈 */}
                     <div className='flex justify-center mb-6'>
-                        <h1 className='bg-white shadow-lg shadow-indigo-300 text-indigo-500 border-[0.17vw] border-indigo-500 px-[4vw] py-[1.5vh] w-max font-semibold text-[2.8vh]'>Marriage Payment Screen</h1>
+                        <h1 className='bg-white shadow-lg shadow-indigo-300 text-indigo-400 w-max font-semibold text-2xl px-6 py-2 border border-indigo-400'>Fines & Penalties Payment Screen</h1>
                     </div>
 
                     {/* 👉 Details sections 👈 */}
                     <div className='flex items-center flex-wrap w-full text-sm bg-white p-4 shadow-lg gap-2 mt-4'>
-                        <div className='flex flex-col flex-wrap justify-center w-full md:w-[22%]'>
-                            <div>Application No. </div>
-                            <div className='font-semibold text-base'>{nullToNA(details?.application_no)}</div>
+                    <div className='flex flex-col flex-wrap justify-center w-full md:w-[27%]'>
+                            <div>Name</div>
+                            <div className='font-semibold text-base'>{nullToNA(details?.full_name)}</div>
                         </div>
                         <div className='flex flex-col flex-wrap justify-center w-full md:w-[22%]'>
-                            <div>Groom Name </div>
-                            <div className='font-semibold text-base'>{nullToNA(details?.groom_name)}</div>
+                            <div>Mobile No.</div>
+                            <div className='font-semibold text-base'>{nullToNA(details?.mobile)}</div>
                         </div>
                         <div className='flex flex-col flex-wrap justify-center w-full md:w-[22%]'>
-                            <div>Bride Name </div>
-                            <div className='font-semibold text-base'>{nullToNA(details?.bride_name)}</div>
+                            <div>Challan No. </div>
+                            <div className='font-semibold text-base'>{nullToNA(details?.challan_no)}</div>
                         </div>
                         <div className='flex flex-col flex-wrap justify-center w-full md:w-[22%]'>
-                            <div>Marriage Date </div>
-                            <div className='font-semibold text-base'>{indianDate(details?.marriage_date)}</div>
+                            <div>Challan Date </div>
+                            <div className='font-semibold text-base'>{indianDate(details?.challan_date)}</div>
                         </div>
                         <div className='flex flex-col flex-wrap justify-center w-full md:w-[22%]'>
-                            <div>Marriage Place </div>
-                            <div className='font-semibold text-base'>{nullToNA(details?.marriage_place)}</div>
-                        </div>
-                        <div className='flex flex-col flex-wrap justify-center w-full md:w-[27%]'>
-                            <div>Either of the Bride or Groom belongs to BPL category ?</div>
-                            <div className='font-semibold text-base'>{nullToNA(details?.is_bpl)}</div>
+                            <div>Violation Type </div>
+                            <div className='font-semibold text-base'>{nullToNA(details?.violation_name)}</div>
                         </div>
                         <div className='flex flex-col flex-wrap justify-center w-full md:w-[22%]'>
-                            <div>Appointment Date </div>
-                            <div className='font-semibold text-base'>{indianDate(details?.appointment_date)}</div>
+                            <div>Violation Section </div>
+                            <div className='font-semibold text-base'>{nullToNA(details?.violation_section)}</div>
+                        </div>
+                        <div className='flex flex-col flex-wrap justify-center w-full md:w-[22%]'>
+                            <div>Penalty Amount </div>
+                            <div className='font-semibold text-base'>{indianAmount(details?.amount)}</div>
                         </div>
                     </div>
 
@@ -153,4 +154,4 @@ const MarriagePayment = () => {
     )
 }
 
-export default MarriagePayment
+export default FpPayment

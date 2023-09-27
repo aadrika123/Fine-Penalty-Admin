@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 👉 Author      : R U Bharti
-// 👉 Component   : MarriageDetails
+// 👉 Component   : FpDetails
 // 👉 Status      : Close
-// 👉 Description : This component is to view marriage details (Dynamic data).
+// 👉 Description : This component is to view fine & penalty details (Dynamic data).
 // 👉 Functions   :  
 //                  1. activateBottomErrorCard -> To activate error card
 //                  2. getDetails              -> To fetch the details of marriage.
@@ -27,16 +27,16 @@ import Modal from 'react-modal';
 import { RxCross2 } from 'react-icons/rx'
 import useSetTitle from '@/Components/Common/useSetTitle'
 
-const MarriageDetails = () => {
+const FpDetails = () => {
 
     // 👉 To set title 👈
-    useSetTitle("Marriage Details")
+    useSetTitle("Fine & Penalty Details")
 
     // 👉 URL constant 👈
     const { id } = useParams()
 
     // 👉 API constants 👈
-    const { marriageDetails, getUploadedDocument } = ProjectApiList()
+    const { fpDetails, getFpUploadedDocument } = ProjectApiList()
 
     // 👉 Navigation constant 👈
     const navigate = useNavigate()
@@ -56,17 +56,17 @@ const MarriageDetails = () => {
     const activateBottomErrorCard = (state, message) => {
         setErrorState(state)
         setErrorMessage(message)
-        if (state == false) {
-            navigate(`/marriage-details/${id}`)
-        }
+        // if (state == false) {
+        //     navigate(`/fp-list`)
+        // }
     }
 
     // 👉 Function 2 👈
     const getDetails = () => {
-        AxiosInterceptors.post(marriageDetails, { applicationId: id }, ApiHeader3())
+        AxiosInterceptors.post(fpDetails, { applicationId: id }, ApiHeader3())
             .then((res) => {
 
-                console.log('marriage details response => ', res)
+                console.log('fine & penalties details response => ', res)
                 if (res?.data?.status) {
                     setMarriageData(res?.data?.data)
                 } else {
@@ -74,7 +74,7 @@ const MarriageDetails = () => {
                 }
             })
             .catch((err) => {
-                console.log("marriage details error  => ", err)
+                console.log("fine & penalties details error  => ", err)
                 activateBottomErrorCard(true, "Some error occured! Please try again later")
             })
             .finally(() => {
@@ -84,10 +84,10 @@ const MarriageDetails = () => {
 
     // 👉 Function 3 👈
     const getDocListFun = () => {
-        AxiosInterceptors.post(getUploadedDocument, { applicationId: id }, ApiHeader3())
+        AxiosInterceptors.post(getFpUploadedDocument, { applicationId: id }, ApiHeader3())
             .then((res) => {
 
-                console.log('marriage doc list response => ', res)
+                console.log('fine & penalties doc list response => ', res)
                 if (res?.data?.status) {
                     setDocList(res?.data?.data)
                 } else {
@@ -95,8 +95,8 @@ const MarriageDetails = () => {
                 }
             })
             .catch((err) => {
-                console.log("marriage details error  => ", err)
-                activateBottomErrorCard(true, "Some error occured! Please try again later")
+                console.log("fine & penalties details error  => ", err)
+                // activateBottomErrorCard(true, "Some error occured! Please try again later")
             })
             .finally(() => {
                 setLoader(false)
@@ -143,14 +143,14 @@ const MarriageDetails = () => {
 
                 <div className=''>
 
-                    {/* 👉 Marriage Details 👈 */}
+                    {/* 👉 Fine & Penalty Details 👈 */}
                     <div className="w-full " >
                         <div className="container mx-auto mb-0 mt-1 p-2 md:p-5 py-1 ">
                             <div className="md:flex no-wrap md:-mx-2 ">
                                 <div className="w-full md:mx-2 ">
                                     <div className="md:p-3  rounded-sm">
                                         <div className="flex items-center pl-0 space-x-2 font-semibold text-gray-900 leading-8 mb-2">
-                                            <div className="tracking-wide flex-1 text-xl font-semibold uppercase text-center text-gray-700 border-b border-gray-400 mb-4 pb-1">Marriage Registration Details </div>
+                                            <div className="tracking-wide flex-1 text-xl font-semibold uppercase text-center text-gray-700 border-b border-gray-400 mb-4 pb-1">Fine & Penalty Details </div>
                                         </div>
                                         <div className=' rounded-lg  py-6 bg-white shadow-xl' >
                                             <div className="grid grid-cols-10 space-y-2  pl-4 ">
@@ -179,7 +179,7 @@ const MarriageDetails = () => {
                         </div>
                     </div>
 
-                    {/* 👉 Bride Details 👈 */}
+                    {/* 👉 Address Details 👈 */}
                     {marriageData?.fullDetailsData?.dataArray?.map((data) => (
                         <div className="w-full " >
                             <div className="container mx-auto mb-0 mt-1 p-2 md:p-5 py-1 ">
@@ -213,7 +213,7 @@ const MarriageDetails = () => {
                         </div>
                     ))}
 
-                    {/* 👉 Groom Details 👈 */}
+                    {/* 👉 Violation Details 👈 */}
                     {
                         marriageData?.fullDetailsData?.tableArray?.map((data) => (
                             <div className="w-full overflow-x-auto" >
@@ -283,12 +283,6 @@ const MarriageDetails = () => {
                                                 </th>
                                                 <th scope="col" className="px-5 py-2 border-b border-gray-200 text-gray-800  text-left text-sm capitalize">
                                                     View
-                                                </th>
-                                                <th scope="col" className="px-5 py-2 border-b border-gray-200 text-gray-800  text-left text-sm capitalize">
-                                                    Status
-                                                </th>
-                                                <th scope="col" className="px-5 py-2 border-b border-gray-200 text-gray-800  text-left text-sm capitalize">
-                                                    Remarks
                                                 </th>
                                             </tr>
                                         </thead>
@@ -362,4 +356,4 @@ const MarriageDetails = () => {
     )
 }
 
-export default MarriageDetails
+export default FpDetails

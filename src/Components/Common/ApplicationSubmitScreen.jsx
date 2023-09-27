@@ -61,7 +61,7 @@ const ApplicationSubmitScreen = (props) => {
             </div>
 
             <div className="flex items-center justify-center my-6">
-                <button className="2xl:px-6 px-3 py-1.5 2xl:py-2.5 cursor-pointer bg-blue-500 text-white font-medium text-xs  poppins rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" onClick={closeModal}>View Challan</button>
+                <button className="2xl:px-6 px-3 py-1.5 2xl:py-2.5 cursor-pointer bg-blue-500 text-white font-medium text-xs  poppins rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" onClick={closeModal}>{props?.button}</button>
             </div>
 
           </div>

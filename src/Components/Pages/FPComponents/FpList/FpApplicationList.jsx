@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 👉 Author      : R U Bharti
-// 👉 Component   : api_getInfractionList
+// 👉 Component   : FpApplicationList
 // 👉 Status      : Close
 // 👉 Description : This component is to view application list.
 // 👉 Functions   :  
@@ -70,14 +70,9 @@ const FpApplicationList = () => {
         },
         {
             Header: "Penalty Amount",
-            accessor: "penalty_amount",
-            Cell: ({ cell }) => (indianAmount(cell.row.original?.penalty_amount))
+            accessor: "total_amount",
+            Cell: ({ cell }) => (indianAmount(cell.row.original?.total_amount))
         },
-        // {
-        //     Header: "Previous Violation",
-        //     accessor: "previous_violation_offence",
-        //     Cell: ({ cell }) => (nullToNA(cell.row.original?.previous_violation_offence))
-        // },
         {
             Header: "Apply Date",
             accessor: "date",
@@ -89,10 +84,10 @@ const FpApplicationList = () => {
                 <div className="flex gap-2 ">
                     <button
                         onClick={() => {
-                            navigate(`/fp-form/${cell?.row?.original?.id}`)
+                            navigate(`/fp-details/${cell?.row?.original?.id}`)
                         }}
-                        className="bg-sky-200 px-3 py-1 rounded-md shadow-lg hover:shadow-xl hover:bg-sky-500 
-                  hover:text-white text-black"
+                        className="border border-sky-700 text-sky-700 px-3 py-1 rounded-sm shadow-md hover:shadow-xl hover:bg-sky-700 
+                        hover:text-white "
                     >
                         View
                     </button>
@@ -156,10 +151,12 @@ const FpApplicationList = () => {
             {/* 👉 Searching Form 👈 */}
             <form onSubmit={formik.handleSubmit} onChange={formik.handleChange} className="bg-white poppins p-4">
 
+                {/* 👉 Header 👈 */}
                 <h1 className="text-xl font-semibold uppercase text-center text-gray-700 border-b border-gray-400 mb-4 pb-1">Fines & Penalties Application List</h1>
 
                 <div className="flex flex-row flex-wrap gap-x-4 items-center gap-y-2 pb-4 mb-2 border-b">
 
+                    {/* 👉 Filter Field 👈 */}
                     <div className='w-full md:w-[25%]'>
                         <label className="form-label inline-block mb-1 text-gray-600 text-sm font-semibold">
                             Filter By<span className="text-red-500">*</span>
@@ -174,6 +171,7 @@ const FpApplicationList = () => {
                         </select>
                     </div>
 
+                    {/* 👉 Parameter Field 👈 */}
                     <div className='w-full md:w-[25%] '>
                         <label className="form-label inline-block mb-1 text-gray-600 text-sm font-semibold">
                             Parameter
@@ -228,6 +226,7 @@ const FpApplicationList = () => {
 
                     </div>
                 </div>
+
             </form>
 
             {/* 👉 Table 👈 */}

@@ -50,7 +50,7 @@ function PaymentCard(props) {
     const { id } = useParams()
 
     // 👉 API constant 👈
-    const { marriageOrderId, api_postMarriageOfflinePayment } = ProjectApiList()
+    const { api_challanOfflinePayment } = ProjectApiList()
 
     // 👉 Navigation constant 👈
     const navigate = useNavigate()
@@ -169,7 +169,7 @@ function PaymentCard(props) {
         let url
         let orderIdPayload
 
-        url = marriageOrderId
+        url = ''
         orderIdPayload = {
             applicationId: id,
         }
@@ -204,24 +204,19 @@ function PaymentCard(props) {
         let requestBody
 
 
-        url = api_postMarriageOfflinePayment
+        url = api_challanOfflinePayment
         requestBody = {
-            applicationId: id,
-            amount: props?.paymentDetails?.totalDues,
+            applicationId: props?.demand?.application_id,
+            challanId : id,
             paymentMode: data?.paymentMode,
-            ulbId: props?.basicDetails?.ulb_id,
-            chequeDate: data?.cheque_dd_date,
-            bankName: data?.bankName,
-            branchName: data?.branchName,
-            chequeNo: data?.cheque_dd_no,
         }
 
         console.log('before make payment..', requestBody)
         AxiosInterceptors.post(url, requestBody, ApiHeader3())
             .then(function (response) {
-                console.log('property payment response...', response?.data)
+                console.log('fine and penalty payment response...', response?.data)
                 if (response?.data?.status) {
-                    settranNo(response?.data?.data?.tranNo)
+                    settranNo(response?.data?.data?.tran_no)
                     setResponseScreenStatus(response?.data?.status)
                 } else {
                     activateBottomErrorCard(true, response?.data?.message)
@@ -230,7 +225,7 @@ function PaymentCard(props) {
                 setisLoading(false)
             })
             .catch(function (error) {
-                console.log('property payment error..', error)
+                console.log('fine and penalty payment error..', error)
                 activateBottomErrorCard(true, 'Error occured. Please try again later.')
                 setisLoading(false)
             })
@@ -263,7 +258,7 @@ function PaymentCard(props) {
                     <div>
                         <div className="text-center font-semibold text-3xl">Your payment has been successfully done ! Now the application is sent for verification.</div>
                         <div className="text-center mt-6">
-                            <button className={`mr-4 bg-indigo-500  text-white px-6 py-1 shadow-lg hover:scale-105 rounded-sm`} onClick={() => navigate(`/marriage-payment-receipt/${encodeURIComponent(tranNo)}`)}>View Receipt</button>
+                            <button className={`mr-4 bg-indigo-500  text-white px-6 py-1 shadow-lg hover:scale-105 rounded-sm`} onClick={() => navigate(`/fp-receipt/${encodeURIComponent(tranNo)}`)}>View Receipt</button>
                             <button className={`mr-4 bg-white border border-indigo-500 text-indigo-500 px-4 py-1 shadow-lg hover:scale-105 rounded-sm`} onClick={() => navigate(`/marriage-details/${id}`)}>View Application</button>
                         </div>
                     </div>
@@ -310,7 +305,9 @@ function PaymentCard(props) {
                                 >
 
                                     <option value="CASH" >Cash</option>
-                                    <option value="ONLINE" >Online</option>
+                                    {/* <option value="CHEQUE" >Cheque</option> */}
+                                    {/* <option value="DD" >DD</option> */}
+                                    {/* <option value="ONLINE" >Online</option> */}
 
                                 </select>
                                 <span className="text-red-600 absolute text-xs">{formik.touched.paymentMode && formik.errors.paymentMode ? formik.errors.paymentMode : null}</span>
@@ -358,14 +355,14 @@ function PaymentCard(props) {
                             <div className='col-span-12'></div>
 
                             {/* 👉 Payment Amount Details 👈 */}
-                            <div className="form-group mb-6 col-span-12 md:col-span-6 md:px-4">
+                            {/* <div className="form-group mb-6 col-span-12 md:col-span-6 md:px-4">
                                 <span>Amount :</span> <span className='font-mono font-semibold'>{indianAmount(props?.demand?.payment_amount)}</span>
                             </div>
                             <div className="form-group mb-6 col-span-12 md:col-span-6 md:px-4">
                                 <span>Penalty :</span> <span className='font-mono font-semibold'>{indianAmount(props?.demand?.penalty_amount)}</span>
-                            </div>
+                            </div> */}
                             <div className="form-group mb-6 col-span-12 md:col-span-6 md:px-4">
-                                <div className='w-2/3'><span>Total Payable Amount :</span> <span className='font-mono font-semibold text-xl'>{indianAmount(props?.demand?.total_payable_amount)}</span></div>
+                                <div className='w-2/3'><span>Total Payable Amount :</span> <span className='font-mono font-semibold text-xl'>{indianAmount(props?.demand?.amount)}</span></div>
                             </div>
                         </div>
 
@@ -381,7 +378,7 @@ function PaymentCard(props) {
 
                                 {formik.values.paymentMode != "ONLINE" ?
                                     <button type='submit' className="sm:ml-4 font-bold sm:px-6 px-1.5 py-2 bg-indigo-500 text-white text-xs sm:text-sm leading-tight uppercase rounded  hover:bg-indigo-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out shadow-xl border border-white"><span className='sm:mr-2 mr-1'>Pay </span>
-                                        {indianAmount(props?.demand?.total_payable_amount)}
+                                        {indianAmount(props?.demand?.amount)}
                                     </button>
                                     :
                                     <button type='submit' className="sm:ml-4 font-bold sm:px-6 px-1.5 py-2 bg-indigo-500 text-white text-xs sm:text-sm leading-tight uppercase rounded  hover:bg-indigo-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out shadow-xl border border-white"><span className='sm:mr-2 mr-1'>Genrate QR</span>

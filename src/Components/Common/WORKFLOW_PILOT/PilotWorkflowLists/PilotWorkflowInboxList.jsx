@@ -29,9 +29,7 @@ function PilotWorkflowInboxList(props) {
       Cell: ({ cell }) => (
         <button
           onClick={() => {
-            console.log('clicked id....', cell?.row?.original?.id)
-            props?.fetchWorkflowPermission(cell.row.original?.workflow_id)
-            props.fun(cell?.row?.original?.id, cell?.row?.original?.assessment)
+            props.fun(cell?.row?.original?.id)
           }}
           className="bg-sky-200 px-3 py-1 rounded-lg shadow-lg hover:shadow-xl hover:bg-sky-800 
             hover:text-white text-black"

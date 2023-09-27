@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////////////
-//    Author - Talib Hussain
+//    Author - R U Bharti
 //    Version - 1.0
 //    Date - 24 june 2022
 //    Revision - 1
@@ -17,20 +17,9 @@ function MailboxSidebar(props) {
     console.log('can transferd from index', props.workflowCandidates)
 
     const tabSwitch = (index) => {
-        // props?.settabButtonClickState(true)
         setTabIndex(index)
         props.fun(index)
     }
-
-    // useEffect(() => {
-    //     // 2 CHECK IF TAB INDEX IS BETWEEN 0 TO 5 THEN UPDATE TAB INDEX -> NEXT IS PILOTWORKFLOWLISTBOX COMPONENT
-    //     if (props?.autoTabIndex == 0 || props?.autoTabIndex == 1 || props?.autoTabIndex == 2 || props?.autoTabIndex == 3 || props?.autoTabIndex == 4) {
-    //         tabSwitch(props?.autoTabIndex)
-    //     }
-
-    // }, [props?.autoTabIndex])
-
-
 
 
     return (
@@ -51,8 +40,6 @@ function MailboxSidebar(props) {
                         {props?.workflowCandidates?.data.map((data) => {
                             return (
                                 <>
-                                    {/* <WorkFlowCandidate designation={data.user_id} name={data.user_name} activeCandidateStatus={data.activeCandidateStatus} /> */}
-                                    {/* <WorkFlowCandidate designation={data.user_id} name={data.user_name}  /> */}
                                     <WorkFlowCandidate designation={data.user_id} name={data.role_name} />
                                     <hr />
                                 </>

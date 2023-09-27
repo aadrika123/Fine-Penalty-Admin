@@ -34,7 +34,7 @@ const ListTableConnect = (props) => {
     const [exportData   , setexportData]   = useState()
     const [csvStatus    , setcsvStatus]    = useState(false)
     const [errorState   , seterrorState]   = useState(false)
-    const [dataList     , setdataList]     = useState()
+    const [dataList     , setdataList]     = useState([])
     const [loader       , setloader]       = useState(false)
 
     // 👉 Function 1 👈
@@ -198,7 +198,7 @@ const ListTableConnect = (props) => {
 
             {/* 👉 Listtable Components 👈 */}
             {
-                (!loader && dataList != undefined && dataList?.length != 0) ?
+                (!loader && dataList?.length > 0) ?
 
                     <>
                             {/* 👉 Listtable 👈 */}
@@ -208,7 +208,7 @@ const ListTableConnect = (props) => {
                     :
 
                     // 👉 When no data available 👈
-                    <>{(!loader && !errorState) &&
+                    <>{(!loader) &&
                         <div className="bg-red-100 border border-red-400 text-red-700 pl-4 pr-16 py-3 rounded relative text-center" role="alert">
                             <span className="block sm:inline">Oops! No data available.</span>
                             <span className="absolute top-0 bottom-0 right-0 px-4 py-3">

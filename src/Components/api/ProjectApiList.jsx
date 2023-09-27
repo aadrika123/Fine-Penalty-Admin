@@ -68,8 +68,9 @@ export default function ProjectApiList() {
         api_submitInfractionForm : `${baseUrl}/api/penalty-record/crud/save`,
         api_updateInfractionForm : `${baseUrl}/api/penalty-record/crud/edit`,
         api_getInfractionById    : `${baseUrl}/api/penalty-record/crud/show`,
-        api_getViolationList     : `${baseUrl}/api/violation/crud/list`,        
         api_getInfractionList     : `${baseUrl}/api/penalty-record/crud/active-all`,        
+        
+        api_getViolationList     : `${baseUrl}/api/violation/crud/list`,        
         
         api_violationMasterList : `${baseUrl}/api/violation/crud/list`,  
         api_getViolationById     : `${baseUrl}/api/violation/crud/get`,
@@ -81,6 +82,27 @@ export default function ProjectApiList() {
         fpDetails : baseUrl + '/api/penalty-record/detail',
         fpDocList : baseUrl + '/api/penalty-record/crud/show-document',
         fpApprove : baseUrl + '/api/penalty-record/approve',
+        api_fpChallan2 : baseUrl + '/api/penalty-record/get-challan',
+        getFpUploadedDocument : baseUrl + "/api/penalty-record/get-uploaded-document",
+
+        api_FPTrack: `${baseUrl}/api/penalty-record/challan-search`,
+
+        api_FpApplyReport:           `${baseUrl}/api/penalty-record/challan-search`,
+        api_ChallanGeneratingReport: `${baseUrl}/api/report/challan-wise`,
+        api_ViolationWiseReport:     `${baseUrl}/api/report/violation-wise`,
+        api_CollectionReport:        `${baseUrl}/api/report/collection-wise`,
+
+        api_getChallanById:        `${baseUrl}/api/penalty-record/get-challan`,
+        api_challanOfflinePayment: `${baseUrl}/api/penalty-record/offline-challan-payment`,
+
+        api_FpReceipt : baseUrl + '/api/penalty-record/payment-receipt',
+
+        api_getViolationList:        `${baseUrl}/api/violation/list`,
+        api_getSectionList:        `${baseUrl}/api/section/list`,
+        api_getDepartmentList:        `${baseUrl}/api/department/list`,
+        api_getUserList:        `${baseUrl}/api/user-list`,
+
+
     }
 
 

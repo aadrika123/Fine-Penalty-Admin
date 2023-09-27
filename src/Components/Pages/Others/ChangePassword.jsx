@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 👉 Author      : R U Bharti
 // 👉 Component   : Change Password
-// 👉 Status      : Open
+// 👉 Status      : Close
 // 👉 Description : To change the password 
 // 👉 Functions   :  
 //                  1. handleChangeInput   -> Handle change to event to restrict useless input

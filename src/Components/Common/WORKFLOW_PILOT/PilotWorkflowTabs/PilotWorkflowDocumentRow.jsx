@@ -38,7 +38,7 @@ function PilotWorkflowDocumentRow(props) {
                 {/* 👉 Document Name 👈 */}
                 <td className="px-5 py-2 border-b border-gray-200 bg-white text-sm">
                     <p className="text-gray-900 whitespace-no-wrap">
-                        {nullToNA(props?.docList?.doc_code)} {props?.docList?.owner_name != "" && <span className='font-semibold italic text-gray-700'>({props?.docList?.owner_name})</span>}
+                        {nullToNA(props?.docList?.doc_code)}
                     </p>
                 </td>
 
@@ -70,7 +70,7 @@ function PilotWorkflowDocumentRow(props) {
                 </td>
 
                 {/* 👉 Document verification status 👈 */}
-                <td className="px-5 py-2 border-b border-gray-200 bg-white text-sm">
+                {/* <td className="px-5 py-2 border-b border-gray-200 bg-white text-sm">
                     {
                         props?.docList?.doc_code == 'PHOTOGRAPH' &&
                         <p className="whitespace-no-wrap">
@@ -89,12 +89,12 @@ function PilotWorkflowDocumentRow(props) {
                             </p>
                         </>
                     }
-                </td>
+                </td> */}
 
                 {/* 👉 Document Remarks 👈 */}
-                <td className="px-5 py-2 border-b border-gray-200 bg-white text-sm">
+                {/* <td className="px-5 py-2 border-b border-gray-200 bg-white text-sm">
                     {nullToNA(props?.docList?.remarks)}
-                </td>
+                </td> */}
 
             </tr>
         </>

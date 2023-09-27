@@ -27,7 +27,7 @@ function FPDashboard() {
     useSetTitle("Home")
 
     // 👉 API constants 👈
-    const { approvedList, api_getInfractionList } = ProjectApiList()
+    const { api_FPTrack, api_getInfractionList } = ProjectApiList()
 
     // 👉 Roles constant 👈
     const allRole = getLocalStorageItemJsonParsed('userDetails')?.roles
@@ -41,7 +41,7 @@ function FPDashboard() {
     // 👉 Function 1 👈
     const fetchApprovedList = () => {
         setisLoading(true)
-        AxiosInterceptors.post(approvedList, {}, ApiHeader())
+        AxiosInterceptors.post(api_FPTrack, {}, ApiHeader())
             .then(function (response) {
                 console.log('approved list data', response.data.data)
                 setapprovedData(response.data.data)
@@ -92,23 +92,21 @@ function FPDashboard() {
             <div class="grid grid-cols-12 items-center mx-10 ">
 
                 {/* 👉 Application Card 👈 */}
-                <div class="flex flex-row flex-wrap gap-4 items-start col-span-12 md:col-span-6">
-                    <div className="w-full md:w-[40%]">
-                        <ApplicationCard
+                <div class="flex flex-row flex-wrap gap-2 items-start col-span-12 md:col-span-6 ">
+
+                    <div className="w-[45%]"><ApplicationCard
                             heading={"Pending Application"}
                             total={pendingData?.total}
                             loading={isLoading}
-                        />
-                    </div>
-
-                    <div className="w-full md:w-[40%]">
-                        <ApplicationCard
-                            heading={"Cleared Application"}
+                        /></div>
+                    <div className="w-[45%]"><ApplicationCard
+                            heading={"Challan Generated"}
                             total={approvedData?.total}
-                            loading={isLoading2}
-                        />
-                    </div>
-
+                            loading={isLoading}
+                        /></div>
+                        
+                        
+                    
                 </div>
 
                 {/* 👉 Shortcuts Card 👈 */}
@@ -123,8 +121,8 @@ function FPDashboard() {
                     <div className="w-full md:w-[50%]">
 
                         <ShortcutCard
-                            heading={"Cleared List"}
-                            path={'/registered-marriage-list'}
+                            heading={"Search Challan"}
+                            path={'/search-challan'}
                         />
                     </div>
 
@@ -140,7 +138,7 @@ function FPDashboard() {
                     heading={['Application No.', 'Name', 'Mobile No.', 'Holding No.', 'Violation Name', 'Violation Section', 'Penalty Amount', 'Apply Date']}
                     dataKey={['application_no', 'full_name', 'mobile_no', 'holding_no', 'violation_name', 'violation_section', 'penalty_amount', 'date']}
                     data={pendingData?.data ?? []}
-                    viewLink={'/fp-form/'}
+                    viewLink={'/fp-details/'}
                 />
             </div>
 

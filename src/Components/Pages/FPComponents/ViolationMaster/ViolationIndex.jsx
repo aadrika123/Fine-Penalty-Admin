@@ -52,8 +52,8 @@ const ViolationIndex = () => {
     const [violationData, setviolationData] = useState(null)
 
     // 👉 CSS constants 👈
-    const editButton = "border border-sky-800 text-sky-800 mx-1 px-3 py-1 rounded-md shadow-lg hover:shadow-xl hover:bg-sky-800 hover:text-white"
-    const deleteButton = "border border-red-300 text-red-400 mx-1 px-3 py-1 rounded-lg shadow-lg hover:shadow-xl hover:bg-red-800 hover:text-white"
+    const editButton = "border border-sky-800 text-sky-800 mx-1 px-3 py-1 rounded-sm shadow-lg hover:shadow-xl hover:bg-sky-800 hover:text-white"
+    const deleteButton = "border border-red-300 text-red-400 mx-1 px-3 py-1 rounded-sm shadow-lg hover:shadow-xl hover:bg-red-800 hover:text-white"
     const addButton = "float-right bg-[#1A4D8C] px-3 py-1 rounded-sm shadow-lg hover:shadow-xl hover:bg-[#113766] hover:text-white text-white flex items-center"
     const labelStyle = 'text-gray-800 text-sm'
     const inputStyle = 'border focus:outline-none drop-shadow-sm focus:drop-shadow-md px-4 py-1 text-gray-700 shadow-black placeholder:text-sm'
