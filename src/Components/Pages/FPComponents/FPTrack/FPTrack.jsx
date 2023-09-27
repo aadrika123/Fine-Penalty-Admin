@@ -21,6 +21,8 @@ import { indianAmount, indianDate, nullToNA } from '@/Components/Common/PowerupF
 import useSetTitle from '@/Components/Common/useSetTitle';
 import {FaRegEye} from 'react-icons/fa'
 import { BiMoney } from 'react-icons/bi';
+import { MdOutlineSettingsBackupRestore } from 'react-icons/md';
+import { RxLinkBreak2 } from 'react-icons/rx';
 
 const FPTrack = () => {
 
@@ -78,35 +80,54 @@ const FPTrack = () => {
             Header: "Action",
             Cell: ({ cell }) => (
                 <div className="flex items-center flex-wrap md:flex-nowrap flex-row gap-2 ">
-                    <button
+                    {cell?.row?.original?.hasExpired ?
+                         <>
+                         <button
+                         onClick={() => {
+                             navigate(`/challan/${cell?.row?.original?.id}`)
+                         }}
+                         className="border border-sky-700 text-sky-700 w-24 py-1 rounded-sm shadow-md hover:shadow-xl hover:bg-sky-700 
+                     hover:text-white flex items-center justify-center gap-1"
+                     >
+                        <span className=" -scale-x-100"><MdOutlineSettingsBackupRestore/></span> Regenerate
+                     </button>
+                     
+                         <button className="border border-red-600 text-red-500 w-24 py-1 rounded-sm shadow-md  flex items-center justify-center gap-1 ">
+                           <RxLinkBreak2/> Expired
+                         </button>
+                         </>
+                         :
+                        <>
+                        <button
                         onClick={() => {
                             navigate(`/challan/${cell?.row?.original?.id}`)
                         }}
-                        className="border border-sky-700 text-sky-700 w-20 py-1 rounded-sm shadow-md hover:shadow-xl hover:bg-sky-700 
-                    hover:text-white flex items-center justify-center gap-2 "
+                        className="border border-sky-700 text-sky-700 w-24 py-1 rounded-sm shadow-md hover:shadow-xl hover:bg-sky-700 
+                    hover:text-white flex items-center justify-center gap-1 "
                     >
                         <FaRegEye /> Challan
                     </button>
-                    {cell?.row?.original?.payment_status ? 
+                    
+                        {!cell?.row?.original?.payment_status && <button
+                            onClick={() => {
+                                navigate(`/fp-pay/${cell?.row?.original?.id}`)
+                            }}
+                            className="border border-orange-600 text-orange-500 w-24 py-1 rounded-sm shadow-md hover:shadow-xl hover:bg-orange-600 
+                            hover:text-white flex items-center justify-center gap-1 "
+                        >
+                           <BiMoney /> Pay
+                        </button>}
+                        </>}
+                    {cell?.row?.original?.payment_status && 
                     <button
                     onClick={() => {
                         navigate(`/fp-receipt/${cell?.row?.original?.transaction_no}`)
                     }}
-                    className="border border-green-600 text-green-600 w-20 py-1 rounded-sm shadow-md hover:shadow-xl hover:bg-green-600 
-                    hover:text-white flex items-center justify-center gap-2 "
+                    className="border border-green-600 text-green-600 w-24 py-1 rounded-sm shadow-md hover:shadow-xl hover:bg-green-600 
+                    hover:text-white flex items-center justify-center gap-1 "
                 >
                     <FaRegEye /> Receipt
-                </button>
-                :
-                    <button
-                        onClick={() => {
-                            navigate(`/fp-pay/${cell?.row?.original?.id}`)
-                        }}
-                        className="border border-orange-600 text-orange-500 w-20 py-1 rounded-sm shadow-md hover:shadow-xl hover:bg-orange-600 
-                        hover:text-white flex items-center justify-center gap-2 "
-                    >
-                       <BiMoney /> Pay
-                    </button>}
+                </button>}
                 </div>
             ),
         }

@@ -106,6 +106,7 @@ const FpChallan2 = () => {
                                     <div className=" text-2xl underline font-bold px-8 ">कार्यालय : राँची नगर निगम</div>
                                     <div className=" font-bold px-8 text-base mt-2">कचहरी रोड, राँची, पिन नo- 834001</div>
                                     <div className=" font- px-8 text-sm">E-mail ID- support@ranchimunicipal.com</div>
+                                    <div className=" font- px-8 text-sm font-normal">Toll Free Number: 1800 890 4115</div>
                                     <div className=" font-semibold px-8 text-sm">{challanDetails?.challan_print_type == '1' ? '(चालान - ख)' : '(चालान - क)'} </div>
                                 </div>
                             </div>
@@ -116,7 +117,7 @@ const FpChallan2 = () => {
                     <div className='grid grid-cols-12 items-center text-sm mt-4 border-b pb-2 border-gray-700'>
 
                         <div className="col-span-8 flex gap-2">
-                            <div className="">रसीद नं:- </div>
+                            <div className="">रसीद क्रमांक:- </div>
                             <div className="font-normal">{nullToNA(challanDetails?.challan_no)}</div>
                         </div>
 
@@ -151,7 +152,7 @@ const FpChallan2 = () => {
                                 <div className="w-[23%]">पिता / पति का नाम :-  </div>
                                 <div className="w-[83%]">
                                     <div className='w-full flex gap-2'><div className='w-[20%]'>श्री/स्व </div> <div className="w-[80%] border-b-2 border-dashed border-gray-500 font-normal">
-                                    {nullToNA(challanDetails?.guardian_name)}
+                                        {nullToNA(challanDetails?.guardian_name)}
                                     </div></div>
                                 </div>
                             </div>
@@ -160,7 +161,7 @@ const FpChallan2 = () => {
                             <div className="w-[98%] flex gap-2">
                                 <div className="w-[23%]">पता :-  </div>
                                 <div className="w-[83%]">
-                                    <div className='w-full flex gap-2'><div className='w-[20%]'>श्री/ श्रीमती/सुश्री </div> <div className="w-[80%] border-b-2 border-dashed border-gray-500 font-normal flex gap-2">
+                                    <div className='w-full flex gap-2'><div className="w-full border-b-2 border-dashed border-gray-500 font-normal flex gap-2">
                                         <span>{challanDetails?.street_address}</span>
                                         <span>{challanDetails?.city}</span>
                                         <span>{challanDetails?.region}</span>
@@ -223,9 +224,19 @@ const FpChallan2 = () => {
                         }
                     </div>
 
+                    {/* 👉 Bottom Contact Details 👈 */}
+                    <div className='flex justify-start items-center mt-6 font-normal text-xs'>
+                        अधिक जानकारी के लिए संपर्क करे : udhd.jharkhand.gov.in, 1800 890 4115 or 0651-3500700
+                    </div>
+
                     {/* 👉 Bottom Image 👈 */}
-                    <div className='flex justify-center items-center mt-6'>
+                    <div className='flex justify-center items-center mt-4'>
                         <img src={swachhBharat} alt="" className="h-10 opacity-70" />
+                    </div>
+
+                    {/* 👉 Bottom Message 👈 */}
+                    <div className='flex justify-center items-center mt-4 text-xs font-normal'>
+                        यह रसीद कंप्यूटर द्वारा बनाई गई है और इसमें हस्ताक्षर की आवश्यकता नहीं है।
                     </div>
 
                 </div>

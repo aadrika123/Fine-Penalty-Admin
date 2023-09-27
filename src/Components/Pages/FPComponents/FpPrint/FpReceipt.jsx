@@ -22,6 +22,7 @@ import ApiHeader2 from '@/Components/api/ApiHeader2'
 import rmclogo from '@/Components/assets/rmc.png'
 import swachhBharat from '@/Components/assets/swachhBharat.png'
 import ApiHeader from '@/Components/api/ApiHeader'
+import QrCode from './QrCode'
 
 const FpReceipt = () => {
 
@@ -110,6 +111,7 @@ const FpReceipt = () => {
                                     <div className=" text-2xl underline font-bold px-8 ">कार्यालय : राँची नगर निगम</div>
                                     <div className=" font-bold px-8 text-base mt-2">कचहरी रोड, राँची, पिन नo- 834001</div>
                                     <div className=" font- px-8 text-sm">E-mail ID- support@ranchimunicipal.com</div>
+                                    <div className=" font- px-8 text-sm font-normal">Toll Free Number: 1800 890 4115</div>
                                 </div>
                             </div>
                         </div>
@@ -119,17 +121,17 @@ const FpReceipt = () => {
                     <div className='grid grid-cols-12 items-center text-sm mt-8 gap-y-2 '>
 
                         <div className="col-span-8 flex gap-2">
-                            <div className="">रसीद नं:- </div>
+                            <div className="">रसीद क्रमांक:- </div>
                             <div className="font-normal">{nullToNA(receiptDetails?.tran_no)}</div>
                         </div>
 
                         <div className="col-span-4 flex gap-2">
-                            <div className="">दिनांक:- </div>
+                            <div className="">प्राप्ति दिनांक:- </div>
                             <div className="font-normal">{indianDate(receiptDetails?.tran_date)}</div>
                         </div>
 
                         <div className="col-span-8 flex gap-2">
-                            <div className="">प्राप्त चालान नंबर:- </div>
+                            <div className="">प्राप्त चालान क्रमांक:- </div>
                             <div className="font-normal">{nullToNA(receiptDetails?.challan_no)}</div>
                         </div>
 
@@ -171,15 +173,17 @@ const FpReceipt = () => {
                                 <div>बैंक,</div>
                                 <div className="w-[25%] border-dashed border-b-2 border-gray-500 font-normal ">{nullToNA(receiptDetails?.branch_name)}</div>
                                 <div>बैंक का स्थान।</div>
-                                <div>रु.</div>                                
+                                <div>रु.</div>
                                 <div className="w-[25%] border-dashed border-b-2 border-gray-500 font-normal ">{nullToNA(receiptDetails?.amount)}</div>
-                                <div>(आकृति में)</div>                                
-                                <div className="w-[45%] border-dashed border-b-2 border-gray-500 font-normal ">{nullToNA(receiptDetails?.amount_in_words)}</div>
-                                <div>।</div>                                
+                                <div>(आकृति में)</div>
+                                <div className="w-[45%] border-dashed border-b-2 border-gray-500 font-normal ">{nullToNA(receiptDetails?.amount_in_words)} ।</div>
                             </div>
 
-                            <div className="w-full mt-16 flex justify-end items-center">
-                                <div className='w-max flex flex-col gap-2 '>
+                            <div className="w-full mt-16 flex justify-between items-center">
+                                <div className="w-[30%]">
+                                    <QrCode url={window.location.href} size={90} />
+                                </div>
+                                <div className='w-[40%] flex flex-col gap-2 '>
                                     <div className='flex gap-1 w-full'><div className='w-full border-b-2 border-dashed border-gray-500'></div></div>
                                     <div>प्राधिकृत अधिकारी/ कर्मचारी का हस्ताक्षर</div>
                                 </div>
@@ -188,9 +192,26 @@ const FpReceipt = () => {
                         </div>
                     </div>
 
+                    {/* 👉 bottom note 👈 */}
+                    <div className="pt-1 mt-4 text-sm font-normal">
+ 
+                            Note  :- Payment by cheque is subject to clearance.
+ 
+                    </div>
+
+                    {/* 👉 Bottom Contact Details 👈 */}
+                    <div className='flex justify-start items-center mt-6 font-normal text-xs'>
+                        अधिक जानकारी के लिए संपर्क करे : udhd.jharkhand.gov.in, 1800 890 4115 or 0651-3500700
+                    </div>
+
                     {/* 👉 Bottom Image 👈 */}
-                    <div className='flex justify-center items-center mt-10'>
+                    <div className='flex justify-center items-center mt-4'>
                         <img src={swachhBharat} alt="" className="h-10 opacity-70" />
+                    </div>
+
+                    {/* 👉 Bottom Message 👈 */}
+                    <div className='flex justify-center items-center mt-4 text-xs font-normal'>
+                        यह रसीद कंप्यूटर द्वारा बनाई गई है और इसमें हस्ताक्षर की आवश्यकता नहीं है।
                     </div>
 
                 </div>

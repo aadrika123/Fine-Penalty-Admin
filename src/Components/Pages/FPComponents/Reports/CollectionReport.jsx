@@ -105,9 +105,9 @@ const CollectionReport = () => {
             title: "Payment Mode", key: "paymentMode", width: 'md:w-[20%] w-full', type: 'select', hint: "Enter your name",
             options: [
                 { id: 'CASH', value: 'Cash' },
-                { id: 'CHEQUE', value: 'Cheque' },
-                { id: 'DD', value: 'DD' },
-                { id: 'ONLINE', value: 'Online' },
+                // { id: 'CHEQUE', value: 'Cheque' },
+                // { id: 'DD', value: 'DD' },
+                // { id: 'ONLINE', value: 'Online' },
             ],
             okey: 'id', ovalue: 'value'
         },
