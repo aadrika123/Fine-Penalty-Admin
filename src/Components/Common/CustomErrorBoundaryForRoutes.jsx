@@ -31,8 +31,8 @@ class CustomErrorBoundaryForRoutes extends React.Component {
                 <div className='flex gap-2 flex-wrap items-center justify-center mt-4'>
                   <button onClick={() => (window.history.back(), window.location.reload())} className="border text-sm border-amber-700 text-amber-700 px-3 py-1 rounded-sm shadow-md hover:shadow-xl hover:bg-amber-700 
                         hover:text-white ">Go Back</button>
-                        <button onClick={() => (window.localStorage.clear(), window.location.replace('/fines'))} className="border text-sm border-green-700 text-green-700 px-3 py-1 rounded-sm shadow-md hover:shadow-xl hover:bg-green-700 
-                        hover:text-white ">Login</button>
+                        <button onClick={() => (window.localStorage.clear(), window.location.replace('/fines'))} className="border text-sm border-red-500 text-red-500 px-3 py-1 rounded-sm shadow-md hover:shadow-xl hover:bg-red-500 
+                        hover:text-white ">Log Out</button>
                   <button onClick={() => window.location.reload()} className="border text-sm border-blue-700 text-blue-700 px-3 py-1 rounded-sm shadow-md hover:shadow-xl hover:bg-blue-700 
                         hover:text-white ">Reload</button>
                 </div>
