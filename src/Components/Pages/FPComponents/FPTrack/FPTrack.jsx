@@ -80,8 +80,8 @@ const FPTrack = () => {
             Header: "Action",
             Cell: ({ cell }) => (
                 <div className="flex items-center flex-wrap md:flex-nowrap flex-row gap-2 ">
-                    {cell?.row?.original?.hasExpired ?
-                         <>
+                    {/* {cell?.row?.original?.hasExpired ? */}
+                         {/* <>
                          <button
                          onClick={() => {
                              navigate(`/challan/${cell?.row?.original?.id}`)
@@ -96,8 +96,8 @@ const FPTrack = () => {
                            <RxLinkBreak2/> Expired
                          </button>
                          </>
-                         :
-                        <>
+                         : 
+                        <>*/}
                         <button
                         onClick={() => {
                             navigate(`/challan/${cell?.row?.original?.id}`)
@@ -117,7 +117,7 @@ const FPTrack = () => {
                         >
                            <BiMoney /> Pay
                         </button>}
-                        </>}
+                        {/* </>} */}
                     {cell?.row?.original?.payment_status && 
                     <button
                     onClick={() => {

@@ -102,6 +102,16 @@ export default function ProjectApiList() {
         api_getDepartmentList:        `${baseUrl}/api/department/list`,
         api_getUserList:        `${baseUrl}/api/user-list`,
 
+        api_listDepartment: `${baseUrl}/api/department/crud/list`,
+        api_addDepartment: `${baseUrl}/api/department/crud/save`,
+        api_updateDepartment: `${baseUrl}/`,
+        api_deleteDepartment: `${baseUrl}/api/department/crud/delete`,
+
+        api_listSection: `${baseUrl}/api/section/crud/list`,
+        api_addSection: `${baseUrl}/api/section/crud/save`,
+        api_updateSection: `${baseUrl}/`,
+        api_deleteSection: `${baseUrl}/api/section/crud/delete`,
+
 
     }
 

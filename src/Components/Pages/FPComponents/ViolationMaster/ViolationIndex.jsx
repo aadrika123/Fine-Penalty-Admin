@@ -20,7 +20,7 @@ import ApiHeader from "@/Components/api/ApiHeader";
 import useSetTitle from "@/Components/Common/useSetTitle";
 import AxiosInterceptors from "@/Components/Common/AxiosInterceptors";
 import ProjectApiList from "@/Components/api/ProjectApiList";
-import { checkErrorMessage, indianAmount, nullToNA } from "@/Components/Common/PowerupFunctions";
+import { checkErrorMessage, indianAmount, indianDate, nullToNA } from "@/Components/Common/PowerupFunctions";
 import ShimmerEffectInline from "@/Components/Common/Loaders/ShimmerEffectInline";
 import BarLoader from "@/Components/Common/Loaders/BarLoader";
 import BottomErrorCard from "@/Components/Common/BottomErrorCard";
@@ -36,12 +36,27 @@ const ViolationIndex = () => {
     useSetTitle('Violation Master')
 
     // 👉 API constants 👈
-    const { api_violationMasterList, api_updateViolation, api_deleteViolation, api_addViolation, api_getViolationList, api_getSectionList, api_getDepartmentList  } = ProjectApiList()
+    const {
+        api_violationMasterList,
+        api_updateViolation,
+        api_deleteViolation,
+        api_addViolation,
+        api_listDepartment,
+        api_addDepartment,
+        api_updateDepartment,
+        api_deleteDepartment,
+        api_listSection,
+        api_addSection,
+        api_updateSection,
+        api_deleteSection,
+        api_getSectionList,
+        api_getDepartmentList
+    } = ProjectApiList()
 
-    
+
     // 👉 Dialog useRef 👈
     const dialogRef = useRef()
-    
+
     // 👉 State constants 👈
     const [violationDataList, setViolationDataList] = useState([])
     const [loader, setLoader] = useState(false)
@@ -55,6 +70,7 @@ const ViolationIndex = () => {
     const [departmentList, setDepartmentList] = useState([])
     const [violationList, setViolationList] = useState([])
     const [sLoader, setsLoader] = useState(false)
+    const [mType, setMType] = useState('department')
 
     // 👉 CSS constants 👈
     const editButton = "border border-sky-800 text-sky-800 mx-1 px-3 py-1 rounded-sm shadow-lg hover:shadow-xl hover:bg-sky-800 hover:text-white"
@@ -67,6 +83,11 @@ const ViolationIndex = () => {
     const buttonStyle = (color) => {
         return `px-4 py-1 text-sm bg-${color}-500 hover:bg-${color}-600 select-none rounded-sm hover:drop-shadow-md text-white`
     }
+
+    const tabButtonStyle = (status) => {
+        return `border border-slate-700 ${status ? 'bg-slate-700 text-white' : 'text-slate-700 shadow-2xl shadow-slate-700'} mx-1 px-3 py-1 rounded-sm hover:bg-slate-700 hover:text-white text-sm`
+    }
+
     // 👉 Function 1 👈
     const activateBottomErrorCard = (state, message) => {
         setErrorState(state)
@@ -87,9 +108,21 @@ const ViolationIndex = () => {
 
             case 'edit': {
                 setviolationData(data)
-                formik.setFieldValue('violationName', data?.violation_name)
-                formik.setFieldValue('violationSection', data?.violation_section)
-                formik.setFieldValue('penaltyAmount', data?.penalty_amount)
+
+                if (mType == 'department') {
+                    formik.setFieldValue('department', data?.department_name)
+                }
+                if (mType == 'section') {
+                    formik.setFieldValue('violationSection', data?.violation_section)
+                    formik.setFieldValue('department', data?.department_id)
+                }
+                if (mType == 'violation') {
+                    formik.setFieldValue('violationName', data?.violation_name)
+                    formik.setFieldValue('violationSection', data?.violation_section_id)
+                    formik.setFieldValue('department', data?.department_id)
+                    formik.setFieldValue('penaltyAmount', data?.penalty_amount)
+                }
+
             } break;
 
             case 'delete': {
@@ -101,7 +134,83 @@ const ViolationIndex = () => {
     }
 
     // 👉 Table Columns 👈
-    const COLUMNS = [
+    const DCOLUMNS = [
+        {
+            Header: "#",
+            Cell: ({ row }) => <div className="pr-2">{row?.index + 1}</div>,
+        },
+        {
+            Header: "Department",
+            Cell: ({ cell }) => (nullToNA(cell.row.original?.department_name)),
+        },
+        {
+            Header: "Created At",
+            Cell: ({ cell }) => (indianDate(cell.row.original?.date)),
+        },
+        {
+            Header: "Action",
+            accessor: "id",
+            Cell: ({ cell }) => (
+                <div className="flex flex-row flex-wrap gap-2">
+                    {/* <button
+                        onClick={() => handleModal('edit', cell?.row?.original)}
+                        className={editButton}
+                    >
+                        Edit
+                    </button> */}
+
+                    <button
+                        onClick={() => handleModal('delete', cell?.row?.original?.id)}
+                        className={deleteButton}
+                    >
+                        Delete
+                    </button>
+                </div>
+            ),
+        },
+    ];
+
+    const SCOLUMNS = [
+        {
+            Header: "#",
+            Cell: ({ row }) => <div className="pr-2">{row?.index + 1}</div>,
+        },
+        {
+            Header: "Department",
+            Cell: ({ cell }) => (nullToNA(cell.row.original?.department_name)),
+        },
+        {
+            Header: "Violation Section",
+            Cell: ({ cell }) => (nullToNA(cell.row.original?.violation_section)),
+        },
+        {
+            Header: "Created At",
+            Cell: ({ cell }) => (indianDate(cell.row.original?.date)),
+        },
+        {
+            Header: "Action",
+            accessor: "id",
+            Cell: ({ cell }) => (
+                <div className="flex flex-row flex-wrap gap-2">
+                    {/* <button
+                        onClick={() => handleModal('edit', cell?.row?.original)}
+                        className={editButton}
+                    >
+                        Edit
+                    </button> */}
+
+                    <button
+                        onClick={() => handleModal('delete', cell?.row?.original?.id)}
+                        className={deleteButton}
+                    >
+                        Delete
+                    </button>
+                </div>
+            ),
+        },
+    ];
+
+    const VCOLUMNS = [
         {
             Header: "#",
             Cell: ({ row }) => <div className="pr-2">{row?.index + 1}</div>,
@@ -118,10 +227,13 @@ const ViolationIndex = () => {
             Header: "Violation Name",
             Cell: ({ cell }) => (nullToNA(cell.row.original?.violation_name)),
         },
-        
         {
             Header: "Penalty Amount",
             Cell: ({ cell }) => (indianAmount(cell.row.original?.penalty_amount)),
+        },
+        {
+            Header: "Created At",
+            Cell: ({ cell }) => (indianDate(cell.row.original?.date)),
         },
         {
             Header: "Action",
@@ -148,10 +260,47 @@ const ViolationIndex = () => {
 
     // 👉 Form Fields JSON 👈
     const basicForm = [
-        { title: "Department", key: "department", width:'md:w-[20%] w-full', type: 'text', hint: "Enter department", required: true, options: 'departmentList', okey: 'id', ovalue: 'department_name' },
-        { title: "Violation Section", key: "violationSection", width:'md:w-[20%] w-full', type: 'text', hint: "Enter violation section", required: true, options: 'violationSectionList', okey: 'id', ovalue: 'section' },
-        { title: "Violation Name", key: "violationMade", width: 'md:w-[20%] w-full', type: 'text', hint: "Enter violation name", required: true , options: 'violationList', okey: 'id', ovalue: 'violation_name' },
-        { title: "Penalty Amount", key: "penaltyAmount", type: 'number', hint: "Enter penalty Amount", required: true },
+        {
+            title: "Department",
+            key: "department",
+            width: `${mType == 'department' ? ' md:w-full ' : (mType == 'section' ? ' md:w-[45%] ' : ' md:w-[20%] ')} w-full `,
+            type: (mType == 'department' ? 'text' : 'select'),
+            hint: "Enter department",
+            required: true,
+            options: departmentList,
+            okey: 'id',
+            ovalue: 'department_name'
+        },
+        {
+            title: "Violation Section",
+            key: "violationSection",
+            width: `${mType == 'section' ? ' md:w-[45%] ' : ' md:w-[20%] '} w-full ${mType != 'department' ? 'block ' : 'hidden '}`,
+            type: (mType == 'section' ? 'text' : 'select'),
+            hint: "Enter violation section",
+            required: mType != 'department' && true,
+            options: violationSectionList,
+            okey: 'id',
+            ovalue: 'violation_section'
+        },
+        {
+            title: "Violation Name",
+            key: "violationMade",
+            width: `md:w-[20%] w-full ${(mType != 'department' && mType != 'section') ? 'block ' : 'hidden '}`,
+            type: 'text',
+            hint: "Enter violation name",
+            required: (mType != 'department' && mType != 'section') && true,
+            options: violationList,
+            okey: 'id',
+            ovalue: 'violation_name'
+        },
+        {
+            title: "Penalty Amount",
+            key: "penaltyAmount",
+            width: `md:w-[20%] w-full ${mType == 'violation' ? 'block ' : 'hidden '}`,
+            type: 'number',
+            hint: "Enter penalty Amount",
+            required: mType == 'violation' && true
+        },
     ]
 
     // 👉 Formik validation schema 👈
@@ -187,10 +336,24 @@ const ViolationIndex = () => {
     // 👉 Function 3 👈
     const getViolationList = () => {
 
+        setViolationDataList([])
+
         setLoader(true)
 
+        let url;
+
+        if (mType == 'department') {
+            url = api_listDepartment
+        }
+        if (mType == 'section') {
+            url = api_listSection
+        }
+        if (mType == 'violation') {
+            url = api_violationMasterList
+        }
+
         AxiosInterceptors
-            .post(api_violationMasterList, {}, ApiHeader())
+            .post(url, {}, ApiHeader())
             .then((res) => {
                 if (res?.data?.status) {
                     setViolationDataList(res?.data?.data)
@@ -222,7 +385,7 @@ const ViolationIndex = () => {
                             <>
                                 <option value={null}>Select</option>
                                 {
-                                    options?.map((elem) => <option className='' value={elem[okey]}>{elem[ovalue]}</option>)
+                                    (typeof options === 'object') && options?.map((elem) => <option className='' value={elem[okey]}>{elem[ovalue]}</option>)
                                 }
                             </>
                     }
@@ -245,31 +408,83 @@ const ViolationIndex = () => {
 
         switch (modalType) {
             case 'add': {
-                payload = {
-                    violationName: values?.violationMade,
-                    violationSection: values?.violationSection,
-                    penaltyAmount: values?.penaltyAmount,
-                    department: values?.department
+
+                if (mType == 'department') {
+                    payload = {
+                        departmentName: values?.department
+                    }
+                    url = api_addDepartment
                 }
-                url = api_addViolation
+                if (mType == 'section') {
+                    payload = {
+                        violationSection: values?.violationSection,
+                        departmentId: values?.department
+                    }
+                    url = api_addSection
+                }
+                if (mType == 'violation') {
+                    payload = {
+                        violationName: values?.violationMade,
+                        sectionId: values?.violationSection,
+                        penaltyAmount: values?.penaltyAmount,
+                        departmentId: values?.department
+                    }
+                    url = api_addViolation
+                }
+
             } break;
 
             case 'edit': {
-                payload = {
-                    id: violationData?.id,
-                    violationName: values?.violationMade,
-                    violationSection: values?.violationSection,
-                    penaltyAmount: values?.penaltyAmount,
-                    department: values?.department
+
+                if (mType == 'department') {
+                    payload = {
+                        id: violationData?.id,
+                        departmentName: values?.department
+                    }
+                    url = api_updateDepartment
                 }
-                url = api_updateViolation
+                if (mType == 'section') {
+                    payload = {
+                        id: violationData?.id,
+                        violationSection: values?.violationSection,
+                        department: values?.department
+                    }
+                    url = api_updateSection
+                }
+                if (mType == 'violation') {
+                    payload = {
+                        id: violationData?.id,
+                        violationName: values?.violationMade,
+                        violationSection: values?.violationSection,
+                        penaltyAmount: values?.penaltyAmount,
+                        department: values?.department
+                    }
+                    url = api_updateViolation
+                }
+
             } break;
 
             case 'delete': {
-                payload = {
-                    id: vId
+
+                if (mType == 'department') {
+                    url = api_deleteDepartment
+                    payload = {
+                        departmentId: vId
+                    }
                 }
-                url = api_deleteViolation
+                if (mType == 'section') {
+                    url = api_deleteSection
+                    payload = {
+                        sectionId: vId
+                    }
+                }
+                if (mType == 'violation') {
+                    url = api_deleteViolation
+                    payload = {
+                        id: vId
+                    }
+                }
+
             } break;
         }
 
@@ -294,49 +509,49 @@ const ViolationIndex = () => {
             })
     }
 
-    // const getDepartmentList = () => {
+    const getDepartmentList = () => {
 
-    //     setsLoader(true)
+        setsLoader(true)
 
-    //     AxiosInterceptors
-    //         .post(api_getDepartmentList, {}, ApiHeader())
-    //         .then((res) => {
-    //             if (res?.data?.status) {
-    //                 setDepartmentList(res?.data?.data)
-    //             } else {
-    //             }
-    //             console.log('fp department list response => ', res)
-    //         })
-    //         .catch((err) => {
-    //             console.log('error fp department list => ', err)
-    //         })
-    //         .finally(() => {
-    //             setsLoader(false)
-    //         })
-    // }
+        AxiosInterceptors
+            .post(api_getDepartmentList, {}, ApiHeader())
+            .then((res) => {
+                if (res?.data?.status) {
+                    setDepartmentList(res?.data?.data)
+                } else {
+                }
+                console.log('fp department list response => ', res)
+            })
+            .catch((err) => {
+                console.log('error fp department list => ', err)
+            })
+            .finally(() => {
+                setsLoader(false)
+            })
+    }
 
-    // const getViolationSectionList = (value) => {
+    const getViolationSectionList = (value) => {
 
-    //     console.log(value)
+        console.log(value)
 
-    //     setsLoader(true)
+        setsLoader(true)
 
-    //     AxiosInterceptors
-    //         .post(api_getSectionList, { departmentId: value }, ApiHeader())
-    //         .then((res) => {
-    //             if (res?.data?.status) {
-    //                 setViolationSectionList(res?.data?.data)
-    //             } else {
-    //             }
-    //             console.log('fp violation section list response => ', res)
-    //         })
-    //         .catch((err) => {
-    //             console.log('error fp violation section list => ', err)
-    //         })
-    //         .finally(() => {
-    //             setsLoader(false)
-    //         })
-    // }
+        AxiosInterceptors
+            .post(api_getSectionList, { departmentId: value }, ApiHeader())
+            .then((res) => {
+                if (res?.data?.status) {
+                    setViolationSectionList(res?.data?.data)
+                } else {
+                }
+                console.log('fp violation section list response => ', res)
+            })
+            .catch((err) => {
+                console.log('error fp violation section list => ', err)
+            })
+            .finally(() => {
+                setsLoader(false)
+            })
+    }
 
     // const getViolationNameList = (value) => {
 
@@ -365,23 +580,25 @@ const ViolationIndex = () => {
     // }
 
     const handleChange = (e) => {
-        // const name = e.target.name;
-        // const value = e.target.value;
+        const name = e.target.name;
+        const value = e.target.value;
+
+        console.log(name)
 
         // if (name == 'violationSection') {
         //     getViolationNameList(value)
         // }
 
-        // if (name == 'department') {
-        //     getViolationSectionList(value)
-        // }
+        if (name == 'department') {
+            getViolationSectionList(value)
+        }
     }
 
     // 👉 To call Function 3 👈
     useEffect(() => {
-        // getDepartmentList()
+        mType != 'department' && getDepartmentList()
         getViolationList()
-    }, [])
+    }, [mType])
 
     return (
         <>
@@ -401,6 +618,13 @@ const ViolationIndex = () => {
 
                 <div className="w-full h-[0.15rem] bg-gray-400 mb-6"></div>
 
+                <div className="flex gap-1 w-full flex-wrap my-6">
+                    <button onClick={() => setMType('department')} className={tabButtonStyle(mType == 'department')}>Department Master</button>
+                    <button onClick={() => setMType('section')} className={tabButtonStyle(mType == 'section')}>Section Master</button>
+                    <button onClick={() => setMType('violation')} className={tabButtonStyle(mType == 'violation')}>Violation Master</button>
+                </div>
+
+
                 {/* 👉 Table Loader 👈 */}
                 {loader && <ShimmerEffectInline />}
 
@@ -410,26 +634,42 @@ const ViolationIndex = () => {
                         {violationDataList?.length > 0 ?
 
                             <>
-                                <ListTable
-                                    columns={COLUMNS}
-                                    dataList={violationDataList}
-                                >
-                                    <button
-                                        onClick={() => handleModal('add')}
-                                        className={addButton}
-                                    >
-                                        <CgPlayListAdd /> Add Violation
-                                    </button>
-                                </ListTable>
+                                <button onClick={() => handleModal('add')} className={addButton + 'capitalize flex gap-1 items-center'} >
+                                    <CgPlayListAdd /> Add <span className="capitalize">{mType}</span>
+                                </button>
+
+                                {
+                                    mType == 'department' &&
+                                    <ListTable
+                                        columns={DCOLUMNS}
+                                        dataList={violationDataList}
+                                    />
+                                }
+                                {
+                                    mType == 'section' &&
+                                    <ListTable
+                                        columns={SCOLUMNS}
+                                        dataList={violationDataList}
+                                    />
+                                }
+                                {
+                                    mType == 'violation' &&
+                                    <ListTable
+                                        columns={VCOLUMNS}
+                                        dataList={violationDataList}
+                                    />
+                                }
+
+
                             </>
                             :
                             <>
                                 <div className="flex justify-end mb-2">
                                     <button
                                         onClick={() => handleModal('add')}
-                                        className={addButton}
+                                        className={addButton + 'capitalize flex gap-1 items-center'}
                                     >
-                                        <CgPlayListAdd /> Add Violation
+                                        <CgPlayListAdd /> Add <span className="capitalize">{mType}</span>
                                     </button>
                                 </div>
                                 <div className="bg-red-100 text-red-500 py-2 text-lg font-semibold text-center border border-red-500 drop-shadow-sm">Oops! No Data Found.</div>
@@ -439,7 +679,7 @@ const ViolationIndex = () => {
             </div>
 
             {/* 👉 Dialog form 👈 */}
-            <dialog ref={dialogRef} className={`relative overflow-clip animate__animated animate__zoomIn animate__faster ${modalType != 'delete' && ' w-[90vw] md:max-w-[1080px]'}`}>
+            <dialog ref={dialogRef} className={`relative overflow-clip animate__animated animate__zoomIn animate__faster ${(modalType != 'delete' && mType == 'violation') && ' w-[90vw] md:max-w-[1080px]'}`}>
 
                 {/* 👉 Cross button 👈 */}
                 {modalType != 'delete' && <span onClick={() => (dialogRef.current.close(), formik.resetForm())} className="block p-1 bg-red-100 hover:bg-red-500 rounded-full hover:text-white cursor-pointer transition-all duration-200 absolute top-2 right-2"><RxCross2 /></span>}
@@ -448,7 +688,7 @@ const ViolationIndex = () => {
                 {modalType != 'delete' && <form onChange={(e) => (formik.handleChange(e), handleChange(e))} onSubmit={formik.handleSubmit} className="p-4 px-8 py-6 shadow-lg">
                     <section className='flex gap-4 flex-wrap'>
 
-                        <header className='w-full font-semibold text-xl capitalize text-sky-700 border-b pb-1 text-center'>{modalType} Violation</header>
+                        <header className='w-full font-semibold text-xl capitalize text-sky-700 border-b pb-1 text-center'>{modalType} {mType}</header>
 
                         {
                             basicForm?.map((elem) => {
