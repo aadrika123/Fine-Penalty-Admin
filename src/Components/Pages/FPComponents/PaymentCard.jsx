@@ -259,7 +259,7 @@ function PaymentCard(props) {
                         <div className="text-center font-semibold text-3xl">Your payment has been successfully done ! Now the application is sent for verification.</div>
                         <div className="text-center mt-6">
                             <button className={`mr-4 bg-indigo-500  text-white px-6 py-1 shadow-lg hover:scale-105 rounded-sm`} onClick={() => navigate(`/fp-receipt/${encodeURIComponent(tranNo)}`)}>View Receipt</button>
-                            <button className={`mr-4 bg-white border border-indigo-500 text-indigo-500 px-4 py-1 shadow-lg hover:scale-105 rounded-sm`} onClick={() => navigate(`/marriage-details/${id}`)}>View Application</button>
+                            <button className={`mr-4 bg-white border border-indigo-500 text-indigo-500 px-4 py-1 shadow-lg hover:scale-105 rounded-sm`} onClick={() => navigate(`/challan/${id}`)}>View Challan</button>
                         </div>
                     </div>
                 </div>

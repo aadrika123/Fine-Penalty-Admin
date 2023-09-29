@@ -101,7 +101,7 @@ const FpPayment = () => {
 
                     {/* 👉 Details sections 👈 */}
                     <div className='flex items-center flex-wrap w-full text-sm bg-white p-4 shadow-lg gap-2 mt-4'>
-                    <div className='flex flex-col flex-wrap justify-center w-full md:w-[27%]'>
+                        <div className='flex flex-col flex-wrap justify-center w-full md:w-[27%]'>
                             <div>Name</div>
                             <div className='font-semibold text-base'>{nullToNA(details?.full_name)}</div>
                         </div>
@@ -139,11 +139,26 @@ const FpPayment = () => {
                                 <div>
                                     <div className="text-center font-semibold text-3xl">As you belongs to BPL category, so you don't need to pay. And your application is sent for verification.</div>
                                     <div className="text-center mt-6">
-                                        <button className={`mr-4 bg-white border border-indigo-500 text-indigo-500 px-4 py-1 shadow-lg hover:scale-105 rounded-sm`} onClick={() => navigate(`/marriage-details/${id}`)}>View Application</button>
+                                        <button className={`mr-4 bg-white border border-indigo-500 text-indigo-500 px-4 py-1 shadow-lg hover:scale-105 rounded-sm`} onClick={() => navigate(`/fp-details/${id}`)}>View Application</button>
                                     </div>
                                 </div>
                             </div>
-                        </> : <PaymentCard demand={details} />}
+                        </> : <>
+                            {
+                                details?.payment_status ?
+                                    <div className="w-full h-full bg-white sm:p-20 p-2">
+                                        <div>
+                                            <div className="text-center font-semibold text-3xl">Payment Already Done. You can view your receipt or challan.</div>
+                                            <div className="text-center mt-6">
+                                                <button className={`mr-4 bg-indigo-500  text-white px-6 py-1 shadow-lg hover:scale-105 rounded-sm`} onClick={() => navigate(`/fp-receipt/${encodeURIComponent(details?.tran_no)}`)}>View Receipt</button>
+                                                <button className={`mr-4 bg-white border border-indigo-500 text-indigo-500 px-4 py-1 shadow-lg hover:scale-105 rounded-sm`} onClick={() => navigate(`/challan/${id}`)}>View Challan</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    :
+                                    <PaymentCard demand={details} />
+                            }
+                        </>}
 
                     </div>
 
