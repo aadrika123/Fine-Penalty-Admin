@@ -18,7 +18,7 @@ const Heading = (props) => {
     }, [props?.allRole]);
 
     return (
-        <div className=' bg-white shadow-xl py-4 px-2 md:px-6 md:py-6 mt-4 mx-10 mb-10'>
+        <div className=' bg-white shadow-xl py-4 px-2 md:px-6 md:py-6 mt-4 mx-10 mb-10 animate__animated animate__fadeInDown animate__faster'>
             <div className="flex flex-col md:flex-row">
 
                 <div className="flex-initial ml-4">

@@ -94,12 +94,12 @@ function FPDashboard() {
                 {/* 👉 Application Card 👈 */}
                 <div class="flex flex-row flex-wrap gap-2 items-start col-span-12 md:col-span-6 ">
 
-                    <div className="w-[45%]"><ApplicationCard
+                    <div className="w-[45%] animate__animated animate__zoomIn animate__faster"><ApplicationCard
                             heading={"Pending Application"}
                             total={pendingData?.total}
                             loading={isLoading}
                         /></div>
-                    <div className="w-[45%]"><ApplicationCard
+                    <div className="w-[45%] animate__animated animate__zoomIn animate__faster"><ApplicationCard
                             heading={"Challan Generated"}
                             total={approvedData?.total}
                             loading={isLoading}
@@ -110,7 +110,7 @@ function FPDashboard() {
                 </div>
 
                 {/* 👉 Shortcuts Card 👈 */}
-                <div class="flex flex-col flex-wrap gap-4 justify-center col-span-12 md:col-span-6 md:mt-0 mt-10">
+                <div class="flex flex-col flex-wrap gap-4 justify-center col-span-12 md:col-span-6 md:mt-0 mt-10 animate__animated animate__fadeInLeft animate__faster">
                     <div className="w-full md:w-[50%]">
 
                         <ShortcutCard
@@ -131,7 +131,7 @@ function FPDashboard() {
             </div>
 
             {/* 👉 Recent Application Table 👈 */}
-            <div className='mx-10 mt-10 md:w-auto w-[80vw] overflow-auto'>
+            <div className='mx-10 mt-10 md:w-auto w-[80vw] overflow-auto animate__animated animate__fadeInUp animate__faster'>
                 <div className="font-bold text-md mb-2 flex-1 text-gray-600"># Recent Applications</div>
                 <Table
                     loading={isLoading2}
