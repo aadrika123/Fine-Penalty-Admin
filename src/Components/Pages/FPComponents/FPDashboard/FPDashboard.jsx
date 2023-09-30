@@ -30,7 +30,7 @@ function FPDashboard() {
     const { api_FPTrack, api_getInfractionList } = ProjectApiList()
 
     // 👉 Roles constant 👈
-    const allRole = getLocalStorageItemJsonParsed('userDetails')?.roles
+    const userDetails = getLocalStorageItemJsonParsed('userDetails')
 
     // 👉 State constants 👈
     const [pendingData, setpendingData] = useState(null)
@@ -78,14 +78,14 @@ function FPDashboard() {
 
             {/* 👉 Heading Card 👈 */}
             <Heading
-                matchForApply={['JSK']}
-                matchForSafWf={['REGISTRAR', 'BACK OFFICE']}
-                allRole={allRole}
+                // matchForApply={['JSK']}
+                // matchForSafWf={userDetails}
+                allRole={userDetails}
                 heading={"Fines & Penalties Home Page"}
                 subHeading={"Verified Account"}
                 changePasswordLink={'/change-password'}
                 mainWorkflowLink={'/fp-workflow'}
-                applyLink={'/fp-apply'}
+                // applyLink={'/fp-apply'}
             />
 
             {/* 👉 Middle Cards 👈 */}

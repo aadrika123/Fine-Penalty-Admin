@@ -66,6 +66,36 @@ function Login() {
                     setLocalStorageItem('token', response?.data?.data?.token)
                     setLocalStorageItemStrigified('userDetails', response?.data?.data?.userDetails)
 
+                    if( response?.data?.data?.userDetails?.user_type == 'CO') {
+                        setLocalStorageItemStrigified('menuList', [
+                          { name: 'Home',                 path: '/home',              children: [] },
+                          { name: 'Application List',     path: '/fp-list',           children: [] },
+                          { name: 'Search Challan',       path: '/search-challan',    children: [] },
+                          { name: 'Workflow',             path: '/fp-workflow',       children: [] },
+                        ])
+                      }
+                      if( response?.data?.data?.userDetails?.user_type == 'EC') {
+                        setLocalStorageItemStrigified('menuList', [
+                          { name: 'Home',                 path: '/home',              children: [] },
+                          { name: 'Application List',     path: '/fp-list',           children: [] },
+                          { name: 'Search Challan',       path: '/search-challan',    children: [] },
+                          {
+                            name: 'Reports',              path: '',                   children: [
+                              { name: 'Challan Generated Report', path: '/challan-generated-report' },
+                              { name: 'Violation Wise Report',     path: '/violation-wise-report'     },
+                              { name: 'Collection Report',         path: '/collection-report'         }
+                            ]
+                          },
+                        ])
+                      }
+                      if( response?.data?.data?.userDetails?.user_type == 'JSK') {
+                          setLocalStorageItemStrigified('menuList', [
+                            { name: 'Home',                 path: '/home',              children: [] },
+                            { name: 'Application List',     path: '/fp-list',           children: [] },
+                            { name: 'Search Challan',       path: '/search-challan',    children: [] },
+                          ])
+                      }
+
                     fetchMenuList()
                     setheartBeatCounter(prev => prev + 1)
                     navigate('/home') //navigate to home page after login
@@ -99,7 +129,7 @@ function Login() {
                 console.log('fetched menu list.....', response?.data?.data?.userDetails?.roles)
                 // return
                 if (response.data.status == true) {
-                    setLocalStorageItemStrigified('menuList', response?.data?.data?.permission)
+                    // setLocalStorageItemStrigified('menuList', response?.data?.data?.permission)
                     // setLocalStorageItemStrigified('userDetails', response?.data?.data?.userDetails)
 
                     setmenuList(response?.data?.data?.permission)
@@ -129,7 +159,7 @@ function Login() {
                     <nav className="flex flex-row flex-nowrap items-center justify-between mt-0 py-4 px-6" id="desktop-menu">
                         {/* logo */}
                         <a className="flex items-center py-2 ltr:mr-4 rtl:ml-4 text-xl" href="../index.html">
-                            <div> <span className="font-bold text-xl">{`${ulb_data().ulb_name}`}</span> <span className="hidden text-gray-700 darks:text-gray-200">{`${ulb_data().ulb_name}`}</span></div>
+                            <div className='flex gap-2'> <span className='w-7'><img src={ulb_data()?.ulb_logo} alt="" srcset="" /></span> <span className="font-bold text-xl">Ranchi Nagar Nigam, Ranchi</span></div>
                         </a>
                         {/* menu */}
                         <ul className="flex ltr:ml-auto rtl:mr-auto mt-2">

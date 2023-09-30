@@ -76,7 +76,7 @@ const TopHeader = (props) => {
       {isLoading && <BarLoader />}
       <div className='bg-white flex flex-row justify-between px-2 sm:px-6 border shadow-sm print:hidden py-3 z-50 animate__animated animate__fadeInDown animate__faster'>
         <div className='flex items-center md:w-[20rem] w-full justify-between gap-2 sm:gap-4'>
-          <span className='font-semibold flex items-center gap-1'> <img src={ulb_data()?.state_logo} alt="" srcset="" className='w-9' /> <span className='text-lg md:text-xl '>Fines & Penalties</span></span>
+          <span className='font-semibold flex items-center gap-2'> <img src={ulb_data()?.ulb_logo} alt="" srcset="" className='w-9' /> <div className='flex flex-col'><div className='text-lg md:text-xl '>Fines & Penalties</div><div className='text-sm hidden'>Ranchi Nagar Nigam, Ranchi</div> </div></span>
           <div onClick={() => {
             settoggleBar(!toggleBar)
           }}>

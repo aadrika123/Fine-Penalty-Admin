@@ -17,12 +17,15 @@ import { MdOutlineDashboard, MdOutlineSpaceDashboard } from 'react-icons/md';
 import { contextVar } from '@/Components/context/contextVar'
 import { BsCaretRight } from 'react-icons/bs';
 import { GiTakeMyMoney } from 'react-icons/gi'
-import { getLocalStorageItem, setLocalStorageItem } from '@/Components/Common/localstorage'
+import { getLocalStorageItem, getLocalStorageItemJsonParsed, setLocalStorageItem } from '@/Components/Common/localstorage'
 
 const SideBar = (props) => {
 
   // 👉 Context constants 👈
-  const { toggleBar, settoggleBar, userDetails } = useContext(contextVar)
+  const { toggleBar, settoggleBar } = useContext(contextVar)
+
+  // 👉 Local Storage constants 👈
+  let userDetails = getLocalStorageItemJsonParsed('userDetails')
 
   // 👉 State constants 👈
   const [dropDown, setdropDown] = useState(getLocalStorageItem('dropDown') || false)
