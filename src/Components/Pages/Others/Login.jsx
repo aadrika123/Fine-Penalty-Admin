@@ -7,7 +7,7 @@ import './login.css'
 import { RotatingLines } from "react-loader-spinner";
 import ProjectApiList from '@/Components/api/ProjectApiList';
 import ApiHeader from '@/Components/api/ApiHeader';
-import img from '@/Components/assets/img.svg'
+import img from '@/Components/assets/fp.png'
 import AxiosInterceptors from '@/Components/Common/AxiosInterceptors';
 import { getLocalStorageItem, setLocalStorageItem, setLocalStorageItemStrigified } from '@/Components/Common/localstorage';
 import ulb_data from '@/Components/Common/DynamicData';
@@ -270,11 +270,12 @@ function Login() {
 
                 </div>
             </header>
-            <main className='h-[80vh] bg-gray-100 flex justify-center items-center'>
-                <div className="py-8 md:py-12 bg-gray-100 darks:bg-gray-900 darks:bg-opacity-40">
-                    <div className="container mx-auto px-4 xl:max-w-6xl">
-                        <div className="flex flex-wrap -mx-4 flex-row">
-                            <div className="flex-shrink max-w-full px-4 w-full lg:w-1/2">
+            <main className=' bg-gray-100 flex justify-center items-center md:h-[80vh]'>
+                <div className="py-8 bg-gray-100 darks:bg-gray-900 darks:bg-opacity-40">
+                    <div className="mx-auto px-4 ">
+                        <div className="flex flex-wrap flex-row justify-center gap-2 items-center">
+
+                            <div className=" px-4 w-full md:w-[30%]">
                                 {/* login form */}
                                 <div className="max-w-full w-full px-2 sm:px-12 lg:pr-20 mb-12 lg:mb-0">
                                     <div className="relative">
@@ -338,21 +339,22 @@ function Login() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex-shrink max-w-full px-4 w-full lg:w-1/2">
+
+                            <div className="px-4 w-full md:w-[45%]">
                                 <div className="text-center mt-6 lg:mt-0">
 
-                                    <img src={img} alt="welcome" className="max-w-full h-auto mx-auto" />
+                                    <img src={img} alt="welcome" className="w-[60%] h-auto mx-auto hue-rotate-[90deg]" />
                                     <div className="px-4 mt-12">
-                                        <h1 className="text-bold text-4xl mb-2">Serve Citizen Services with Ease of Access</h1>
-                                        <p className="text-lg mb-4 text-gray-500">Manage citizen government services with easy of access and serve them in no time. </p>
+                                        <h1 className="text-bold text-4xl mb-2">Fines & Penalties Admin Portal</h1>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </main>
-            <footer className=" h-[10vh] bg-white py-6 border-t border-gray-200 darks:bg-gray-800 darks:border-gray-800">
+            <footer className=" bg-white py-6 border-t border-gray-200 darks:bg-gray-800 darks:border-gray-800">
                 <div className="container mx-auto px-4 xl:max-w-6xl ">
                     <div className="mx-auto px-4">
                         <div className="flex flex-wrap flex-row -mx-4">
