@@ -21,8 +21,6 @@ import { indianAmount, indianDate, nullToNA } from '@/Components/Common/PowerupF
 import useSetTitle from '@/Components/Common/useSetTitle';
 import {FaRegEye} from 'react-icons/fa'
 import { BiMoney } from 'react-icons/bi';
-import { MdOutlineSettingsBackupRestore } from 'react-icons/md';
-import { RxLinkBreak2 } from 'react-icons/rx';
 
 const FPTrack = () => {
 
