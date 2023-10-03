@@ -104,7 +104,7 @@ const ViolationWiseReport = () => {
                             <option>Loading...</option>
                             :
                             <>
-                                <option value={null}>Select</option>
+                                <option value="">All</option>
                                 {
                                     options?.map((elem) => <option className='' value={elem[okey]}>{elem[ovalue]}</option>)
                                 }

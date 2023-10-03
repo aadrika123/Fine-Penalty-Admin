@@ -103,7 +103,7 @@ const FpChallan2 = () => {
                         <div className='w-full flex justify-center'>
                             <div className='w-full flex justify-center mt-2'>
                                 <div className='flex flex-col items-center'>
-                                    <div className=" text-2xl underline font-bold px-8 ">कार्यालय : राँची नगर निगम</div>
+                                    <div className=" text-2xl underline font-bold px-8 ">कार्यालय : राँची नगर निगम, राँची</div>
                                     <div className=" font-bold px-8 text-base mt-2">कचहरी रोड, राँची, पिन नo- 834001</div>
                                     <div className=" font- px-8 text-sm">E-mail ID- support@ranchimunicipal.com</div>
                                     <div className=" font- px-8 text-sm font-normal">Toll Free Number: 1800 890 4115</div>

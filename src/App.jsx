@@ -14,6 +14,8 @@ import { getLocalStorageItemJsonParsed } from '@/Components/Common/localstorage'
 import MarriagePayment from './Components/Pages/FPComponents/FpPayment';
 import FpPayment from './Components/Pages/FPComponents/FpPayment';
 import FpReceipt from './Components/Pages/FPComponents/FpPrint/FpReceipt';
+import DifferenceReport from './Components/Pages/FPComponents/Reports/DifferenceReport';
+import DifferenceDetails from './Components/Pages/FPComponents/DifferenceDetails';
 
 const Login                   = lazy(() => import('@/Components/Pages/Others/Login'));
 const ProtectedRoutes         = lazy(() => import('@/Components/Pages/Others/ProtectedRoutes'));
@@ -81,6 +83,8 @@ function App() {
     { path: '/challan-generated-report',    element: <ChallanGeneratingReport /> },
     { path: '/violation-wise-report',       element: <ViolationWiseReport />     },
     { path: '/collection-report',           element: <CollectionReport />        },
+    { path: '/comparision-report',          element: <DifferenceReport />        },
+    { path: '/comparision-report/:id',     element: <DifferenceDetails />        },
 
   ]
 

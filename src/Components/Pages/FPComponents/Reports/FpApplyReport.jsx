@@ -122,7 +122,7 @@ const FpApplyReport = () => {
                             <option>Loading...</option>
                             :
                             <>
-                                <option value={null}>Select</option>
+                                <option value="">All</option>
                                 {
                                     options?.map((elem) => <option value={elem[okey]}>{elem[ovalue]}</option>)
                                 }

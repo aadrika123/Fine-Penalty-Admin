@@ -6,10 +6,10 @@ import { BrowserRouter } from 'react-router-dom'
 import CustomErrorBoundaryForRoutes from '@/Components/Common/CustomErrorBoundaryForRoutes.jsx'
 
 // 👉 To hide console data 👈
-console.log = () => {}
-console.warn = () => {}
-console.error = () => {}
-console.info = () => {}
+// console.log = () => {}
+// console.warn = () => {}
+// console.error = () => {}
+// console.info = () => {}
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

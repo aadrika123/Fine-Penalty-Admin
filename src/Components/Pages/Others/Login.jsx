@@ -83,7 +83,8 @@ function Login() {
                             name: 'Reports',              path: '',                   children: [
                               { name: 'Challan Generated Report', path: '/challan-generated-report' },
                               { name: 'Violation Wise Report',     path: '/violation-wise-report'     },
-                              { name: 'Collection Report',         path: '/collection-report'         }
+                              { name: 'Collection Report',         path: '/collection-report'         },
+                              { name: 'Comparision Report',         path: '/comparision-report'         }
                             ]
                           },
                         ])

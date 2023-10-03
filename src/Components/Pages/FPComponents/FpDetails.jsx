@@ -91,7 +91,7 @@ const FpDetails = () => {
                 if (res?.data?.status) {
                     setDocList(res?.data?.data)
                 } else {
-                    activateBottomErrorCard(true, res?.data?.message)
+                    // activateBottomErrorCard(true, res?.data?.message)
                 }
             })
             .catch((err) => {

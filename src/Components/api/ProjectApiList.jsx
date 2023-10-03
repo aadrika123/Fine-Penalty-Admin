@@ -111,6 +111,9 @@ export default function ProjectApiList() {
         api_addSection: `${baseUrl}/api/section/crud/save`,
         api_updateSection: `${baseUrl}/`,
         api_deleteSection: `${baseUrl}/api/section/crud/delete`,
+        
+        
+        api_compData: `${baseUrl}/api/report/comparison`,
 
 
     }
