@@ -11,7 +11,6 @@
 import React, { useEffect, useState } from 'react'
 import './Reciept.css'
 import ProjectApiList from '@/Components/api/ProjectApiList'
-import AxiosInterceptors from '@/Components/Common/AxiosInterceptors'
 import BarLoader from '@/Components/Common/Loaders/BarLoader'
 import { nullToNA, indianAmount, indianDate, checkErrorMessage } from '@/Components/Common/PowerupFunctions'
 import { AiFillPrinter } from 'react-icons/ai'
@@ -21,6 +20,7 @@ import { useParams } from 'react-router-dom'
 import ApiHeader2 from '@/Components/api/ApiHeader2'
 import rmclogo from '@/Components/assets/rmc.png'
 import swachhBharat from '@/Components/assets/swachhBharat.png'
+import axios from 'axios'
 
 const FpChallan2 = () => {
 
@@ -54,7 +54,7 @@ const FpChallan2 = () => {
         seterroState2(false)
         setisLoading(true)
 
-        AxiosInterceptors.post(api_fpChallan2, { challanId: id }, ApiHeader2())
+        axios.post(api_fpChallan2, { challanId: id }, ApiHeader2())
             .then((res) => {
                 console.log('getting challan 2 details => ', res)
                 setisLoading(false)

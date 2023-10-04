@@ -11,18 +11,17 @@
 import React, { useEffect, useState } from 'react'
 import './Reciept.css'
 import ProjectApiList from '@/Components/api/ProjectApiList'
-import AxiosInterceptors from '@/Components/Common/AxiosInterceptors'
 import BarLoader from '@/Components/Common/Loaders/BarLoader'
 import { nullToNA, indianDate, checkErrorMessage } from '@/Components/Common/PowerupFunctions'
 import { AiFillPrinter } from 'react-icons/ai'
 import BottomErrorCard from '@/Components/Common/BottomErrorCard'
 import useSetTitle from '@/Components/Common/useSetTitle'
 import { useParams } from 'react-router-dom'
-import ApiHeader2 from '@/Components/api/ApiHeader2'
 import rmclogo from '@/Components/assets/rmc.png'
 import swachhBharat from '@/Components/assets/swachhBharat.png'
 import ApiHeader from '@/Components/api/ApiHeader'
 import QrCode from './QrCode'
+import axios from 'axios'
 
 const FpReceipt = () => {
 
@@ -59,7 +58,7 @@ const FpReceipt = () => {
         seterroState2(false)
         setisLoading(true)
 
-        AxiosInterceptors.post(api_FpReceipt, { transactionNo: transaction_no }, ApiHeader())
+        axios.post(api_FpReceipt, { transactionNo: transaction_no }, ApiHeader())
             .then((res) => {
                 console.log('getting challan 2 details => ', res)
                 setisLoading(false)
@@ -181,7 +180,7 @@ const FpReceipt = () => {
 
                             <div className="w-full mt-16 flex justify-between items-center">
                                 <div className="w-[30%]">
-                                    <QrCode url={window.location.href} size={90} />
+                                    <QrCode url={window.location.href+'/direct'} size={90} />
                                 </div>
                                 <div className='w-[40%] flex flex-col gap-2 '>
                                     <div className='flex gap-1 w-full'><div className='w-full border-b-2 border-dashed border-gray-500'></div></div>

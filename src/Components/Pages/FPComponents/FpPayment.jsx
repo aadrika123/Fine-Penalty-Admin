@@ -25,7 +25,7 @@ import ApiHeader from '@/Components/api/ApiHeader'
 const FpPayment = () => {
 
     // 👉 To set title 👈
-    useSetTitle("Marriage Payment")
+    useSetTitle("Fines & Penalties Payment")
 
     // 👉 API constant 👈
     const { api_getChallanById } = ProjectApiList()

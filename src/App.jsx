@@ -11,11 +11,6 @@ import { Route, Routes } from 'react-router-dom';
 import { Toaster, toast } from 'react-hot-toast';
 import { contextVar } from '@/Components/context/contextVar';
 import { getLocalStorageItemJsonParsed } from '@/Components/Common/localstorage';
-import MarriagePayment from './Components/Pages/FPComponents/FpPayment';
-import FpPayment from './Components/Pages/FPComponents/FpPayment';
-import FpReceipt from './Components/Pages/FPComponents/FpPrint/FpReceipt';
-import DifferenceReport from './Components/Pages/FPComponents/Reports/DifferenceReport';
-import DifferenceDetails from './Components/Pages/FPComponents/DifferenceDetails';
 
 const Login                   = lazy(() => import('@/Components/Pages/Others/Login'));
 const ProtectedRoutes         = lazy(() => import('@/Components/Pages/Others/ProtectedRoutes'));
@@ -34,6 +29,10 @@ const FpApplyReport           = lazy(() => import('@/Components/Pages/FPComponen
 const ChallanGeneratingReport = lazy(() => import('@/Components/Pages/FPComponents/Reports/ChallanGeneratingReport'));
 const ViolationWiseReport     = lazy(() => import('@/Components/Pages/FPComponents/Reports/ViolationWiseReport'));
 const CollectionReport        = lazy(() => import('@/Components/Pages/FPComponents/Reports/CollectionReport'));
+const FpPayment               = lazy(() => import('@/Components/Pages/FPComponents/FpPayment'));
+const FpReceipt               = lazy(() => import('@/Components/Pages/FPComponents/FpPrint/FpReceipt'));
+const DifferenceReport        = lazy(() => import('@/Components/Pages/FPComponents/Reports/DifferenceReport'));
+const DifferenceDetails       = lazy(() => import('@/Components/Pages/FPComponents/DifferenceDetails'));
 
 function App() {
 
@@ -84,7 +83,7 @@ function App() {
     { path: '/violation-wise-report',       element: <ViolationWiseReport />     },
     { path: '/collection-report',           element: <CollectionReport />        },
     { path: '/comparision-report',          element: <DifferenceReport />        },
-    { path: '/comparision-report/:id',     element: <DifferenceDetails />        },
+    { path: '/comparision-report/:id',      element: <DifferenceDetails />       },
 
   ]
 
@@ -98,12 +97,14 @@ function App() {
         <Routes>
 
           <Route index element={<Login />} />
+          <Route path='/challan/:id/direct'   element={<FpChallan2 />} />
+          <Route path='/fp-receipt/:tranNo/direct' element={<FpReceipt />} />
 
           <Route element={<ProtectedRoutes />}>
 
             {
-              allRoutes?.map((elem) =>
-                <Route path={elem?.path} element={elem?.element} />
+              allRoutes?.map((elem, index) =>
+                <Route key={index} path={elem?.path} element={elem?.element} />
               )
             }
 
