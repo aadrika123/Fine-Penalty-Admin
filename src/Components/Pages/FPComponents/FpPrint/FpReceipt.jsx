@@ -89,52 +89,52 @@ const FpReceipt = () => {
 
             {/* 👉 Print Button 👈 */}
             <div className='fixed bottom-10 text-center  justify-center items-center  w-screen z-40'>
-                <button onClick={() => window.print()} className="ml-4 font-bold px-6 py-1 bg-indigo-500 text-white  text-sm leading-tight uppercase rounded  hover:bg-indigo-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out shadow-xl border border-white">
+                <button onClick={() => window.print()} className="ml-4 font-bold px-6 py-1 bg-indigo-500 text-white  text-xs md:text-sm leading-tight uppercase rounded  hover:bg-indigo-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out shadow-xl border border-white">
                     <AiFillPrinter className='inline text-lg' />
                     Print
                 </button>
             </div>
 
             <div className="mx-auto print:block flex justify-center print:w-[98vw] print:drop-shadow-none print:shadow-none print:appearance-none" id="printableArea">
-                <div className="w-[70%] print:w-auto overflow-x-hidden border-2 border-dashed border-black py-4 px-3 relative h-[80vh] print:h-full print:border-2 print:border-black font-semibold">
+                <div className="md:w-[70%] print:w-auto overflow-x-hidden border-2 border-dashed border-black py-4 px-2 md:px-3 relative h-[80vh] print:h-full print:border-2 print:border-black font-semibold">
 
                     {/* 👉 Logo & Heading 👈 */}
                     <div className=''>
-                        <div className="flex flex-col justify-center items-center gap-x-4 absolute print:top-[4%] top-[5%] left-[25%] print:left-[5%]">
+                        <div className="flex flex-col justify-center items-center gap-x-4 md:absolute print:top-[4%] top-[5%] left-[25%] print:left-[5%]">
                             <img src={rmclogo} alt="Logo" srcset="" className="h-16 w-16 appearance-none mix-blend-darken" />
                             <span className="text-3xl font-bold uppercase">{receiptDetails?.ulbDetails?.ulb_name}</span>
                         </div>
                         <div className='w-full flex justify-center'>
                             <div className='w-full flex justify-center mt-2'>
                                 <div className='flex flex-col items-center'>
-                                    <div className=" text-2xl underline font-bold px-8 ">कार्यालय : राँची नगर निगम, राँची</div>
-                                    <div className=" font-bold px-8 text-base mt-2">कचहरी रोड, राँची, पिन नo- 834001</div>
-                                    <div className=" font- px-8 text-sm">E-mail ID- support@ranchimunicipal.com</div>
-                                    <div className=" font- px-8 text-sm font-normal">Toll Free Number: 1800 890 4115</div>
+                                    <div className=" text-xl md:text-2xl underline font-bold px-2 md:px-8 ">कार्यालय : राँची नगर निगम, राँची</div>
+                                    <div className=" font-bold px-2 md:px-8 text-base mt-2">कचहरी रोड, राँची, पिन नo- 834001</div>
+                                    <div className=" font- px-2 md:px-8 text-sm">E-mail ID- support@ranchimunicipal.com</div>
+                                    <div className=" font- px-2 md:px-8 text-sm font-normal">Toll Free Number: 1800 890 4115</div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     {/* 👉 Challan Details 👈 */}
-                    <div className='grid grid-cols-12 items-center text-sm mt-8 gap-y-2 '>
+                    <div className='grid grid-cols-12 items-center text-xs md:text-sm mt-8 gap-y-2 '>
 
-                        <div className="col-span-8 flex gap-2">
+                        <div className="col-span-12 md:col-span-8 flex gap-2">
                             <div className="">रसीद क्रमांक:- </div>
                             <div className="font-normal">{nullToNA(receiptDetails?.tran_no)}</div>
                         </div>
 
-                        <div className="col-span-4 flex gap-2">
+                        <div className="col-span-12 md:col-span-4 flex gap-2">
                             <div className="">प्राप्ति दिनांक:- </div>
                             <div className="font-normal">{indianDate(receiptDetails?.tran_date)}</div>
                         </div>
 
-                        <div className="col-span-8 flex gap-2">
+                        <div className="col-span-12 md:col-span-8 flex gap-2">
                             <div className="">प्राप्त चालान क्रमांक:- </div>
                             <div className="font-normal">{nullToNA(receiptDetails?.challan_no)}</div>
                         </div>
 
-                        <div className="col-span-4 flex gap-2">
+                        <div className="col-span-12 md:col-span-4 flex gap-2">
                             <div className="">चालान दिनांक:- </div>
                             <div className="font-normal">{indianDate(receiptDetails?.challan_date)}</div>
                         </div>
@@ -145,7 +145,7 @@ const FpReceipt = () => {
                         </div>
 
                         <div className="col-span-12 flex gap-2">
-                            <div className="w-[10%] print:w-[15%]">कृत का विवरण:- </div>
+                            <div className="w-full md:w-[10%] print:w-[15%]">कृत का विवरण:- </div>
                             <div className="font-normal">{nullToNA(receiptDetails?.violation_name)}</div>
                         </div>
 
@@ -154,7 +154,7 @@ const FpReceipt = () => {
 
                     {/* 👉 Basic Details 👈 */}
                     <div className='flex justify-between mb-2 pt-4 gap-2 mt-6'>
-                        <div className="text-start text-sm w-full flex flex-wrap gap-y-2 ">
+                        <div className="text-start text-xs md:text-sm w-full flex flex-wrap gap-y-2 ">
 
                             <div className="w-full flex gap-2 flex-wrap">
                                 <div className=""> श्रीमान/श्रीमती </div>
@@ -192,7 +192,7 @@ const FpReceipt = () => {
                     </div>
 
                     {/* 👉 bottom note 👈 */}
-                    <div className="pt-1 mt-4 text-sm font-normal">
+                    <div className="pt-1 mt-4 text-xs md:text-sm font-normal">
  
                             Note  :- Payment by cheque is subject to clearance.
  

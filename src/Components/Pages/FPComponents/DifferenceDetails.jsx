@@ -75,7 +75,7 @@ const DifferenceDetails = () => {
 
                         <div className='bg-white p-4'>
                             <table className='w-full grid grid-cols-12'>
-                                <tr className='col-span-12 grid grid-cols-12 items-center bg-slate-200 p-2 text-slate-600 text-lg'>
+                                <tr className='col-span-12 grid grid-cols-12 items-center bg-slate-200 p-2 text-slate-600 text-lg gap-x-4'>
                                     <th className='col-span-4 text-start font-bold '>#</th>
                                     <th className='col-span-4 text-start font-bold '>Apply Data</th>
                                     <th className='col-span-4 text-start font-bold '>Approved Data</th>
@@ -84,7 +84,7 @@ const DifferenceDetails = () => {
                                     cList?.length > 0 ?
                                         <>{cList?.map((elem) =>
                                             <>
-                                                <tr className='col-span-12 grid grid-cols-12 items-center px-2 py-1.5 border-b'>
+                                                <tr className='col-span-12 grid grid-cols-12 items-center px-2 py-1.5 border-b gap-x-4'>
                                                     <td className='col-span-4 font-semibold'>{elem?.displayString}</td>
                                                     <td className='col-span-4'>{nullToNA(elem?.applied)}</td>
                                                     <td className='col-span-4'>{nullToNA(elem?.final)}</td>

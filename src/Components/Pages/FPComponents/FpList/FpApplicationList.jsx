@@ -76,7 +76,8 @@ const FpApplicationList = () => {
         {
             Header: "Apply Date",
             accessor: "date",
-            Cell: ({ cell }) => (nullToNA(cell.row.original?.date))
+            Cell: ({ cell }) => (nullToNA(cell.row.original?.date)),
+            className: 'w-[7%]'
         },
         {
             Header: "Action",

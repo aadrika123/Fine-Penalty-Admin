@@ -16,11 +16,14 @@ import { nullToNA, indianAmount, indianDate, checkErrorMessage } from '@/Compone
 import { AiFillPrinter } from 'react-icons/ai'
 import BottomErrorCard from '@/Components/Common/BottomErrorCard'
 import useSetTitle from '@/Components/Common/useSetTitle'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import ApiHeader2 from '@/Components/api/ApiHeader2'
 import rmclogo from '@/Components/assets/rmc.png'
 import swachhBharat from '@/Components/assets/swachhBharat.png'
 import axios from 'axios'
+import { FaRegEye } from 'react-icons/fa'
+import { BiMoney } from 'react-icons/bi'
+import { getLocalStorageItemJsonParsed } from '@/Components/Common/localstorage'
 
 const FpChallan2 = () => {
 
@@ -29,6 +32,12 @@ const FpChallan2 = () => {
 
     // 👉 URL constant 👈
     const { id } = useParams()
+
+    // 👉 Navigate constant 👈
+    const navigate = useNavigate()
+
+    // 👉 Storing localstorage data in constant 👈
+    const userDetails = getLocalStorageItemJsonParsed('userDetails')
 
     // 👉 API constant 👈
     const { api_fpChallan2 } = ProjectApiList()
@@ -84,14 +93,70 @@ const FpChallan2 = () => {
             {isLoading && <BarLoader />}
 
             {/* 👉 Print Button 👈 */}
-            <div className='fixed bottom-10 text-center  justify-center items-center  w-screen z-40'>
-                <button onClick={() => window.print()} className="ml-4 font-bold px-6 py-1 bg-indigo-500 text-white  text-sm leading-tight uppercase rounded  hover:bg-indigo-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out shadow-xl border border-white">
+            <div className='fixed bottom-10 text-center flex justify-center items-center gap-4  w-screen z-40'>
+                <button onClick={() => window.print()} className="border border-indigo-600 w-24 py-1 rounded-sm shadow-md hover:shadow-xl bg-indigo-500 hover:bg-indigo-600 
+                            text-white flex items-center justify-center gap-1 ">
                     <AiFillPrinter className='inline text-lg' />
                     Print
                 </button>
+                {/* {cell?.row?.original?.hasExpired ? */}
+                {/* <>
+                         <button
+                         onClick={() => {
+                             navigate(`/challan/${id}`)
+                         }}
+                         className="border border-sky-700 text-sky-700 w-24 py-1 rounded-sm shadow-md hover:shadow-xl hover:bg-sky-700 
+                     hover:text-white flex items-center justify-center gap-1"
+                     >
+                        <span className=" -scale-x-100"><MdOutlineSettingsBackupRestore/></span> Regenerate
+                     </button>
+                     
+                         <button className="border border-red-600 text-red-500 w-24 py-1 rounded-sm shadow-md  flex items-center justify-center gap-1 ">
+                           <RxLinkBreak2/> Expired
+                         </button>
+                         </>
+                         : 
+                        <>*/}
+
+                {(userDetails?.user_type == "JSK" && !challanDetails?.payment_status) && <button
+                    onClick={() => {
+                        navigate(`/fp-pay/${id}`)
+                    }}
+                    className="border border-orange-600 w-24 py-1 rounded-sm shadow-md hover:shadow-xl bg-orange-500 hover:bg-orange-600 
+                            text-white flex items-center justify-center gap-1 "
+                >
+                    <BiMoney /> Pay
+                </button>
+                }
+                {(userDetails?.user_type != "JSK" && !challanDetails?.payment_status) &&
+                    <div
+                        className="border border-red-600 w-max px-4 py-1 rounded-sm shadow-md bg-red-500
+                            text-white flex items-center justify-center gap-1 "
+                    >
+                        <BiMoney /> Payment Not Done
+                    </div>
+                }
+                {/* </>} */}
+
+                {challanDetails?.payment_status &&
+                    <button
+                        onClick={() => {
+                            navigate(`/fp-receipt/${challanDetails?.tran_no}`)
+                        }}
+                        className="border border-green-600 w-24 py-1 rounded-sm shadow-md hover:shadow-xl bg-green-500 hover:bg-green-600 
+                    text-white flex items-center justify-center gap-1 "
+                    >
+                        <FaRegEye /> Receipt
+                    </button>}
             </div>
 
+{/* <div className='bg-none w-[70%] h-[80vh] absolute flex justify-center items-center ml-[11.5vw]'>
+                        <div className='bg-red-100 border border-red-500 text-red-600 text-center text-2xl py-1 w-full'>Challan Expired</div>
+</div> */}
+
             <div className="mx-auto print:block flex justify-center print:w-[98vw] print:drop-shadow-none print:shadow-none print:appearance-none" id="printableArea">
+
+
                 <div className="w-[70%] print:w-auto overflow-x-hidden border-2 border-dashed border-black py-4 px-3 relative h-[80vh] print:h-full print:border-2 print:border-black font-semibold">
 
                     {/* 👉 Logo & Heading 👈 */}

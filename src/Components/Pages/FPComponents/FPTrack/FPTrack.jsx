@@ -21,6 +21,7 @@ import { indianAmount, indianDate, nullToNA } from '@/Components/Common/PowerupF
 import useSetTitle from '@/Components/Common/useSetTitle';
 import {FaRegEye} from 'react-icons/fa'
 import { BiMoney } from 'react-icons/bi';
+import { getLocalStorageItemJsonParsed } from '@/Components/Common/localstorage';
 
 const FPTrack = () => {
 
@@ -32,6 +33,9 @@ const FPTrack = () => {
 
     // 👉 Navigate constant 👈
     const navigate = useNavigate()
+
+    // 👉 Storing localstorage data in constant 👈
+    const userDetails = getLocalStorageItemJsonParsed('userDetails')
 
     // 👉 Column constant 👈
     const columns = [
@@ -62,7 +66,8 @@ const FPTrack = () => {
         {
             Header: "Challan Date",
             accessor: "challan_date",
-            Cell: ({ cell }) => (indianDate(cell.row.original?.challan_date))
+            Cell: ({ cell }) => (indianDate(cell.row.original?.challan_date)),
+            className: 'w-[7%]'
         },
         {
             Header: "Violatioin Name",
@@ -73,6 +78,11 @@ const FPTrack = () => {
             Header: "Penalty Amount",
             accessor: "total_amount",
             Cell: ({ cell }) => (indianAmount(cell.row.original?.total_amount))
+        },
+        {
+            Header: "Has Expired",
+            accessor: "hasExpired",
+            Cell: ({ cell }) => (nullToNA(cell.row.original?.has_expired))
         },
         {
             Header: "Action",
@@ -106,7 +116,7 @@ const FPTrack = () => {
                         <FaRegEye /> Challan
                     </button>
                     
-                        {!cell?.row?.original?.payment_status && <button
+                        {userDetails?.user_type == 'JSK' && !cell?.row?.original?.payment_status && <button
                             onClick={() => {
                                 navigate(`/fp-pay/${cell?.row?.original?.id}`)
                             }}
@@ -115,8 +125,8 @@ const FPTrack = () => {
                         >
                            <BiMoney /> Pay
                         </button>}
-                        {/* </>} */}
-                    {cell?.row?.original?.payment_status && 
+
+                    {userDetails?.user_type == 'JSK' && cell?.row?.original?.payment_status && 
                     <button
                     onClick={() => {
                         navigate(`/fp-receipt/${cell?.row?.original?.transaction_no}`)

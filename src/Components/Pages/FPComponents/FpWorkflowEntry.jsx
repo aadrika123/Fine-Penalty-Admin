@@ -71,7 +71,8 @@ function FpWorkflowEntry() {
       {
         Header: "Apply Date",
         accessor: "date",
-        Cell: ({ cell }) => (indianDate(cell.row.original?.date))
+        Cell: ({ cell }) => (indianDate(cell.row.original?.date)),
+        className: 'w-[7%]'
       }
     ],
   }
