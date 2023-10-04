@@ -46,8 +46,8 @@ const Table = (props) => {
                                                             <tr className="bg-white shadow-lg border-b border-gray-200">
                                                                 <td className="px-2 py-2 text-sm text-left">{index + 1}</td>
                                                                 {
-                                                                    props?.dataKey?.map((elem) =>
-                                                                        <td className="px-2 py-2 text-sm text-left">{nullToNA(value[elem])}</td>
+                                                                    props?.dataKey?.map((elem, index) =>
+                                                                        <td className={`px-2 py-2 text-sm text-left ${index == props?.dataKey?.length - 1  && 'w-[7%]'}`}>{nullToNA(value[elem])}</td>
                                                                     )
                                                                 }
                                                                 <td className="px-2 py-2 text-sm text-left"> <button  className="w-max cursor-pointer px-4 py-1 bg-indigo-500 hover:bg-indigo-600 text-white text-sm" onClick={() => navigate(`${props?.viewLink}${value?.id}`)}>View</button></td>
