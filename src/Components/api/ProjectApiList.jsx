@@ -97,10 +97,11 @@ export default function ProjectApiList() {
 
         api_FpReceipt : baseUrl + '/api/penalty-record/payment-receipt',
 
-        api_getViolationList:        `${baseUrl}/api/violation/list`,
-        api_getSectionList:        `${baseUrl}/api/section/list`,
-        api_getDepartmentList:        `${baseUrl}/api/department/list`,
-        api_getUserList:        `${baseUrl}/api/user-list`,
+        api_getViolationList:    `${baseUrl}/api/violation/list`,
+        api_getSectionList:      `${baseUrl}/api/section/list`,
+        api_assignViolation:     `${baseUrl}/api/violation/onspot`,
+        api_getDepartmentList:   `${baseUrl}/api/department/list`,
+        api_getUserList:         `${baseUrl}/api/user-list`,
 
         api_listDepartment: `${baseUrl}/api/department/crud/list`,
         api_addDepartment: `${baseUrl}/api/department/crud/save`,
@@ -114,7 +115,6 @@ export default function ProjectApiList() {
         
         
         api_compData: `${baseUrl}/api/report/comparison`,
-
 
     }
 

@@ -569,9 +569,13 @@ const InfractionForm = (props) => {
                     <header className='w-full text-gray-700 -mb-3 font-semibold font-serif border-t'></header>
 
                     {
-                        violationForm?.map((elem) => {
-                            return inputBox(elem?.key, elem?.title, elem?.type, elem?.width, elem?.hint, elem?.required, "", elem?.value, elem?.options, elem?.ovalue, elem?.otitle)
-                        })
+                        violationForm?.map((elem, index) => 
+                             
+                            <>
+                                {inputBox(elem?.key, elem?.title, elem?.type, elem?.width, elem?.hint, elem?.required, "", elem?.value, elem?.options, elem?.ovalue, elem?.otitle)}
+                                {index == 0 && <><div>Data will be shown.</div></>}
+                            </>
+                        )
                     }
 
                 </section>

@@ -79,7 +79,7 @@ const DifferenceReport = () => {
                 <div className="flex items-center flex-wrap md:flex-nowrap flex-row gap-2 ">
                         <button
                         onClick={() => {
-                            navigate(`/comparision-report/${cell?.row?.original?.id}`)
+                            navigate(`/comparision-report/${cell?.row?.original?.application_id}`)
                         }}
                         className="border border-sky-700 text-sky-700 w-max px-4 py-1 rounded-sm shadow-md hover:shadow-xl hover:bg-sky-700 
                     hover:text-white flex items-center justify-center gap-1 "

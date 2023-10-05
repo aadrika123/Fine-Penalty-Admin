@@ -29,6 +29,8 @@ import * as yup from 'yup'
 import { useFormik } from "formik";
 import { FiAlertCircle } from "react-icons/fi";
 import { toast } from "react-hot-toast";
+import AssignViolation from "./AssignViolation";
+import { MdAssignmentAdd } from "react-icons/md";
 
 const ViolationIndex = () => {
 
@@ -232,8 +234,24 @@ const ViolationIndex = () => {
             Cell: ({ cell }) => (indianAmount(cell.row.original?.penalty_amount)),
         },
         {
+            Header: "On Spot",
+            Cell: ({ cell }) => <>
+            {
+                (cell.row.original?.on_spot) ? 
+                <span className="text-green-400 font-semibold">Yes</span>
+                :
+                <span className="text-red-400 font-semibold">No</span>
+            }
+            </>,
+        },
+        {
+            Header: "Created By",
+            Cell: ({ cell }) => (nullToNA(cell.row.original?.created_by)),
+        },
+        {
             Header: "Created At",
             Cell: ({ cell }) => (indianDate(cell.row.original?.date)),
+            className: ' w-[7%] '
         },
         {
             Header: "Action",
@@ -628,6 +646,13 @@ const ViolationIndex = () => {
                 {/* 👉 Table Loader 👈 */}
                 {loader && <ShimmerEffectInline />}
 
+                {
+                    !loader && mType == 'violation' && 
+                    <button onClick={() => handleModal('assign')} className={addButton + ' bg-orange-500 hover:bg-orange-600 capitalize flex gap-1 items-center ml-2'} >
+                        <MdAssignmentAdd />Assign On Spot Violation
+                    </button>
+                }
+
                 {/* 👉 Table 👈 */}
                 {!loader &&
                     <>
@@ -682,10 +707,10 @@ const ViolationIndex = () => {
             <dialog ref={dialogRef} className={`relative overflow-clip animate__animated animate__zoomIn animate__faster ${(modalType != 'delete' && mType == 'violation') && ' w-[90vw] md:max-w-[1080px]'}`}>
 
                 {/* 👉 Cross button 👈 */}
-                {modalType != 'delete' && <span onClick={() => (dialogRef.current.close(), formik.resetForm())} className="block p-1 bg-red-100 hover:bg-red-500 rounded-full hover:text-white cursor-pointer transition-all duration-200 absolute top-2 right-2"><RxCross2 /></span>}
+                {modalType != 'assign' && modalType != 'delete' && <span onClick={() => (dialogRef.current.close(), formik.resetForm())} className="block p-1 bg-red-100 hover:bg-red-500 rounded-full hover:text-white cursor-pointer transition-all duration-200 absolute top-2 right-2"><RxCross2 /></span>}
 
                 {/* 👉 Form 👈 */}
-                {modalType != 'delete' && <form onChange={(e) => (formik.handleChange(e), handleChange(e))} onSubmit={formik.handleSubmit} className="p-4 px-8 py-6 shadow-lg">
+                {modalType != 'assign' && modalType != 'delete' && <form onChange={(e) => (formik.handleChange(e), handleChange(e))} onSubmit={formik.handleSubmit} className="p-4 px-8 py-6 shadow-lg">
                     <section className='flex gap-4 flex-wrap'>
 
                         <header className='w-full font-semibold text-xl capitalize text-sky-700 border-b pb-1 text-center'>{modalType} {mType}</header>
@@ -722,6 +747,11 @@ const ViolationIndex = () => {
                             </div>
                         </div>
                     </>
+                }
+
+                {
+                    modalType == 'assign' &&
+                    <AssignViolation closeFun={() => dialogRef.current.close()} refresh={() => getViolationList()} maxAmount={Math.max(...violationDataList.map(item => parseInt(item?.penalty_amount, 10)))} dataList={violationDataList} activateBottomErrorCard={activateBottomErrorCard} />
                 }
 
             </dialog>

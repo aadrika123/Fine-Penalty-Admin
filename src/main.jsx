@@ -20,7 +20,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <div></div>
           <div></div>
           <div></div>
-          <div></div>
         </div>
       </div>}>
         <CustomErrorBoundaryForRoutes errorMsg="Something went wrong. Please try again later !">

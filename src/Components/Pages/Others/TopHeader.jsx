@@ -108,7 +108,7 @@ const TopHeader = (props) => {
           <div className='flex items-center gap-6'>
             <span className='text-red-500 bg-red-100 p-2 block rounded-full drop-shadow-md shadow-red-300'><FiAlertCircle size={25} /></span>
             <div className='flex flex-col gap-2'>
-              <span className='text-xl font-semibold border-b pb-1'>Confirmation Box</span>
+              <span className='text-xl font-semibold border-b pb-1'>Confirmation</span>
               <span className='text-base'>Are you sure want to log out ?</span>
             </div>
           </div>
