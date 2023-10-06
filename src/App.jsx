@@ -26,7 +26,6 @@ const FpApplicationList       = lazy(() => import('@/Components/Pages/FPComponen
 const FpWorkflowEntry         = lazy(() => import('@/Components/Pages/FPComponents/FpWorkflowEntry'));
 const FpChallan2              = lazy(() => import('@/Components/Pages/FPComponents/FpPrint/FpChallan2'));
 const FpDetails               = lazy(() => import('@/Components/Pages/FPComponents/FpDetails'));
-const FpApplyReport           = lazy(() => import('@/Components/Pages/FPComponents/Reports/FpApplyReport'));
 const ChallanGeneratingReport = lazy(() => import('@/Components/Pages/FPComponents/Reports/ChallanGeneratingReport'));
 const ViolationWiseReport     = lazy(() => import('@/Components/Pages/FPComponents/Reports/ViolationWiseReport'));
 const CollectionReport        = lazy(() => import('@/Components/Pages/FPComponents/Reports/CollectionReport'));
