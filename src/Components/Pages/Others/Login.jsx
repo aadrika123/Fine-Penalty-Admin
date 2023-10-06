@@ -80,6 +80,7 @@ function Login() {
                           { name: 'Application List',     path: '/fp-list',           children: [] },
                           { name: 'Search Challan',       path: '/search-challan',    children: [] },
                           { name: 'Violation Master',     path: '/violation-master',  children: [] },
+                          { name: 'User Master',          path: '/user-master',       children: [] },
                           {
                             name: 'Reports',              path: '',                   children: [
                               { name: 'Challan Generated Report', path: '/challan-generated-report' },

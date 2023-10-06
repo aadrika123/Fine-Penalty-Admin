@@ -11,6 +11,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Toaster, toast } from 'react-hot-toast';
 import { contextVar } from '@/Components/context/contextVar';
 import { getLocalStorageItemJsonParsed } from '@/Components/Common/localstorage';
+import UserMaster from './Components/Pages/FPComponents/UserMaster/UserMasterIndex';
 
 const Login                   = lazy(() => import('@/Components/Pages/Others/Login'));
 const ProtectedRoutes         = lazy(() => import('@/Components/Pages/Others/ProtectedRoutes'));
@@ -78,12 +79,12 @@ function App() {
     { path: '/challan/:id',                 element: <FpChallan2 />              },
     { path: '/fp-pay/:id',                  element: <FpPayment />               },
     { path: '/fp-receipt/:tranNo',          element: <FpReceipt />               },
-    { path: '/fp-apply-report',             element: <FpApplyReport />           },
     { path: '/challan-generated-report',    element: <ChallanGeneratingReport /> },
     { path: '/violation-wise-report',       element: <ViolationWiseReport />     },
     { path: '/collection-report',           element: <CollectionReport />        },
     { path: '/comparision-report',          element: <DifferenceReport />        },
     { path: '/comparision-report/:id',      element: <DifferenceDetails />       },
+    { path: '/user-master',                 element: <UserMaster />       },
 
   ]
 

@@ -1,3 +1,15 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 👉 Author      : R U Bharti
+// 👉 Component   : ChallanGeneratingReport
+// 👉 Status      : Open
+// 👉 Description : This component will show challan generated reports with some parameters.
+// 👉 Functions   :  
+//                  1. inputBox          -> Function to map input field.
+//                  2. getViolationList  -> To fetch violation list.
+//                  3. fetchData         -> To fetch data by some parameters.
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// 👉 Importing Packages 👈
 import React, { useEffect } from 'react'
 import ListTableConnect from "@/Components/Common/ListTableBP/ListTableConnect";
 import { useFormik } from "formik";
@@ -7,8 +19,7 @@ import { RotatingLines } from "react-loader-spinner";
 import * as yup from 'yup'
 import ProjectApiList from "@/Components/api/ProjectApiList";
 import { useNavigate } from "react-router-dom";
-import { getCurrentDate, indianAmount, indianDate, nullToNA } from "@/Components/Common/PowerupFunctions";
-import { useMemo } from "react";
+import { getCurrentDate, indianAmount, nullToNA } from "@/Components/Common/PowerupFunctions";
 import useSetTitle from "@/Components/Common/useSetTitle";
 import AxiosInterceptors from '@/Components/Common/AxiosInterceptors';
 import ApiHeader from '@/Components/api/ApiHeader';
@@ -21,12 +32,10 @@ const ChallanGeneratingReport = () => {
     // 👉 API constant 👈
     const { api_ChallanGeneratingReport, api_getUserList } = ProjectApiList()
     const [userList, setUserList] = useState([])
-
-    const [sLoader, setsLoader] = useState(false)
-
+    
     // 👉 Navigate constant 👈
     const navigate = useNavigate()
-
+    
     // 👉 Column constant 👈
     const columns = [
         {
@@ -93,13 +102,13 @@ const ChallanGeneratingReport = () => {
     const [requestBody, setrequestBody] = useState({})
     const [changeData, setchangeData] = useState(0)
     const [loader, setloader] = useState(false);
-    const [viewAll, setviewAll] = useState(false)
+    const [sLoader, setsLoader] = useState(false)
 
     // 👉 CSS Constants 👈
     const labelStyle = 'text-gray-800 text-sm'
     const inputStyle = 'border focus:outline-none drop-shadow-sm focus:drop-shadow-md px-4 py-1 text-gray-700 shadow-black placeholder:text-sm'
-    const fileStyle = 'block w-full border focus:outline-none drop-shadow-sm focus:drop-shadow-md p-1 text-sm text-slate-500 file:mr-4 file:py-1 file:px-4 file:rounded-sm file:border file:text-xs file:font-semibold file:bg-zinc-100 hover:file:bg-zinc-200'
 
+    // 👉 Filter Form JSON 👈
     const formDataList = [
         { title: "From Date", key: "fromDate", width: 'md:w-[20%] w-full', type: 'date', hint: "", required: true, options: '', okey: '', ovalue: '' },
         { title: "Upto Date", key: "uptoDate", width: 'md:w-[20%] w-full', type: 'date', hint: "", required: true, options: '', okey: '', ovalue: '' },
@@ -108,6 +117,7 @@ const ChallanGeneratingReport = () => {
         { title: "Challan Category", key: "challanCategory", width: 'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: [{ id: 1, value: 'E-Rickshaw' }, { id: 2, value: 'Others' }], okey: 'id', ovalue: 'value' },
     ]
 
+    // 👉 Function 1 👈
     const inputBox = (key, title = '', type, width = '', hint = '', required = false, options = [], okey = '', ovalue = '') => {
         return (
             <div className={`flex flex-col ${width} `}>
@@ -130,6 +140,7 @@ const ChallanGeneratingReport = () => {
         );
     }
 
+    // 👉 Validation Schema 👈
     const schema = yup.object().shape(
         [...formDataList]?.reduce((acc, elem) => {
 
@@ -141,6 +152,7 @@ const ChallanGeneratingReport = () => {
         }, {})
     );
 
+    // 👉 Initial values 👈
     const initialValues = {
         fromDate: getCurrentDate(),
         uptoDate: getCurrentDate(),
@@ -159,35 +171,7 @@ const ChallanGeneratingReport = () => {
         },
     });
 
-    // 👉 Function 1 👈
-    const getAllList = () => {
-
-        formik.setFieldValue('searchBy', '')
-        formik.setFieldValue("entry", '')
-
-        setrequestBody({})
-
-        setviewAll(false)
-
-        setchangeData(prev => prev + 1)
-
-    }
-
     // 👉 Function 2 👈
-    const fetchData = (data) => {
-        setviewAll(true)
-        setrequestBody({
-            fromDate: data?.fromDate,
-            uptoDate: data?.uptoDate,
-            userId: data?.users,
-            challanType: data?.challanType,
-            challanCategory: data?.challanCategory,
-        })
-
-        setchangeData(prev => prev + 1)
-
-    };
-
     const getViolationList = () => {
 
         setsLoader(true)
@@ -209,6 +193,21 @@ const ChallanGeneratingReport = () => {
             })
     }
 
+    // 👉 Function 3 👈
+    const fetchData = (data) => {
+        setrequestBody({
+            fromDate: data?.fromDate,
+            uptoDate: data?.uptoDate,
+            userId: data?.users,
+            challanType: data?.challanType,
+            challanCategory: data?.challanCategory,
+        })
+
+        setchangeData(prev => prev + 1)
+
+    };
+
+    // 👉 To call Funtion 2 👈
     useEffect(() => {
         getViolationList()
     }, [])
@@ -260,16 +259,6 @@ const ChallanGeneratingReport = () => {
                     </div>
                 </section>
 
-
-                {/* {viewAll && <div className='' onClick={() => getAllList()}>
-                        {
-                            !loader &&
-                            <div
-                                className="cursor-pointer text-center w-full border border-indigo-600 bg-indigo-500 hover:bg-indigo-600 text-white shadow-md rounded-sm text-sm font-semibold px-5 py-1"
-                            >
-                                View All Applications
-                            </div>}
-                    </div>} */}
             </form>
 
             {/* 👉 Table 👈 */}

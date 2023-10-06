@@ -236,12 +236,12 @@ const ViolationIndex = () => {
         {
             Header: "On Spot",
             Cell: ({ cell }) => <>
-            {
-                (cell.row.original?.on_spot) ? 
-                <span className="text-green-400 font-semibold">Yes</span>
-                :
-                <span className="text-red-400 font-semibold">No</span>
-            }
+                {
+                    (cell.row.original?.on_spot) ?
+                        <span className="text-green-400 font-semibold">Yes</span>
+                        :
+                        <span className="text-red-400 font-semibold">No</span>
+                }
             </>,
         },
         {
@@ -646,8 +646,9 @@ const ViolationIndex = () => {
                 {/* 👉 Table Loader 👈 */}
                 {loader && <ShimmerEffectInline />}
 
+                {/* 👉 Button to open assign on spot violation modal 👈 */}
                 {
-                    !loader && mType == 'violation' && 
+                    !loader && mType == 'violation' &&
                     <button onClick={() => handleModal('assign')} className={addButton + ' bg-orange-500 hover:bg-orange-600 capitalize flex gap-1 items-center ml-2'} >
                         <MdAssignmentAdd />Assign On Spot Violation
                     </button>
@@ -749,6 +750,7 @@ const ViolationIndex = () => {
                     </>
                 }
 
+                {/* 👉 Assign on spot violation component 👈 */}
                 {
                     modalType == 'assign' &&
                     <AssignViolation closeFun={() => dialogRef.current.close()} refresh={() => getViolationList()} maxAmount={Math.max(...violationDataList.map(item => parseInt(item?.penalty_amount, 10)))} dataList={violationDataList} activateBottomErrorCard={activateBottomErrorCard} />

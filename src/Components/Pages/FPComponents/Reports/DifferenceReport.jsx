@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 👉 Author      : R U Bharti
 // 👉 Component   : DifferenceReport
-// 👉 Status      : Open
+// 👉 Status      : Close
 // 👉 Description : This component is for searching challan list and view difference details.
 // 👉 Functions   :  
 //                  1. getAllList      -> To fetch all list.

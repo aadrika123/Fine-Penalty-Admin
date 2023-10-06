@@ -1,3 +1,14 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 👉 Author      : R U Bharti
+// 👉 Component   : DifferenceDetails
+// 👉 Status      : Close
+// 👉 Description : This screen is designed to show the difference between apply data and approved data.
+// 👉 Functions   :  
+//                  1. activateBottomErrorCard      -> To activate error card with status and message.
+//                  1. fetchComparisionList         -> To fetch comparision data.
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// 👉 Importing Packages 👈
 import AxiosInterceptors from '@/Components/Common/AxiosInterceptors'
 import BottomErrorCard from '@/Components/Common/BottomErrorCard'
 import ShimmerEffectInline from '@/Components/Common/Loaders/ShimmerEffectInline'
@@ -9,20 +20,25 @@ import { useParams } from 'react-router-dom'
 
 const DifferenceDetails = () => {
 
+    // 👉 URL constants 👈
     const { id } = useParams()
 
+    // 👉 API constant 👈
     const { api_compData } = ProjectApiList()
 
+    // 👉 State constants 👈
     const [cList, setcList] = useState([])
     const [loader, setLoader] = useState(false)
     const [errorState, setErrorState] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
 
+    // 👉 Function 1 👈
     const activateBottomErrorCard = (state, message) => {
         setErrorState(state)
         setErrorMessage(message)
     }
 
+    // 👉 Function 2 👈
     const fetchComparisionList = () => {
 
         setLoader(true)
@@ -51,6 +67,7 @@ const DifferenceDetails = () => {
             })
     }
 
+    // 👉 To call function 2 👈
     useEffect(() => {
         fetchComparisionList()
     }, [])
@@ -65,6 +82,7 @@ const DifferenceDetails = () => {
                 {/* 👉 Header 👈 */}
                 <h1 className="text-2xl font-semibold uppercase text-center text-gray-700 border-b border-gray-400 mb-4 pb-1 tracking-widest">Comparision Chart</h1>
 
+                {/* 👉 Loader 👈 */}
                 {
                     loader && <ShimmerEffectInline />
                 }
@@ -73,26 +91,36 @@ const DifferenceDetails = () => {
 
                     <>
 
+                        {/* 👉 Comparision Screen 👈 */}
                         <div className='bg-white p-4'>
+
                             <table className='w-full grid grid-cols-12'>
+
+                                {/* 👉 Comparision Header 👈 */}
                                 <tr className='col-span-12 grid grid-cols-12 items-center bg-slate-200 p-2 text-slate-600 text-lg gap-x-4'>
                                     <th className='col-span-4 text-start font-bold '>#</th>
                                     <th className='col-span-4 text-start font-bold '>Apply Data</th>
                                     <th className='col-span-4 text-start font-bold '>Approved Data</th>
                                 </tr>
+
+                                {/* 👉 List 👈 */}
                                 {
                                     cList?.length > 0 ?
                                         <>{cList?.map((elem) =>
                                             <>
+
+                                                {/* 👉 Comparision Row 👈 */}
                                                 <tr className='col-span-12 grid grid-cols-12 items-center px-2 py-1.5 border-b gap-x-4'>
                                                     <td className='col-span-4 font-semibold'>{elem?.displayString}</td>
                                                     <td className='col-span-4'>{nullToNA(elem?.applied)}</td>
                                                     <td className='col-span-4'>{nullToNA(elem?.final)}</td>
                                                 </tr>
+
                                             </>
                                         )}
                                         </>
                                         :
+                                        // 👉 Message row when no comparision available 👈
                                         <tr className='col-span-12 mt-4 w-full border border-red-200 bg-red-100 text-center text-red-500 py-2 text-lg'>
                                             <td colSpan={3} className='flex justify-center'>Oops! No Comparision Data available.</td>
                                         </tr>

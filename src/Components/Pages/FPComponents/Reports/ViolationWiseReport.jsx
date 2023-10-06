@@ -1,3 +1,14 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 👉 Author      : R U Bharti
+// 👉 Component   : ViolationWiseReport
+// 👉 Status      : Open
+// 👉 Description : This component will violation wise reports with some parameters.
+// 👉 Functions   :  
+//                  1. inputBox          -> Function to map input field.
+//                  2. fetchData         -> To fetch data by some parameters.
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// 👉 Importing Packages 👈
 import React, { useEffect } from 'react'
 import ListTableConnect from "@/Components/Common/ListTableBP/ListTableConnect";
 import { useFormik } from "formik";
@@ -7,13 +18,13 @@ import { RotatingLines } from "react-loader-spinner";
 import * as yup from 'yup'
 import ProjectApiList from "@/Components/api/ProjectApiList";
 import { useNavigate } from "react-router-dom";
-import { getCurrentDate, indianAmount, indianDate, nullToNA } from "@/Components/Common/PowerupFunctions";
-import { useMemo } from "react";
+import { getCurrentDate, indianAmount, nullToNA } from "@/Components/Common/PowerupFunctions";
 import useSetTitle from "@/Components/Common/useSetTitle";
 import AxiosInterceptors from '@/Components/Common/AxiosInterceptors';
 import ApiHeader from '@/Components/api/ApiHeader';
 
 const ViolationWiseReport = () => {
+
     // 👉 Setting title 👈
     useSetTitle("Violation Wise Report")
 
@@ -22,8 +33,6 @@ const ViolationWiseReport = () => {
     const [violationList, setViolationList] = useState([])
     const [violationSectionList, setViolationSectionList] = useState([])
     const [departmentList, setDepartmentList] = useState([])
-
-    const [sLoader, setsLoader] = useState(false)
 
     // 👉 Navigate constant 👈
     const navigate = useNavigate()
@@ -79,12 +88,13 @@ const ViolationWiseReport = () => {
     const [requestBody, setrequestBody] = useState({})
     const [changeData, setchangeData] = useState(0)
     const [loader, setloader] = useState(false);
-    const [viewAll, setviewAll] = useState(false)
+    const [sLoader, setsLoader] = useState(false)
 
     // 👉 CSS Constants 👈
     const labelStyle = 'text-gray-800 text-sm'
     const inputStyle = 'border focus:outline-none drop-shadow-sm focus:drop-shadow-md px-4 py-1 text-gray-700 shadow-black placeholder:text-sm'
 
+    // 👉 Filter Form JSON 👈
     const formDataList = [
         { title: "From Date", key: "fromDate", width: 'md:w-[20%] w-full', type: 'date', hint: "", required: true, options: '', okey: '', ovalue: '' },
         { title: "Upto Date", key: "uptoDate", width: 'md:w-[20%] w-full', type: 'date', hint: "", required: true, options: '', okey: '', ovalue: '' },
@@ -93,6 +103,7 @@ const ViolationWiseReport = () => {
         { title: "Violation Made", key: "violationMade", width: 'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: violationList, okey: 'id', ovalue: 'violation_name' },
     ]
 
+    // 👉 Function 1 👈
     const inputBox = (key, title = '', type, width = '', hint = '', required = false, options = [], okey = '', ovalue = '') => {
         return (
             <div className={`flex flex-col ${width} `}>
@@ -115,6 +126,7 @@ const ViolationWiseReport = () => {
         );
     }
 
+    // 👉 Validation Schema 👈
     const schema = yup.object().shape(
         [...formDataList]?.reduce((acc, elem) => {
 
@@ -126,6 +138,7 @@ const ViolationWiseReport = () => {
         }, {})
     );
 
+    // 👉 Formik initial values 👈
     const initialValues = {
         fromDate: getCurrentDate(),
         uptoDate: getCurrentDate(),
@@ -144,23 +157,8 @@ const ViolationWiseReport = () => {
         },
     });
 
-    // 👉 Function 1 👈
-    const getAllList = () => {
-
-        formik.setFieldValue('searchBy', '')
-        formik.setFieldValue("entry", '')
-
-        setrequestBody({})
-
-        setviewAll(false)
-
-        setchangeData(prev => prev + 1)
-
-    }
-
     // 👉 Function 2 👈
     const fetchData = (data) => {
-        setviewAll(true)
         setrequestBody({
             fromDate: data?.fromDate,
             uptoDate: data?.uptoDate,
@@ -173,6 +171,7 @@ const ViolationWiseReport = () => {
 
     };
 
+    // 👉 Function 3 👈
     const getDepartmentList = () => {
 
         setsLoader(true)
@@ -194,6 +193,7 @@ const ViolationWiseReport = () => {
             })
     }
 
+    // 👉 Function 4 👈
     const getViolationSectionList = (value) => {
 
         console.log(value)
@@ -217,6 +217,7 @@ const ViolationWiseReport = () => {
             })
     }
 
+    // 👉 Function 5 👈
     const getViolationList = (value) => {
 
         setsLoader(true)
@@ -243,6 +244,7 @@ const ViolationWiseReport = () => {
             })
     }
 
+    // 👉 Function 6 👈
     const handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -308,16 +310,6 @@ const ViolationWiseReport = () => {
                     </div>
                 </section>
 
-
-                {/* {viewAll && <div className='' onClick={() => getAllList()}>
-                        {
-                            !loader &&
-                            <div
-                                className="cursor-pointer text-center w-full border border-indigo-600 bg-indigo-500 hover:bg-indigo-600 text-white shadow-md rounded-sm text-sm font-semibold px-5 py-1"
-                            >
-                                View All Applications
-                            </div>}
-                    </div>} */}
 
             </form >
 

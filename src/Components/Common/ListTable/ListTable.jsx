@@ -59,16 +59,6 @@ function ListTable(props) {
                 <div className='flex-initial'><GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} /></div>
                 {props?.exportStatus !== false && <div className='flex-initial ml-2'><button className='bg-sky-400 px-3 pr-3  shadow-lg rounded py-1 text-white hover:shadow-2xl hover:bg-green-600 text-center relative' onMouseEnter={() => setbounce('')} onMouseLeave={() => setbounce('hidden')}><CSVLink data={props.dataList}>Export</CSVLink><div className={bounce + ' absolute h-full top-3 text-sm left-0 text-center animate-bounce'}><AiOutlineArrowDown /></div></button></div>}
                 <div className='flex-1'>{props.children}</div>
-                {
-                    props.assessmentType && <div className='flex-initial flex'><div className="flex">
-                        <div className='flex-initial h-4 w-4 text-green-900 text-xs font-semibold text-center bg-green-200 rounded-full ml-4 '>N</div><div className='flex-initial text-xs ml-2'> New Assessment</div>
-                        <div className='flex-initial h-4 w-4 bg-blue-200  text-blue-900 text-xs font-semibold text-center rounded-full ml-4'>R</div><div className='flex-initial text-xs ml-2'> Re-Assessment</div>
-                        <div className='flex-initial h-4 w-4 bg-red-200  text-red-900 text-xs font-semibold text-center rounded-full ml-4'>M</div><div className='flex-initial text-xs ml-2'> Mutation</div>
-                    </div>
-                        <div></div>
-                        <div></div>
-                    </div>
-                }
             </div>
             <div className=" p-4 overflow-x-auto bg-white">
                 <div className="inline-block min-w-full rounded-lg overflow-hidden bg-white">
@@ -144,9 +134,3 @@ function ListTable(props) {
 }
 
 export default ListTable
-/**
- * Exported to :
- * 1. MailboxContent Component
- * 2. PropertySafApplicationList Component
- * 
- */

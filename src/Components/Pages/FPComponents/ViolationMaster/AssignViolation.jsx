@@ -1,3 +1,16 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 👉 Author      : R U Bharti
+// 👉 Component   : AssignViolation
+// 👉 Status      : Close
+// 👉 Description : This screen is designed to assign violation for on-spot.
+// 👉 Functions   :  
+//                  1. checkId           -> To check violation id is available or not.
+//                  2. handleCheckBox    -> To handle checkbox and store id(s) in violationIds state.
+//                  3. closeFun          -> To close dialog and refresh the data.
+//                  4. assignAllFun      -> Final submission id(s) to update through api.
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// 👉 Importing Packages 👈
 import { checkErrorMessage, indianAmount } from '@/Components/Common/PowerupFunctions'
 import React, { useEffect, useState } from 'react'
 import './rangeStyle.css'
@@ -10,18 +23,27 @@ import ShimmerEffectInline from '@/Components/Common/Loaders/ShimmerEffectInline
 
 const AssignViolation = (props) => {
 
+    // 👉 API constant 👈
     const { api_assignViolation } = ProjectApiList()
 
+    // 👉 State constants 👈
     const [amount, setAmount] = useState(0)
     const [violationIds, setViolationIds] = useState([])
     const [allCheck, setAllCheck] = useState(false)
     const [loader, setLoader] = useState(false)
 
+    // 👉 To store id(s) in violationIds list if on_spot == true 👈
     useEffect(() => {
         const idArray = props?.dataList?.filter(item => item?.on_spot == true)?.map((elem) => elem?.id);
         setViolationIds(idArray)
     }, [props?.dataList])
 
+    // 👉 Function 1 👈
+    const checkId = (id) => {
+        return violationIds.some(item => parseInt(item) == parseInt(id))
+    }
+
+    // 👉 Function 2 👈
     const handleCheckBox = (e, id = '') => {
 
         const name = e.target.name;
@@ -50,6 +72,7 @@ const AssignViolation = (props) => {
 
     }
 
+    // 👉 Function 3 👈
     const closeFun = () => {
         props?.closeFun()
         setAllCheck(false)
@@ -57,6 +80,7 @@ const AssignViolation = (props) => {
         props?.refresh()
     }
 
+    // 👉 Function 4 👈
     const assignAllFun = () => {
 
         setLoader(true)
@@ -85,43 +109,44 @@ const AssignViolation = (props) => {
 
     }
 
-    const checkId = (id) => {
-        return violationIds.some(item => parseInt(item) == parseInt(id))
-    }
-
     return (
         <>
 
+            {/* 👉 Close button 👈 */}
             <span onClick={() => closeFun()} className="block p-1 bg-red-100 hover:bg-red-500 rounded-full hover:text-white cursor-pointer transition-all duration-200 absolute top-2 right-2"><RxCross2 /></span>
 
+            {/* 👉 Main Screen 👈 */}
             <div className='p-4 px-6'>
 
+                {/* 👉 Range Heading 👈 */}
                 <h1 className='font-semibold text-sky-700 border-b pb-1 text-center my-4 text-xl '>Penalty Amount Assignment for On-Spot Challan Generation</h1>
 
+                {/* 👉 Range Bar 👈 */}
                 <div className='bg-sky-50 p-4'>
                     <label for="minmax-range" class="block mb-2 font-medium text-gray-900 text-lg">Select Penalty Range</label>
                     <input id="minmax-range" type="range" min="0" max={props?.maxAmount} onChange={e => setAmount(e.target.value)} value={amount} class="w-full h-2 range-input bg-sky-800 rounded-lg appearance-none cursor-pointer darks:bg-gray-700" />
 
+                    {/* 👉 Range Label 👈 */}
                     <div className="w-full flex justify-between text-xs font-semibold">
                         <span>{indianAmount(0)}</span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
                         <span>{indianAmount(props?.maxAmount)}</span>
                     </div>
                 </div>
 
+                {/* 👉 Range Input 👈 */}
                 <div className='my-4 font-semibold'><span className='text-sm font-normal'>Amount:</span> ₹ <input type="number" className='focus:outline-none border-b border-gray-300 w-28 bg-white' name="" value={amount} onChange={e => setAmount(e.target.value)} max={parseFloat(props?.maxAmount)} placeholder='0.00' id="" /></div>
 
-
+                {/* 👉 Assign Action Button 👈 */}
                 {!loader && Array.isArray(props?.dataList) && props?.dataList?.filter(item => parseFloat(item?.penalty_amount) <= parseFloat(amount))?.length > 0 &&
                     <div className='px-2 animate__animated animate__fadeIn animate__faster'>
                         <button onClick={() => assignAllFun()} className='float-right bg-[#1A4D8C] px-3 py-1 rounded-sm shadow-lg hover:shadow-xl hover:bg-[#113766] hover:text-white text-white flex items-center mb-1'>Assign</button>
                     </div>
                 }
 
+                {/* 👉 List Screen 👈 */}
                 <div className='flex flex-col h-[60vh] w-full overflow-y-auto md:overflow-x-hidden'>
 
+                    {/* 👉 List Heading 👈 */}
                     <div className='w-full grid grid-cols-12 items-center gap-2 bg-slate-500 text-white font-semibold border border-slate-200 px-4 py-2'>
                         <div className='col-span-1'>Section</div>
                         <div className='col-span-10 text-center'>Violation Name</div>
@@ -134,11 +159,12 @@ const AssignViolation = (props) => {
                         </div>
                     </div>
 
-
+                    {/* 👉 List Loader 👈 */}
                     {
                         loader && <ShimmerEffectInline />
                     }
 
+                    {/* 👉 All List 👈 */}
                     {
                         !loader && Array.isArray(props?.dataList) &&
                         props?.dataList?.filter(item => parseFloat(item?.penalty_amount) <= parseFloat(amount))?.map((elem, index) =>
@@ -156,6 +182,7 @@ const AssignViolation = (props) => {
                         )
                     }
 
+                    {/* 👉 Message for list when no data available 👈 */}
                     {
                         !loader && Array.isArray(props?.dataList) && props?.dataList?.filter(item => parseFloat(item?.penalty_amount) <= parseFloat(amount))?.length == 0 &&
                         <div className='w-full text-center text-red-400 font-semibold pb-1 p-4'>
