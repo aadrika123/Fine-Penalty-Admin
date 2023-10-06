@@ -11,8 +11,9 @@
 //                  5. firstPageFun  -> To jump on first page
 //                  6. lastPageFun   -> To jump on last page
 //                  7. gotoPageFun   -> To jump of manual or any entered page
-//                  8. exportDataFun -> To collect all data to export
-//                  9. downloadFun   -> To download the exported data in CSV
+//                  8. makeExportFun -> To make export table.
+//                  9. exportDataFun -> To collect all data to export
+//                 10. downloadFun   -> To download the exported data in CSV
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // 👉 Importing packages 👈
@@ -129,7 +130,23 @@ const ListTableConnect = (props) => {
         setpageCount(val)
     }
 
-    // 👉 Function 8 👈
+     // 👉 Function 8 👈
+    const makeExportFun = (dataList) => {
+        console.log(props?.columns);
+        let data = dataList?.map((elem, index) => {
+          // Map over the columns for each element in dataList
+          const rowData = props?.columns?.map((col, columnIndex) => {
+            return col?.Header != "Action" && { [col?.Header]: col?.accessor ? elem[col?.accessor] : index + 1 };
+          });
+      
+          // Combine rowData for each element into a single object
+          return Object.assign({}, ...rowData);
+        });
+      
+        return data;
+      };
+
+    // 👉 Function 9 👈
     const exportDataFun = () => {
 
         setloader(true)
@@ -139,7 +156,7 @@ const ListTableConnect = (props) => {
             props?.api, { ...props?.requestBody, perPage: totalCount }, ApiHeader())
             .then((res) => {
                 if (res?.data?.status == true) {
-                    setexportData(res?.data?.data?.data)
+                    setexportData(makeExportFun(res?.data?.data?.data))
                     downloadFun()
                 } else {
                 }
@@ -152,7 +169,7 @@ const ListTableConnect = (props) => {
 
     }
 
-    // 👉 Function 9 👈
+    // 👉 Function 10 👈
     const downloadFun = () => {
         setcsvStatus(true)
     }

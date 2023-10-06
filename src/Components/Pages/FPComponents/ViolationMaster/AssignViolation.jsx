@@ -139,7 +139,7 @@ const AssignViolation = (props) => {
                 {/* 👉 Assign Action Button 👈 */}
                 {!loader && Array.isArray(props?.dataList) && props?.dataList?.filter(item => parseFloat(item?.penalty_amount) <= parseFloat(amount))?.length > 0 &&
                     <div className='px-2 animate__animated animate__fadeIn animate__faster'>
-                        <button onClick={() => assignAllFun()} className='float-right bg-[#1A4D8C] px-3 py-1 rounded-sm shadow-lg hover:shadow-xl hover:bg-[#113766] hover:text-white text-white flex items-center mb-1'>Assign</button>
+                        <button onClick={() => assignAllFun()} className='float-right bg-green-500 px-3 py-1 rounded-sm shadow-lg hover:shadow-xl hover:bg-green-600 hover:text-white text-white flex items-center mb-1'>Assign</button>
                     </div>
                 }
 

@@ -96,7 +96,7 @@ const FpPayment = () => {
 
                     {/* 👉 Heading 👈 */}
                     <div className='flex justify-center mb-6'>
-                        <h1 className='bg-white shadow-lg shadow-indigo-300 text-indigo-400 w-max font-semibold text-2xl px-6 py-2 border border-indigo-400'>Fines & Penalties Payment Screen</h1>
+                        <h1 className='bg-white shadow-lg shadow-indigo-300 text-indigo-400 w-max font-semibold text-2xl px-6 py-2 border border-indigo-400'>Fines & Penalties Payment</h1>
                     </div>
 
                     {/* 👉 Details sections 👈 */}

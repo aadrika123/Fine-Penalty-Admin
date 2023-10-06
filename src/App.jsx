@@ -12,6 +12,7 @@ import { Toaster, toast } from 'react-hot-toast';
 import { contextVar } from '@/Components/context/contextVar';
 import { getLocalStorageItemJsonParsed } from '@/Components/Common/localstorage';
 import UserMaster from './Components/Pages/FPComponents/UserMaster/UserMasterIndex';
+import NewPassowd from './Components/Pages/Others/NewPassowd';
 
 const Login                   = lazy(() => import('@/Components/Pages/Others/Login'));
 const ProtectedRoutes         = lazy(() => import('@/Components/Pages/Others/ProtectedRoutes'));
@@ -97,6 +98,7 @@ function App() {
         <Routes>
 
           <Route index element={<Login />} />
+          <Route path='/set-password/:token/:id' element={<NewPassowd />} />
           <Route path='/challan/:id/direct'   element={<FpChallan2 />} />
           <Route path='/fp-receipt/:tranNo/direct' element={<FpReceipt />} />
 

@@ -113,8 +113,17 @@ export default function ProjectApiList() {
         api_updateSection: `${baseUrl}/`,
         api_deleteSection: `${baseUrl}/api/section/crud/delete`,
         
-        
         api_compData: `${baseUrl}/api/report/comparison`,
+
+        api_addRole:        `${baseUrl}/api/wfrole/crud/save`,
+        api_updateRole:     `${baseUrl}/api/wfrole/crud/edit`,
+        api_deletedRole:    `${baseUrl}/api/wfrole/crud/delete`,
+        api_listRole:       `${baseUrl}/api/wfrole/crud/list`,
+
+        api_addUser:        `${baseUrl}/api/wfrole/crud/save`,
+        api_updateUser:     `${baseUrl}/api/wfrole/crud/edit`,
+        api_deletedUser:    `${baseUrl}/api/wfrole/crud/delete`,
+        api_listUser:       `${baseUrl}/api/wfrole/crud/list`,
 
     }
 

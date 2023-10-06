@@ -143,10 +143,12 @@ const ViolationIndex = () => {
         },
         {
             Header: "Department",
+            accessor: "department_name",
             Cell: ({ cell }) => (nullToNA(cell.row.original?.department_name)),
         },
         {
             Header: "Created At",
+            accessor: "date",
             Cell: ({ cell }) => (indianDate(cell.row.original?.date)),
         },
         {
@@ -179,10 +181,12 @@ const ViolationIndex = () => {
         },
         {
             Header: "Department",
+            accessor: "department_name",
             Cell: ({ cell }) => (nullToNA(cell.row.original?.department_name)),
         },
         {
             Header: "Violation Section",
+            accessor: "violation_section",
             Cell: ({ cell }) => (nullToNA(cell.row.original?.violation_section)),
         },
         {
@@ -219,22 +223,27 @@ const ViolationIndex = () => {
         },
         {
             Header: "Department",
+            accessor: "department_name",
             Cell: ({ cell }) => (nullToNA(cell.row.original?.department_name)),
         },
         {
             Header: "Violation Section",
+            accessor: "violation_section",
             Cell: ({ cell }) => (nullToNA(cell.row.original?.violation_section)),
         },
         {
             Header: "Violation Name",
+            accessor: "violation_name",
             Cell: ({ cell }) => (nullToNA(cell.row.original?.violation_name)),
         },
         {
             Header: "Penalty Amount",
+            accessor: "penalty_amount",
             Cell: ({ cell }) => (indianAmount(cell.row.original?.penalty_amount)),
         },
         {
             Header: "On Spot",
+            accessor: 'on_spot',
             Cell: ({ cell }) => <>
                 {
                     (cell.row.original?.on_spot) ?
@@ -246,10 +255,12 @@ const ViolationIndex = () => {
         },
         {
             Header: "Created By",
+            accessor: "created_by",
             Cell: ({ cell }) => (nullToNA(cell.row.original?.created_by)),
         },
         {
             Header: "Created At",
+            accessor: "date",
             Cell: ({ cell }) => (indianDate(cell.row.original?.date)),
             className: ' w-[7%] '
         },

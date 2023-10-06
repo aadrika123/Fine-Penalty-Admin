@@ -80,7 +80,7 @@ function Login() {
                           { name: 'Application List',     path: '/fp-list',           children: [] },
                           { name: 'Search Challan',       path: '/search-challan',    children: [] },
                           { name: 'Violation Master',     path: '/violation-master',  children: [] },
-                          { name: 'User Master',          path: '/user-master',       children: [] },
+                          { name: 'User Role Master',          path: '/user-master',       children: [] },
                           {
                             name: 'Reports',              path: '',                   children: [
                               { name: 'Challan Generated Report', path: '/challan-generated-report' },
@@ -180,7 +180,7 @@ function Login() {
                                         <div className="p-6 sm:py-8 sm:px-12 rounded-lg bg-white darks:bg-gray-800 shadow-xl">
                                             <form onSubmit={formik.handleSubmit}>
                                                 <div className="text-center">
-                                                    <h1 className="text-2xl leading-normal mb-3 font-bold text-gray-800 darks:text-gray-300 text-center">Welcome Back</h1>
+                                                    <h1 className="text-2xl leading-normal mb-3 font-bold text-gray-800 darks:text-gray-300 text-center">Login</h1>
                                                 </div>
                                                 <hr className="block w-12 h-0.5 mx-auto my-5 bg-gray-700 border-gray-700" />
                                                 <div className="mb-6">
@@ -197,7 +197,7 @@ function Login() {
                                                     <input {...formik.getFieldProps('password')} className="w-full leading-5 relative py-2 px-4 rounded text-gray-800 bg-white border border-gray-300 overflow-x-auto focus:outline-none focus:border-gray-400 focus:ring-0 darks:text-gray-300 darks:bg-gray-700 darks:border-gray-700 darks:focus:border-gray-600" aria-label="password" type="password" defaultValue required />
                                                     <span className='text-red-600 text-xs'>{formik.touched.password && formik.errors.password ? formik.errors.password : null}</span>
                                                 </div>
-                                                <div className="grid">
+                                                <div className="grid mb-6">
                                                     {loaderStatus ?
                                                         <div className='flex justify-center'>
                                                             <RotatingLines
@@ -218,12 +218,6 @@ function Login() {
 
                                                 </div>
                                             </form>
-                                            {/* =========buttons for change and reset password========= */}
-                                            <div className="my-4">
-                                                <div className='flex flex-col items-center justify-center flex-wrap gapx-x-2 gap-y-2 w-full poppins'>
-                                                    <span className='text-gray-700 text-sm font-semibold cursor-pointer w-full text-center' onClick={() => setmobileCardStatus(true)}>Forgot Password</span>
-                                                </div>
-                                            </div>
 
                                         </div>
                                     </div>

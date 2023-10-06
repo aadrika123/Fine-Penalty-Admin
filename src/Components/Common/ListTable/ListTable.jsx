@@ -25,6 +25,7 @@ function ListTable(props) {
 
     useEffect(() => {
         setPageSize(10)
+        makeExportFun()
     }, [])
 
     const {
@@ -52,12 +53,41 @@ function ListTable(props) {
 
     const { globalFilter, pageIndex, pageSize } = state
 
+    // const makeExportFun = () => {
+    //     console.log(props?.columns)
+    //     let data = props?.dataList?.map((elem, index) => {
+    //         return {
+    //             props?.columns?.map((col, index) => {
+    //                return {[col?.Header] : col?.accessor ? elem[col?.accessor] : index + 1}
+    //             })
+                
+    //         }
+    //     })
+    //     console.log(data)
+    // }
+
+    const makeExportFun = () => {
+        console.log(props?.columns);
+        let data = props?.dataList?.map((elem, index) => {
+          // Map over the columns for each element in dataList
+          const rowData = props?.columns?.map((col, columnIndex) => {
+            return col?.Header != "Action" && { [col?.Header]: col?.accessor ? elem[col?.accessor] : index + 1 };
+          });
+      
+          // Combine rowData for each element into a single object
+          return Object.assign({}, ...rowData);
+        });
+      
+        return data;
+      };
+      
+
     return (
         <>
 
             <div className="flex mb-2 pb-2">
                 <div className='flex-initial'><GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} /></div>
-                {props?.exportStatus !== false && <div className='flex-initial ml-2'><button className='bg-sky-400 px-3 pr-3  shadow-lg rounded py-1 text-white hover:shadow-2xl hover:bg-green-600 text-center relative' onMouseEnter={() => setbounce('')} onMouseLeave={() => setbounce('hidden')}><CSVLink data={props.dataList}>Export</CSVLink><div className={bounce + ' absolute h-full top-3 text-sm left-0 text-center animate-bounce'}><AiOutlineArrowDown /></div></button></div>}
+                {props?.exportStatus !== false && <div className='flex-initial ml-2'><button className='bg-sky-400 px-3 pr-3  shadow-lg rounded py-1 text-white hover:shadow-2xl hover:bg-green-600 text-center relative' onMouseEnter={() => setbounce('')} onMouseLeave={() => setbounce('hidden')}><CSVLink data={makeExportFun()}>Export</CSVLink><div className={bounce + ' absolute h-full top-3 text-sm left-0 text-center animate-bounce'}><AiOutlineArrowDown /></div></button></div>}
                 <div className='flex-1'>{props.children}</div>
             </div>
             <div className=" p-4 overflow-x-auto bg-white">
@@ -86,7 +116,9 @@ function ListTable(props) {
                                 return (
                                     <tr {...row.getRowProps()} className="bg-white shadow-lg border-b border-gray-200">
                                         {row?.cells?.map((cell) => {
-                                            return <td {...cell.getCellProps()} className="px-2 py-2 text-sm text-left">{cell.render('Cell')}</td>
+                                            return <td {...cell.getCellProps()} className="px-2 py-2 text-sm text-left">
+                                                {cell.render('Cell')}
+                                            </td>
                                         })}
                                     </tr>
                                 )
@@ -97,13 +129,6 @@ function ListTable(props) {
                         </tbody>
                     </table>
                     <div className='mt-3 grid grid-cols-12'>
-                        {/* <span> Search Page Option
-                            | Go to page : {''}
-                            <input className='border-2 border-black rounded-lg' type="text" defaultValue={pageIndex + 1} onChange={(e) => {
-                                const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0
-                                gotoPage(pageNumber)
-                            }} />
-                        </span> */}
                         <div className='col-span-2'>  <select className="h-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " value={pageSize} onChange={(e) => setPageSize(Number(e.target.value))}>
                             {[5, 10, 25, 50].map((pageSize) => (
                                 <option key={pageSize} value={pageSize}>
