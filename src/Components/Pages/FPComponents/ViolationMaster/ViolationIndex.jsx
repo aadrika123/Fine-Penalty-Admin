@@ -3,7 +3,7 @@
 // 👉 Component   : ViolationIndex
 // 👉 Date        : 21-09-2023
 // 👉 Status      : Close
-// 👉 Description : CRUD opeartion for violation master.
+// 👉 Description : CRUD opeartion for department, section and violation master.
 // 👉 Functions   :  
 //                  1. activateBottomErrorCard -> Activate error card to show in screen.
 //                  2. handleModal             -> To handle dialog type.
