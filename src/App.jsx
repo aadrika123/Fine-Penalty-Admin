@@ -98,7 +98,7 @@ function App() {
         <Routes>
 
           <Route index element={<Login />} />
-          <Route path='/set-password/:token/:id' element={<NewPassowd />} />
+          <Route path='/set-password/:token?/:id?' element={<NewPassowd />} />
           <Route path='/challan/:id/direct'   element={<FpChallan2 />} />
           <Route path='/fp-receipt/:tranNo/direct' element={<FpReceipt />} />
 

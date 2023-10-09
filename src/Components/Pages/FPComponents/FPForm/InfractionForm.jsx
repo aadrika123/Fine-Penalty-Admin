@@ -573,7 +573,7 @@ const InfractionForm = (props) => {
                              
                             <>
                                 {inputBox(elem?.key, elem?.title, elem?.type, elem?.width, elem?.hint, elem?.required, "", elem?.value, elem?.options, elem?.ovalue, elem?.otitle)}
-                                {index == 0 && <><div>Data will be shown.</div></>}
+                                {/* {index == 0 && <><div>Data will be shown.</div></>} */}
                             </>
                         )
                     }
@@ -642,7 +642,7 @@ const InfractionForm = (props) => {
                     <div className='flex items-center gap-6'>
                         <span className='text-green-500 p-2 block rounded-full drop-shadow-md shadow-green-300'><FiAlertCircle size={25} /></span>
                         <div className='flex flex-col gap-2'>
-                            <span className='text-xl font-semibold border-b pb-1'>Confirmation Box</span>
+                            <span className='text-xl font-semibold border-b pb-1'>Confirmation</span>
                             <span className='text-base'>Are you sure want to approve ?</span>
                         </div>
                     </div>

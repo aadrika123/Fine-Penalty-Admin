@@ -7,13 +7,13 @@ import './login.css'
 import { RotatingLines } from "react-loader-spinner";
 import ProjectApiList from '@/Components/api/ProjectApiList';
 import img from '@/Components/assets/fp.png'
-import AxiosInterceptors from '@/Components/Common/AxiosInterceptors';
-import { getLocalStorageItem, setLocalStorageItem, setLocalStorageItemStrigified } from '@/Components/Common/localstorage';
+import { getLocalStorageItem } from '@/Components/Common/localstorage';
 import ulb_data from '@/Components/Common/DynamicData';
+import axios from 'axios';
 
 function NewPassowd() {
 
-    const { api_login } = ProjectApiList()
+    const { api_setPassword } = ProjectApiList()
 
     const { token, id } = useParams()
 
@@ -26,7 +26,7 @@ function NewPassowd() {
                 /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/,
                 "Password Must Contains (Capital, Smail, Number, Special) eg - Abc123#."
             ),
-        cPassword: Yup.string()
+        cpassword: Yup.string()
             .label("confirm password")
             .required()
             .oneOf([Yup.ref("password"), null], "Passwords must match"),
@@ -39,17 +39,13 @@ function NewPassowd() {
             password: '',
             cpassword: ''
         },
+        validationSchema: schema,
         onSubmit: values => {
             submitFun(values)
         },
-        validationSchema: schema,
     })
 
     const navigate = useNavigate()
-
-    useEffect(() => {
-        (getLocalStorageItem('token') != 'null' && getLocalStorageItem('token') != null) && navigate('/home')
-    }, [])
 
     const header = {
         timeout: 60000,
@@ -62,14 +58,14 @@ function NewPassowd() {
     };
 
     //authUser function which authenticate user credentials
-    const submitFun = (e) => {
+    const submitFun = (values) => {
         setLoaderStatus(true)
         let requestBody = {
             id: id,
-            password: values.password
+            password: values?.password
         }
         console.log('--1--before login send...', requestBody)
-        AxiosInterceptors.post(api_login, requestBody, header)
+        axios.post(api_setPassword, requestBody, header)
             .then(function (response) {
                 console.log("set password response => ", response.data)
                 // return

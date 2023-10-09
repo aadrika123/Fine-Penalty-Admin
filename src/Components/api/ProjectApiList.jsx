@@ -12,6 +12,7 @@ export default function ProjectApiList() {
         api_getFreeMenuList: `${baseUrl}/api/menu/by-module`,
 
         api_login: `${baseUrl}/api/login`,
+        api_setPassword: `${baseUrl}/api/user/set-password`,
     
        
         // 19 API TO GET WORKFLOW BASIC INFO LIKE PERMISSIONS/WORKFLOW-CANDIDATES
@@ -120,10 +121,10 @@ export default function ProjectApiList() {
         api_deletedRole:    `${baseUrl}/api/wfrole/crud/delete`,
         api_listRole:       `${baseUrl}/api/wfrole/crud/list`,
 
-        api_addUser:        `${baseUrl}/api/wfrole/crud/save`,
-        api_updateUser:     `${baseUrl}/api/wfrole/crud/edit`,
-        api_deletedUser:    `${baseUrl}/api/wfrole/crud/delete`,
-        api_listUser:       `${baseUrl}/api/wfrole/crud/list`,
+        api_addUser:        `${baseUrl}/api/user/crud/create`,
+        api_updateUser:     `${baseUrl}/api/user/crud/edit`,
+        api_deletedUser:    `${baseUrl}/api/user/crud/delete`,
+        api_listUser:       `${baseUrl}/api/user/crud/list`,
 
     }
 

@@ -20,7 +20,7 @@ import ApiHeader from "@/Components/api/ApiHeader";
 import useSetTitle from "@/Components/Common/useSetTitle";
 import AxiosInterceptors from "@/Components/Common/AxiosInterceptors";
 import ProjectApiList from "@/Components/api/ProjectApiList";
-import { checkErrorMessage, checkSizeValidation, indianAmount, indianDate, nullToNA } from "@/Components/Common/PowerupFunctions";
+import { allowNumberInput, checkErrorMessage, checkSizeValidation, indianAmount, indianDate, nullToNA } from "@/Components/Common/PowerupFunctions";
 import ShimmerEffectInline from "@/Components/Common/Loaders/ShimmerEffectInline";
 import BarLoader from "@/Components/Common/Loaders/BarLoader";
 import BottomErrorCard from "@/Components/Common/BottomErrorCard";
@@ -64,7 +64,8 @@ const UserMaster = () => {
   const [editData, setEditData] = useState(null)
   const [sLoader, setsLoader] = useState(false)
   const [mType, setMType] = useState('role')
-  const [document, setDocument] = useState(null)
+  const [signDoc, setSignDoc] = useState(null)
+  const [profileDoc, setProfileDoc] = useState(null)
 
   // 👉 CSS constants 👈
   const editButton = "border border-sky-800 text-sky-800 mx-1 px-3 py-1 rounded-sm shadow-lg hover:shadow-xl hover:bg-sky-800 hover:text-white"
@@ -175,9 +176,21 @@ const UserMaster = () => {
       Cell: ({ row }) => <div className="pr-2">{row?.index + 1}</div>,
     },
     {
-      Header: "User Name",
+      Header: "Profile",
+      accessor: "profile",
+      Cell: ({ cell }) => <>
+        <img className="border drop-shadow-lg h-8 rounded-sm"  src={cell.row.original?.profile} alt="profile" srcset="" />
+      </>
+    },
+    {
+      Header: "Name",
       accessor: "user_name",
       Cell: ({ cell }) => (nullToNA(cell.row.original?.user_name)),
+    },
+    {
+      Header: "Mobile No.",
+      accessor: "mobile",
+      Cell: ({ cell }) => (nullToNA(cell.row.original?.mobile)),
     },
     {
       Header: "E-mail",
@@ -185,9 +198,26 @@ const UserMaster = () => {
       Cell: ({ cell }) => (nullToNA(cell.row.original?.email)),
     },
     {
-      Header: "Password",
-      accessor: "password",
-      Cell: ({ cell }) => (nullToNA(cell.row.original?.password)),
+      Header: "Employee Code",
+      accessor: "employee_code",
+      Cell: ({ cell }) => (nullToNA(cell.row.original?.employee_code)),
+    },
+    {
+      Header: "Designation",
+      accessor: "designation",
+      Cell: ({ cell }) => (nullToNA(cell.row.original?.designation)),
+    },
+    {
+      Header: "Address",
+      accessor: "address",
+      Cell: ({ cell }) => (nullToNA(cell.row.original?.address)),
+    },
+    {
+      Header: "Signature",
+      accessor: "signature",
+      Cell: ({ cell }) => <>
+        <img  className="border drop-shadow-lg h-8 rounded-sm" src={cell.row.original?.signature} alt="signature" srcset="" />
+      </>
     },
     {
       Header: "Created At",
@@ -246,7 +276,7 @@ const UserMaster = () => {
       width: `md:w-[31%] w-full ${mType == 'user' ? 'block ' : 'hidden '}`,
       type: 'text',
       hint: "Enter middle name",
-      required: mType == 'user' && true
+      required: false
     },
     {
       title: "Last Name",
@@ -259,7 +289,7 @@ const UserMaster = () => {
     {
       title: "Mobile No.",
       key: "mobileNo",
-      width: `md:w-[31%] w-full ${mType == 'user' ? 'block ' : 'hidden '}`,
+      width: `md:w-[48%] w-full ${mType == 'user' ? 'block ' : 'hidden '}`,
       type: 'text',
       hint: "Enter mobile no.",
       required: mType == 'user' && true
@@ -267,7 +297,7 @@ const UserMaster = () => {
     {
       title: "E-Mail",
       key: "email",
-      width: `md:w-[31%] w-full ${mType == 'user' ? 'block ' : 'hidden '}`,
+      width: `md:w-[48%] w-full ${mType == 'user' ? 'block ' : 'hidden '}`,
       type: 'email',
       hint: "Enter email",
       required: mType == 'user' && true
@@ -275,7 +305,7 @@ const UserMaster = () => {
     {
       title: "Employee Code",
       key: "employeeCode",
-      width: `md:w-[31%] w-full ${mType == 'user' ? 'block ' : 'hidden '}`,
+      width: `md:w-[48%] w-full ${mType == 'user' ? 'block ' : 'hidden '}`,
       type: 'text',
       hint: "Enter employee code",
       required: mType == 'user' && true
@@ -288,7 +318,14 @@ const UserMaster = () => {
       hint: "Enter designation",
       required: mType == 'user' && true
     },
-
+    {
+      title: "Upload Profile Picture",
+      key: "profile",
+      width: `md:w-[48%] w-full ${mType == 'user' ? 'block ' : 'hidden '}`,
+      type: 'file',
+      hint: "Enter employee code",
+      required: false
+    },
     {
       title: "Upload Signature",
       key: "signature",
@@ -330,7 +367,8 @@ const UserMaster = () => {
     designation: "",
     employeeCode: "",
     address: "",
-    signature: ""
+    signature: "",
+    profile: ""
   }
 
   // 👉 Formik constant 👈
@@ -434,7 +472,8 @@ const UserMaster = () => {
           fd.append('designation', values?.designation)
           fd.append('employeeCode', values?.employeeCode)
           fd.append('address', values?.address)
-          fd.append('signature', document)
+          fd.append('signature', signDoc)
+          fd.append('profile', profileDoc)
 
           url = api_addUser
         }
@@ -461,7 +500,8 @@ const UserMaster = () => {
           fd.append('designatioin', values?.designatioin)
           fd.append('employeeCode', values?.employeeCode)
           fd.append('address', values?.address)
-          fd.append('signature', document)
+          fd.append('signature', signDoc)
+          fd.append('profile', profileDoc)
 
           url = api_updateUser
         }
@@ -532,13 +572,24 @@ const UserMaster = () => {
     const name = e.target.name;
     const value = e.target.value;
 
+    {name == 'mobileNo' && formik.setFieldValue("mobileNo", allowNumberInput(value, formik.values.mobileNo, 10))}
+
     if (name == 'signature') {
       let file = e?.target?.files[0];
       if (!checkSizeValidation(file)) {
         formik.setFieldValue('signature', '')
         return;
       }
-      setDocument(file)
+      setSignDoc(file)
+    }
+
+    if (name == 'profile') {
+      let file = e?.target?.files[0];
+      if (!checkSizeValidation(file)) {
+        formik.setFieldValue('profile', '')
+        return;
+      }
+      setProfileDoc(file)
     }
 
   }
@@ -632,7 +683,14 @@ const UserMaster = () => {
               {modalType} {mType}
             </header>
 
-            {modalType == 'edit' && mType == 'user' && <div className="w-full flex gap-2 items-center flex-wrap text-sm">Signature: <img src={editData?.photo} alt="Signature" srcset="" /></div>}
+            {modalType == 'edit' && mType == 'user' && 
+            <>
+            <div className="w-full grid grid-cols-12 items-center gap-4 mb-4 mt-2">
+            <div className="md:col-span-6 col-span-12 flex gap-2 items-center flex-wrap text-sm">Profile: <img src={editData?.profile} className="ml-4 h-12 border drop-shadow-md rounded-sm" alt="Profile" srcset="" /></div>
+            <div className="md:col-span-6 col-span-12 flex gap-2 items-center flex-wrap text-sm">Signature: <img src={editData?.signature} className="ml-4 h-12 border drop-shadow-md rounded-sm" alt="Signature" srcset="" /></div>
+            </div>
+            </>
+            }
 
             {
               basicForm?.map((elem) => {
@@ -656,7 +714,7 @@ const UserMaster = () => {
               <div className='flex items-center gap-6'>
                 <span className='text-red-500 bg-red-100 p-2 block rounded-full drop-shadow-md shadow-red-300'><FiAlertCircle size={25} /></span>
                 <div className='flex flex-col gap-2'>
-                  <span className='text-xl font-semibold border-b pb-1'>Confirmation Box</span>
+                  <span className='text-xl font-semibold border-b pb-1'>Confirmation</span>
                   <span className='text-base'>Are you sure want to delete ?</span>
                 </div>
               </div>

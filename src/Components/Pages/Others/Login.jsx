@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -11,8 +11,9 @@ import img from '@/Components/assets/fp.png'
 import AxiosInterceptors from '@/Components/Common/AxiosInterceptors';
 import { getLocalStorageItem, setLocalStorageItem, setLocalStorageItemStrigified } from '@/Components/Common/localstorage';
 import ulb_data from '@/Components/Common/DynamicData';
-import { checkErrorMessage } from '@/Components/Common/PowerupFunctions';
+import { allowNumberInput, checkErrorMessage } from '@/Components/Common/PowerupFunctions';
 import { contextVar } from '@/Components/context/contextVar';
+import { RxCross2 } from 'react-icons/rx';
 
 const { api_login, api_getFreeMenuList } = ProjectApiList()
 
@@ -26,6 +27,8 @@ function Login() {
     const { setmenuList, setuserDetails, setheartBeatCounter } = useContext(contextVar)
     const [loaderStatus, setLoaderStatus] = useState(false)
 
+    const modalRef = useRef()
+
     const formik = useFormik({
         initialValues: {
             username: '',
@@ -37,11 +40,77 @@ function Login() {
         validationSchema
     })
 
+    const formik2 = useFormik({
+        initialValues: {
+            email: '',
+            mobile: ''
+        },
+        onSubmit: values => {
+            console.log(values)
+            submitFun(values)
+        },
+        validationSchema: Yup.object().shape({
+            email: Yup.string().test('email-or-mobile', 'Please provide an email or mobile number', function (value) {
+                const { mobile } = this.parent; // Access the 'mobile' field
+            
+                if (!value && !mobile) {
+                  return false; // Fail validation if both email and mobile are empty
+                }
+            
+                return true; // Pass validation otherwise
+              }),
+              mobile: Yup.string().test('email-or-mobile', 'Please provide an email or mobile number', function (value) {
+                const { email } = this.parent; // Access the 'email' field
+            
+                if (!value && !email) {
+                  return false; // Fail validation if both email and mobile are empty
+                }
+            
+                return true; // Pass validation otherwise
+              }),
+        })
+    })
+
+    const submitFun = (values) => {
+        setLoaderStatus(true)
+        let requestBody = {
+            mobileNo: values?.mobile,
+            email: values?.email
+        }
+        console.log('--1--before reset send...', requestBody)
+        axios.post('', requestBody, header)
+            .then(function (response) {
+                console.log("reset password response => ", response.data)
+                // return
+                if (response.data.status == true) {
+
+                    toast.success(response?.data?.message)
+                    modalRef.current.close()
+                    formik2.resetForm()
+
+                }
+                else {
+                    console.log('false...')
+                    setLoaderStatus(false)
+                    toast.error(response?.data?.message)
+                }
+            })
+            .catch(function (error) {
+                setLoaderStatus(false)
+                console.log('reset password error => ', error)
+                toast.error('Server Error')
+            })
+
+    }
+
     const navigate = useNavigate()
 
     useEffect(() => {
         (getLocalStorageItem('token') != 'null' && getLocalStorageItem('token') != null) && navigate('/home')
     }, [])
+
+    const labelStyle = 'text-gray-800 text-sm'
+  const inputStyle = 'border focus:outline-none drop-shadow-sm focus:drop-shadow-md px-4 py-1 text-gray-700 shadow-black placeholder:text-sm'
 
     const header = {
         headers:
@@ -66,38 +135,38 @@ function Login() {
                     setLocalStorageItem('token', response?.data?.data?.token)
                     setLocalStorageItemStrigified('userDetails', response?.data?.data?.userDetails)
 
-                    if( response?.data?.data?.userDetails?.user_type == 'CO') {
+                    if (response?.data?.data?.userDetails?.user_type == 'CO') {
                         setLocalStorageItemStrigified('menuList', [
-                          { name: 'Home',                 path: '/home',              children: [] },
-                          { name: 'Application List',     path: '/fp-list',           children: [] },
-                          { name: 'Search Challan',       path: '/search-challan',    children: [] },
-                          { name: 'Workflow',             path: '/fp-workflow',       children: [] },
+                            { name: 'Home', path: '/home', children: [] },
+                            { name: 'Application List', path: '/fp-list', children: [] },
+                            { name: 'Search Challan', path: '/search-challan', children: [] },
+                            { name: 'Workflow', path: '/fp-workflow', children: [] },
                         ])
-                      }
-                      if( response?.data?.data?.userDetails?.user_type == 'EC') {
+                    }
+                    if (response?.data?.data?.userDetails?.user_type == 'EC') {
                         setLocalStorageItemStrigified('menuList', [
-                          { name: 'Home',                 path: '/home',              children: [] },
-                          { name: 'Application List',     path: '/fp-list',           children: [] },
-                          { name: 'Search Challan',       path: '/search-challan',    children: [] },
-                          { name: 'Violation Master',     path: '/violation-master',  children: [] },
-                          { name: 'User Role Master',          path: '/user-master',       children: [] },
-                          {
-                            name: 'Reports',              path: '',                   children: [
-                              { name: 'Challan Generated Report', path: '/challan-generated-report' },
-                              { name: 'Violation Wise Report',     path: '/violation-wise-report'     },
-                              { name: 'Collection Report',         path: '/collection-report'         },
-                              { name: 'Comparision Report',         path: '/comparision-report'         }
-                            ]
-                          },
+                            { name: 'Home', path: '/home', children: [] },
+                            { name: 'Application List', path: '/fp-list', children: [] },
+                            { name: 'Search Challan', path: '/search-challan', children: [] },
+                            { name: 'Violation Master', path: '/violation-master', children: [] },
+                            { name: 'User Role Master', path: '/user-master', children: [] },
+                            {
+                                name: 'Reports', path: '', children: [
+                                    { name: 'Challan Generated Report', path: '/challan-generated-report' },
+                                    { name: 'Violation Wise Report', path: '/violation-wise-report' },
+                                    { name: 'Collection Report', path: '/collection-report' },
+                                    { name: 'Comparision Report', path: '/comparision-report' }
+                                ]
+                            },
                         ])
-                      }
-                      if( response?.data?.data?.userDetails?.user_type == 'JSK') {
-                          setLocalStorageItemStrigified('menuList', [
-                            { name: 'Home',                 path: '/home',              children: [] },
-                            { name: 'Application List',     path: '/fp-list',           children: [] },
-                            { name: 'Search Challan',       path: '/search-challan',    children: [] },
-                          ])
-                      }
+                    }
+                    if (response?.data?.data?.userDetails?.user_type == 'JSK') {
+                        setLocalStorageItemStrigified('menuList', [
+                            { name: 'Home', path: '/home', children: [] },
+                            { name: 'Application List', path: '/fp-list', children: [] },
+                            { name: 'Search Challan', path: '/search-challan', children: [] },
+                        ])
+                    }
 
                     fetchMenuList()
                     setheartBeatCounter(prev => prev + 1)
@@ -153,6 +222,24 @@ function Login() {
 
     }
 
+    const handleChange = (e) => {
+        let name = e.target.name
+        let value = e.target.value
+
+        console.log('first', name)
+
+        if (name == 'email') {
+            formik2.setFieldValue('mobile', '')
+            formik2.setFieldValue("email", value)
+        } 
+        
+        if (name == 'mobile') {
+            formik2.setFieldValue('email', '')
+            formik2.setFieldValue("mobile", allowNumberInput(value, formik2?.values.mobile, 10))
+        }
+
+    }
+
     return (
         <>
 
@@ -184,7 +271,7 @@ function Login() {
                                                 </div>
                                                 <hr className="block w-12 h-0.5 mx-auto my-5 bg-gray-700 border-gray-700" />
                                                 <div className="mb-6">
-                                                    <label htmlFor="inputemail" className="inline-block mb-2">Username</label>
+                                                    <label htmlFor="inputemail" className="inline-block mb-2">E-mail</label>
                                                     <input {...formik.getFieldProps('username')} className="w-full leading-5 relative py-2 px-4 rounded text-gray-800 bg-white border border-gray-300 overflow-x-auto focus:outline-none focus:border-gray-400 focus:ring-0 darks:text-gray-300 darks:bg-gray-700 darks:border-gray-700 darks:focus:border-gray-600" defaultValue aria-label="email" type="email" required />
                                                     <span className='text-red-600 text-xs'>{formik.touched.username && formik.errors.username ? formik.errors.username : null}</span>
                                                 </div>
@@ -197,7 +284,7 @@ function Login() {
                                                     <input {...formik.getFieldProps('password')} className="w-full leading-5 relative py-2 px-4 rounded text-gray-800 bg-white border border-gray-300 overflow-x-auto focus:outline-none focus:border-gray-400 focus:ring-0 darks:text-gray-300 darks:bg-gray-700 darks:border-gray-700 darks:focus:border-gray-600" aria-label="password" type="password" defaultValue required />
                                                     <span className='text-red-600 text-xs'>{formik.touched.password && formik.errors.password ? formik.errors.password : null}</span>
                                                 </div>
-                                                <div className="grid mb-6">
+                                                <div className="grid mb-2">
                                                     {loaderStatus ?
                                                         <div className='flex justify-center'>
                                                             <RotatingLines
@@ -215,6 +302,10 @@ function Login() {
                                                             </svg>Login
                                                         </button>
                                                     }
+
+                                                    <div onClick={() => modalRef.current.showModal()} className='select-none py-4 text-center font-semibold hover:text-blue-600 hover:underline cursor-pointer'>
+                                                        Forgot Password
+                                                    </div>
 
                                                 </div>
                                             </form>
@@ -250,6 +341,48 @@ function Login() {
                     </div>
                 </div>
             </footer>
+
+            {/* 👉 Dialog form 👈 */}
+            <dialog ref={modalRef} className={`relative overflow-clip animate__animated animate__zoomIn animate__faster w-[20rem] backdrop:backdrop-blur-sm p-4 px-6`}>
+
+                {/* 👉 Cross button 👈 */}
+                <span onClick={() => (modalRef.current.close(), formik2.resetForm())} className="block p-1 bg-red-100 hover:bg-red-500 rounded-full hover:text-white cursor-pointer transition-all duration-200 absolute top-2 right-2"><RxCross2 /></span>
+
+                <div>
+                    <form onSubmit={formik2.handleSubmit} onChange={(e) => handleChange(e)}>
+                        <div className="text-center">
+                            <h1 className="text-2xl border-b pb-1 leading-normal mb-4 font-semibold text-gray-800 darks:text-gray-300 text-center">Reset Password</h1>
+                        </div>
+                        <div className=" flex flex-col">
+                            <label htmlFor={'email'} className={labelStyle}>E-mail : </label>
+                            <input {...formik.getFieldProps('email')} value={formik2.values.email} type={'text'} className={inputStyle + ` ${(formik2.touched?.email && formik2.errors?.email) ? ' border-red-200 placeholder:text-red-400 ' : ' focus:border-zinc-300 border-zinc-200'}`} name='email' id="" placeholder='Enter email' />
+                        </div>
+                        <div className='my-4 text-center font-semibold '>OR</div>
+                        <div className=" flex flex-col mb-6">
+                            <label htmlFor={'mobile'} className={labelStyle}>Mobile No. : </label>
+                            <input {...formik.getFieldProps('mobile')} value={formik2.values.mobile} type={'text'} className={inputStyle + ` ${(formik2.touched?.mobile && formik2.errors?.mobile) ? ' border-red-200 placeholder:text-red-400 ' : ' focus:border-zinc-300 border-zinc-200'}`} name='mobile' id="" placeholder='Enter mobile no.' />
+                        </div>
+                        <div className="grid mb-2">
+                            {loaderStatus ?
+                                <div className='flex justify-center'>
+                                    <RotatingLines
+                                        strokeColor="grey"
+                                        strokeWidth="5"
+                                        animationDuration="0.75"
+                                        width="25"
+                                        visible={true}
+                                    />
+                                </div>
+                                : <button onClick={formik2.handleSubmit} className="py-2 px-4 inline-block text-center rounded leading-normal text-white bg-slate-500 border border-slate-500 hover:text-white hover:bg-slate-600 hover:ring-0 hover:border-indigo-600 focus:bg-slate-600 focus:border-slate-600 focus:outline-none focus:ring-0">
+                                   Reset
+                                </button>
+                            }
+
+                        </div>
+                    </form>
+                </div>
+
+            </dialog>
 
         </>
     )
