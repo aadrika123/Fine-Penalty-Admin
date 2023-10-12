@@ -14,6 +14,7 @@ import ulb_data from '@/Components/Common/DynamicData';
 import { allowNumberInput, checkErrorMessage } from '@/Components/Common/PowerupFunctions';
 import { contextVar } from '@/Components/context/contextVar';
 import { RxCross2 } from 'react-icons/rx';
+import apk from '@/Components/assets/download.png'
 
 const { api_login, api_getFreeMenuList } = ProjectApiList()
 
@@ -52,22 +53,22 @@ function Login() {
         validationSchema: Yup.object().shape({
             email: Yup.string().test('email-or-mobile', 'Please provide an email or mobile number', function (value) {
                 const { mobile } = this.parent; // Access the 'mobile' field
-            
+
                 if (!value && !mobile) {
-                  return false; // Fail validation if both email and mobile are empty
+                    return false; // Fail validation if both email and mobile are empty
                 }
-            
+
                 return true; // Pass validation otherwise
-              }),
-              mobile: Yup.string().test('email-or-mobile', 'Please provide an email or mobile number', function (value) {
+            }),
+            mobile: Yup.string().test('email-or-mobile', 'Please provide an email or mobile number', function (value) {
                 const { email } = this.parent; // Access the 'email' field
-            
+
                 if (!value && !email) {
-                  return false; // Fail validation if both email and mobile are empty
+                    return false; // Fail validation if both email and mobile are empty
                 }
-            
+
                 return true; // Pass validation otherwise
-              }),
+            }),
         })
     })
 
@@ -110,7 +111,7 @@ function Login() {
     }, [])
 
     const labelStyle = 'text-gray-800 text-sm'
-  const inputStyle = 'border focus:outline-none drop-shadow-sm focus:drop-shadow-md px-4 py-1 text-gray-700 shadow-black placeholder:text-sm'
+    const inputStyle = 'border focus:outline-none drop-shadow-sm focus:drop-shadow-md px-4 py-1 text-gray-700 shadow-black placeholder:text-sm'
 
     const header = {
         headers:
@@ -231,8 +232,8 @@ function Login() {
         if (name == 'email') {
             formik2.setFieldValue('mobile', '')
             formik2.setFieldValue("email", value)
-        } 
-        
+        }
+
         if (name == 'mobile') {
             formik2.setFieldValue('email', '')
             formik2.setFieldValue("mobile", allowNumberInput(value, formik2?.values.mobile, 10))
@@ -246,23 +247,37 @@ function Login() {
             <header className=" border-b border-gray-200 bg-white darks:bg-gray-800 darks:border-gray-800">
                 <div className="container mx-auto xl:max-w-6xl ">
                     {/* Navbar */}
-                    <nav className="flex flex-row flex-nowrap items-center justify-center mt-0 py-4 px-6 " id="desktop-menu">
+                    <nav className="flex flex-row flex-nowrap items-center justify-between mt-0 py-4 " id="desktop-menu">
                         {/* logo */}
                         <a className="flex items-center py-2 ltr:mr-4 rtl:ml-4 text-xl cursor-default" >
                             <div className='flex gap-2'> <span className='w-7'><img src={ulb_data()?.ulb_logo} alt="" srcset="" /></span> <span className="font-bold text-xl">Ranchi Nagar Nigam, Ranchi</span></div>
                         </a>
+
+
+                        <div className=' flex justify-center h-max select-none'>
+                            <div className='h-[40%] cursor-pointer py-2 flex items-center gap-4 text-gray-100 bg-gray-800 pl-4 pr-6 drop-shadow-lg transition-all duration-200 hover:scale-105 rounded-md'>
+                                <div className='h-[70%] '>
+                                    <img src={apk} alt="" className='h-8 cursor-pointer' srcset="" />
+                                </div>
+                                <div className='flex flex-col'>
+                                    <span className='text-sm font-semibold'>Download</span>
+                                    <span className='text-sm font-semibold'>Android APK</span>
+                                </div>
+                            </div>
+                        </div>
+
                     </nav>
 
                 </div>
             </header>
             <main className=' bg-gray-100 flex justify-center items-center md:h-[80vh]'>
-                <div className="py-8 bg-gray-100 darks:bg-gray-900 darks:bg-opacity-40">
+                <div className="pt-8 bg-gray-100 darks:bg-gray-900 darks:bg-opacity-40">
                     <div className="mx-auto px-4 ">
                         <div className="flex flex-wrap flex-row justify-center gap-2 items-center">
 
                             <div className=" px-4 w-full md:w-[30%]">
                                 {/* login form */}
-                                <div className="max-w-full w-full px-2 sm:px-12 lg:pr-20 mb-12 lg:mb-0">
+                                <div className="max-w-full w-full px-2 sm:px-12 lg:pr-20 mb-10 lg:mb-0">
                                     <div className="relative">
                                         <div className="p-6 sm:py-8 sm:px-12 rounded-lg bg-white darks:bg-gray-800 shadow-xl">
                                             <form onSubmit={formik.handleSubmit}>
@@ -284,7 +299,7 @@ function Login() {
                                                     <input {...formik.getFieldProps('password')} className="w-full leading-5 relative py-2 px-4 rounded text-gray-800 bg-white border border-gray-300 overflow-x-auto focus:outline-none focus:border-gray-400 focus:ring-0 darks:text-gray-300 darks:bg-gray-700 darks:border-gray-700 darks:focus:border-gray-600" aria-label="password" type="password" defaultValue required />
                                                     <span className='text-red-600 text-xs'>{formik.touched.password && formik.errors.password ? formik.errors.password : null}</span>
                                                 </div>
-                                                <div className="grid mb-2">
+                                                <div className="grid">
                                                     {loaderStatus ?
                                                         <div className='flex justify-center'>
                                                             <RotatingLines
@@ -374,11 +389,12 @@ function Login() {
                                     />
                                 </div>
                                 : <button onClick={formik2.handleSubmit} className="py-2 px-4 inline-block text-center rounded leading-normal text-white bg-slate-500 border border-slate-500 hover:text-white hover:bg-slate-600 hover:ring-0 hover:border-indigo-600 focus:bg-slate-600 focus:border-slate-600 focus:outline-none focus:ring-0">
-                                   Reset
+                                    Reset
                                 </button>
                             }
 
                         </div>
+
                     </form>
                 </div>
 

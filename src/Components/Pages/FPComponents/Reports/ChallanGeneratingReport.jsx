@@ -114,7 +114,7 @@ const ChallanGeneratingReport = () => {
         { title: "Upto Date", key: "uptoDate", width: 'md:w-[20%] w-full', type: 'date', hint: "", required: true, options: '', okey: '', ovalue: '' },
         { title: "Users", key: "users", width: 'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: userList, okey: 'id', ovalue: 'user_name' },
         { title: "Challan Type", key: "challanType", width: 'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: [{ id: 'Via Verification', value: 'Via Verification' }, { id: 'On Spot', value: 'On Spot' }], okey: 'id', ovalue: 'value' },
-        { title: "Challan Category", key: "challanCategory", width: 'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: [{ id: 1, value: 'E-Rickshaw' }, { id: 2, value: 'Others' }], okey: 'id', ovalue: 'value' },
+        // { title: "Challan Category", key: "challanCategory", width: 'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: [{ id: 1, value: 'E-Rickshaw' }, { id: 2, value: 'Others' }], okey: 'id', ovalue: 'value' },
     ]
 
     // 👉 Function 1 👈
@@ -200,7 +200,7 @@ const ChallanGeneratingReport = () => {
             uptoDate: data?.uptoDate,
             userId: data?.users,
             challanType: data?.challanType,
-            challanCategory: data?.challanCategory,
+            // challanCategory: data?.challanCategory,
         })
 
         setchangeData(prev => prev + 1)

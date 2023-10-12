@@ -51,12 +51,11 @@ const InfractionForm = (props) => {
     const navigate = useNavigate()
 
     // 👉 API constants 👈
-    const { api_submitInfractionForm, api_getViolationList, api_getInfractionById, api_getViolationById, api_updateInfractionForm, fpDocList, api_violationMasterList } = ProjectApiList()
+    const { api_submitInfractionForm, api_getViolationList, api_getSectionList, api_listDepartment, api_getInfractionById, api_getViolationById, api_updateInfractionForm, fpDocList, api_violationMasterList } = ProjectApiList()
 
     // 👉 State constants 👈
     const [sloader, setSloader] = useState(false)
     const [loader, setLoader] = useState(false)
-    const [violationList, setViolationList] = useState([])
     const [violationData, setViolationData] = useState(null)
     const [location, setLocation] = useState(null)
     const [geoTaggedImage, setGeoTaggedImage] = useState(null)
@@ -68,6 +67,10 @@ const InfractionForm = (props) => {
     const [isSubmit, setIsSubmit] = useState(false)
     const [formDetails, setFormDetails] = useState(null)
     const [canEdit, setcanEdit] = useState(true)
+    const [violationList, setViolationList] = useState([])
+    const [violationSectionList, setViolationSectionList] = useState([])
+    const [departmentList, setDepartmentList] = useState([])
+    const [sLoader, setsLoader] = useState(false)
 
     // 👉 CSS Constants 👈
     const labelStyle = 'text-gray-800 text-sm'
@@ -94,10 +97,17 @@ const InfractionForm = (props) => {
 
     // 👉 Violation Details Fields JSON👈
     const violationForm = [
-        { title: "Violation Made (Name of the subject)", key: "violationMade", width: 'md:w-[20%] w-full', type: 'select', hint: type == 'edit' ? 'NA' : "Select violation type", required: true, options: violationList, ovalue: 'id', otitle: 'violation_name' },
-        { title: "Violation Section", key: "violationSection", width: 'md:w-[20%] w-full', type: 'disabled', hint: type == 'edit' ? 'NA' : "Select violation type", value: nullToNA(violationData?.violation_section) },
-        { title: "Penalty Amount", key: "penaltyAmount", width: 'md:w-[20%] w-full', type: 'disabled', hint: type == 'edit' ? 'NA' : "Select violation type", value: indianAmount(violationData?.penalty_amount) },
-        { key: 'violationPlace', title: "Violation Place", width: 'md:w-[40%] w-full', type: 'text', required: type == 'edit' ? false : true, hint: type == 'edit' ? 'NA' : "Enter violation place" },
+
+        { key: 'violationPlace', title: "Violation Place", width: 'md:w-[20%] w-full', type: 'text', required: type == 'edit' ? false : true, hint: type == 'edit' ? 'NA' : "Enter violation place" },
+        // { title: "Violation Made (Name of the subject)", key: "violationMade", width: 'md:w-[20%] w-full', type: 'select', hint: type == 'edit' ? 'NA' : "Select violation type", required: true, options: violationList, ovalue: 'id', otitle: 'violation_name' },
+        // { title: "Violation Section", key: "violationSection", width: 'md:w-[20%] w-full', type: 'disabled', hint: type == 'edit' ? 'NA' : "Select violation type", value: nullToNA(violationData?.violation_section) },
+        // { title: "Penalty Amount", key: "penaltyAmount", width: 'md:w-[20%] w-full', type: 'disabled', hint: type == 'edit' ? 'NA' : "Select violation type", value: indianAmount(violationData?.penalty_amount) },
+
+        { title: "Department", key: "department", width: 'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: departmentList, okey: 'id', ovalue: 'department_name' },
+        { title: "Violation Section", key: "violationSection", width: 'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: violationSectionList, okey: 'id', ovalue: 'violation_section' },
+        { title: "Violation Made", key: "violationMade", width: 'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: violationList, okey: 'id', ovalue: 'violation_name' },
+
+
     ]
 
     // 👉 Witness Details Fields JSON👈
@@ -127,8 +137,9 @@ const InfractionForm = (props) => {
         region: '',
         pincode: '',
 
+        department: "",
+        violationSection: "",
         violationMade: '',
-        violationMadeUnderSection: '',
         violationPlace: '',
 
         isWitness: '0',
@@ -172,7 +183,7 @@ const InfractionForm = (props) => {
         validationSchema: schema,
         onSubmit: (values) => {
             console.log('enterd')
-            
+
             type == 'edit' ? dialogRef.current.showModal() : submitFun(values)
         }
     })
@@ -184,21 +195,21 @@ const InfractionForm = (props) => {
     }
 
     // 👉 Function 2 👈
-    const inputBox = (key, title = '', type, width = '', hint = '', required = false, accept, value = '', options = [], ovalue = '', otitle = '') => {
+    const inputBox = (key, title = '', type, width = '', hint = '', required = false, accept, value = '', options = [], okey = '', ovalue = '') => {
         return (
             <div className={`flex flex-col ${width} `}>
                 {title != '' && <label htmlFor={key} className={labelStyle}>{title} {required && <span className='text-red-500 text-xs font-bold'>*</span>} : </label>}
                 {type != 'disabled' && type != 'select' && type != 'file' && <input disabled={!canEdit} {...formik.getFieldProps(key)} type={type} className={(canEdit ? inputStyle : 'font-semibold px-4 py-1') + ` ${(formik.touched[key] && formik.errors[key]) ? ' border-red-200 placeholder:text-red-400 ' : ' focus:border-zinc-300 border-zinc-200'}`} name={key} id="" placeholder={hint} />}
                 {type != 'disabled' && type == 'file' && <input disabled={!canEdit} {...formik.getFieldProps(key)} type={type} className={(canEdit ? fileStyle : 'font-semibold px-4 py-1 ') + `${(formik.touched[key] && formik.errors[key]) ? ' border-red-200 placeholder:text-red-400 text-red-400 file:border-red-200 file:text-red-400' : ' focus:border-zinc-300 border-zinc-200 file:border-zinc-300 file:text-gray-600'}`} name={key} id="" placeholder={hint} accept={accept} />}
-                {type != 'disabled' && type == 'select' && <select {...formik.getFieldProps(key)} className={inputStyle + ` ${(formik.touched[key] && formik.errors[key]) ? ' border-red-200 placeholder:text-red-400 ' : ' focus:border-zinc-300 border-zinc-200'}`}>
+                {type != 'disabled' && type == 'select' && <select disabled={!canEdit} {...formik.getFieldProps(key)} className={inputStyle + ` ${(formik.touched[key] && formik.errors[key]) ? ' border-red-200 placeholder:text-red-400 ' : ' focus:border-zinc-300 border-zinc-200'}`}>
                     {
-                        sloader ?
+                        sLoader ?
                             <option>Loading...</option>
                             :
                             <>
-                                <option value={null}>Select</option>
+                                <option value="">Select</option>
                                 {
-                                    options?.map((elem) => <option value={elem[ovalue]}>{elem[otitle]}</option>)
+                                    options?.map((elem) => <option className='' value={elem[okey]}>{elem[ovalue]}</option>)
                                 }
                             </>
                     }
@@ -217,52 +228,52 @@ const InfractionForm = (props) => {
     }
 
     // 👉 Function 4 👈
-    const getViolationList = () => {
+    // const getViolationList = () => {
 
-        setLoader(true)
+    //     setLoader(true)
 
-        AxiosInterceptors
-            .post(api_violationMasterList, {}, ApiHeader())
-            .then((res) => {
-                if (res?.data?.status) {
-                    setViolationList(res?.data?.data)
-                } else {
-                    activateBottomErrorCard(true, checkErrorMessage(res?.data?.message))
-                }
-                console.log('fp violation list response => ', res)
-            })
-            .catch((err) => {
-                activateBottomErrorCard(true, 'Server Error! Please try again later.')
-                console.log('error fp violation list => ', err)
-            })
-            .finally(() => {
-                setLoader(false)
-            })
-    }
+    //     AxiosInterceptors
+    //         .post(api_violationMasterList, {}, ApiHeader())
+    //         .then((res) => {
+    //             if (res?.data?.status) {
+    //                 setViolationList(res?.data?.data)
+    //             } else {
+    //                 activateBottomErrorCard(true, checkErrorMessage(res?.data?.message))
+    //             }
+    //             console.log('fp violation list response => ', res)
+    //         })
+    //         .catch((err) => {
+    //             activateBottomErrorCard(true, 'Server Error! Please try again later.')
+    //             console.log('error fp violation list => ', err)
+    //         })
+    //         .finally(() => {
+    //             setLoader(false)
+    //         })
+    // }
 
     // 👉 Function 5 👈
-    const getViolationById = (vId) => {
+    // const getViolationById = (vId) => {
 
-        setSloader(true)
+    //     setSloader(true)
 
-        AxiosInterceptors
-            .post(api_getViolationById, { id: vId }, ApiHeader())
-            .then((res) => {
-                if (res?.data?.status) {
-                    setViolationData(res?.data?.data)
-                } else {
-                    activateBottomErrorCard(true, checkErrorMessage(res?.data?.message))
-                }
-                console.log('fp violation list response => ', res)
-            })
-            .catch((err) => {
-                activateBottomErrorCard(true, 'Server Error! Please try again later.')
-                console.log('error fp violation list => ', err)
-            })
-            .finally(() => {
-                setSloader(false)
-            })
-    }
+    //     AxiosInterceptors
+    //         .post(api_getViolationById, { id: vId }, ApiHeader())
+    //         .then((res) => {
+    //             if (res?.data?.status) {
+    //                 setViolationData(res?.data?.data)
+    //             } else {
+    //                 activateBottomErrorCard(true, checkErrorMessage(res?.data?.message))
+    //             }
+    //             console.log('fp violation list response => ', res)
+    //         })
+    //         .catch((err) => {
+    //             activateBottomErrorCard(true, 'Server Error! Please try again later.')
+    //             console.log('error fp violation list => ', err)
+    //         })
+    //         .finally(() => {
+    //             setSloader(false)
+    //         })
+    // }
 
     // 👉 Function 6 👈
     async function getLocationFromImage(imageFile, val) {
@@ -272,6 +283,81 @@ const InfractionForm = (props) => {
             : alert('Image does not have location. Turn on location first and then take a picture to upload...');
 
         return { latitude, longitude };
+    }
+
+    // 👉 Function 3 👈
+    const getDepartmentList = () => {
+
+        setsLoader(true)
+
+        AxiosInterceptors
+            .post(api_listDepartment, {}, ApiHeader())
+            .then((res) => {
+                if (res?.data?.status) {
+                    setDepartmentList(res?.data?.data)
+                } else {
+                }
+                console.log('fp department list response => ', res)
+            })
+            .catch((err) => {
+                console.log('error fp department list => ', err)
+            })
+            .finally(() => {
+                setsLoader(false)
+            })
+    }
+
+    // 👉 Function 4 👈
+    const getViolationSectionList = (value) => {
+
+        console.log(value)
+
+        setsLoader(true)
+
+        AxiosInterceptors
+            .post(api_getSectionList, { departmentId: value }, ApiHeader())
+            .then((res) => {
+                if (res?.data?.status) {
+                    setViolationSectionList(res?.data?.data)
+                } else {
+                }
+                console.log('fp violation section list response => ', res)
+            })
+            .catch((err) => {
+                console.log('error fp violation section list => ', err)
+            })
+            .finally(() => {
+                setsLoader(false)
+            })
+    }
+
+    // 👉 Function 5 👈
+    const getViolationList = (value, state) => {
+
+        console.log(state, value)
+
+        setsLoader(true)
+
+        let payload = {
+            sectionId: state == '0' ? value?.section_id : value,
+            departmentId: state == '0' ? value?.department_id : formik.values.department
+        }
+
+        AxiosInterceptors
+            .post(api_getViolationList, payload, ApiHeader())
+            .then((res) => {
+                if (res?.data?.status) {
+                    setViolationList(res?.data?.data)
+                } else {
+                }
+                console.log('fp violation list response => ', res)
+            })
+            .catch((err) => {
+                console.log('error fp violation list => ', err)
+            })
+            .finally(() => {
+                setsLoader(false)
+            })
     }
 
     // 👉 Function 7 👈
@@ -336,9 +422,13 @@ const InfractionForm = (props) => {
 
             } break;
 
-            case "violationMade": {
-                getViolationById(value)
-            }
+            case "department": {
+                getViolationSectionList(value)
+            } break;
+
+            case "violationSection": {
+                getViolationList(value)
+            } break;
         }
     }
 
@@ -354,11 +444,17 @@ const InfractionForm = (props) => {
         formik.setFieldValue('city', data?.city)
         formik.setFieldValue('region', data?.region)
         formik.setFieldValue('pincode', data?.postal_code)
+        formik.setFieldValue('department', data?.department_id)
+        formik.setFieldValue('violationSection', data?.section_id)
         formik.setFieldValue('violationMade', data?.violation_id)
         formik.setFieldValue('violationPlace', data?.violation_place)
         formik.setFieldValue('isWitness:', data?.witness)
         formik.setFieldValue('witnessName', data?.witness_name)
         formik.setFieldValue('witnessMobile', data?.witness_mobile)
+
+        getViolationSectionList(data?.department_id)
+        getViolationList(data, '0')
+
     }
 
     // 👉 Function 9 👈
@@ -372,7 +468,6 @@ const InfractionForm = (props) => {
                 if (res?.data?.status) {
                     feedFormData(res?.data?.data)
                     setFormDetails(res?.data?.data)
-                    getViolationById(res?.data?.data?.violation_id)
                 } else {
                     activateBottomErrorCard(true, checkErrorMessage(res?.data?.message))
                 }
@@ -411,6 +506,7 @@ const InfractionForm = (props) => {
             remarks: formik.values?.remarks,
         }
 
+        // console.log(payload)
         props?.approve(payload)
         dialogRef.current.close()
     }
@@ -418,7 +514,7 @@ const InfractionForm = (props) => {
     // 👉 Function 11 👈
     const submitFun = (values) => {
 
-        console.log(":::::::Submitting values::::::", values , violationData)
+        console.log(":::::::Submitting values::::::", values, violationData)
 
         let url;
 
@@ -489,7 +585,8 @@ const InfractionForm = (props) => {
 
     // 👉 To call function 4 and function 9 👈
     useEffect(() => {
-        getViolationList()
+        // getViolationList()
+        getDepartmentList()
         id && type == 'edit' && fetchData()
         type == 'edit' && setcanEdit(false)
     }, [id])
@@ -529,16 +626,28 @@ const InfractionForm = (props) => {
             </header>}
 
             {/* 👉 Main 👈 */}
-            <form onChange={(e) => (formik.handleChange(e), handleChange(e))} onSubmit={formik.handleSubmit} className='w-full h-full p-4 my-6 border border-zinc-200 bg-zinc-50'>
+            <form onChange={(e) => (formik.handleChange(e), handleChange(e))} onSubmit={formik.handleSubmit} className='w-full h-full pb-4 px-4 my-6 border border-zinc-200 bg-zinc-50'>
 
                 {
                     type == 'edit' &&
-                    <header className='w-full flex justify-end gap-2 '>
+                    <header className='w-full flex justify-end gap-2 pt-2'>
                         <span className={buttonStyle('indigo')} onClick={() => setcanEdit(true)}>Edit</span>
                         <button type="submit" className={buttonStyle('green')} >Approve & Generate Challan</button>
                     </header>
                 }
 
+                {/* Remarks */}
+                {type == 'edit' &&
+                    <section className='flex gap-4 flex-wrap mb-6'>
+
+                        <header className='w-full text-gray-700 -mb-3 font-semibold font-serif'>Remarks</header>
+
+                        <div className={`flex flex-col md:w-[40%] w-full `}>
+                            <input {...formik.getFieldProps('remarks')} type='text' className={inputStyle + ` ${(formik.touched.remarks && formik.errors.remarks) ? ' border-red-200 placeholder:text-red-400 ' : ' focus:border-zinc-300 border-zinc-200'}`} name='remarks' id="" placeholder='Enter remarks' />
+                        </div>
+
+                    </section>
+                }
                 {/* 👉 Basic Details 👈 */}
                 <section className='flex gap-4 flex-wrap'>
 
@@ -569,10 +678,10 @@ const InfractionForm = (props) => {
                     <header className='w-full text-gray-700 -mb-3 font-semibold font-serif border-t'></header>
 
                     {
-                        violationForm?.map((elem, index) => 
-                             
+                        violationForm?.map((elem, index) =>
+
                             <>
-                                {inputBox(elem?.key, elem?.title, elem?.type, elem?.width, elem?.hint, elem?.required, "", elem?.value, elem?.options, elem?.ovalue, elem?.otitle)}
+                                {inputBox(elem?.key, elem?.title, elem?.type, elem?.width, elem?.hint, elem?.required, "", elem?.value, elem?.options, elem?.okey, elem?.ovalue)}
                                 {/* {index == 0 && <><div>Data will be shown.</div></>} */}
                             </>
                         )
@@ -592,19 +701,6 @@ const InfractionForm = (props) => {
                     }
 
                 </section>
-
-                {/* Remarks */}
-                {type == 'edit' &&
-                    <section className='flex gap-4 flex-wrap my-6'>
-
-                        <header className='w-full text-gray-700 -mb-3 font-semibold font-serif'>Remarks</header>
-
-                        <div className={`flex flex-col md:w-[40%] w-full `}>
-                            <input {...formik.getFieldProps('remarks')} type='text' className={inputStyle + ` ${(formik.touched.remarks && formik.errors.remarks) ? ' border-red-200 placeholder:text-red-400 ' : ' focus:border-zinc-300 border-zinc-200'}`} name='remarks' id="" placeholder='Enter remarks' />
-                        </div>
-
-                    </section>
-                }
 
                 {/* 👉 Evidence Documents 👈 */}
                 {type != 'edit' &&

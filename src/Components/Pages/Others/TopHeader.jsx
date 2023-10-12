@@ -14,7 +14,7 @@ import { BsBell } from 'react-icons/bs';
 import NotificationComponent from './NotificationComponent';
 import axios from 'axios';
 import ProjectApiList from '@/Components/api/ProjectApiList';
-
+import apk from '@/Components/assets/download.png'
 
 const TopHeader = (props) => {
 
@@ -27,7 +27,7 @@ const TopHeader = (props) => {
 
   const { toggleBar, settoggleBar, userDetails } = useContext(contextVar)
 
-  const {api_moduleList} = ProjectApiList()
+  const { api_moduleList } = ProjectApiList()
 
   const { brand_tag, brand_logo } = ulb_data()
 
@@ -68,7 +68,7 @@ const TopHeader = (props) => {
 
   useEffect(() => {
     // fetchModuleList()
-  },[])
+  }, [])
 
 
   return (
@@ -82,11 +82,20 @@ const TopHeader = (props) => {
           }}>
             <span className='cursor-pointer text-gray-700 text-xl' ><AiOutlineBars /></span>
           </div>
+
+          <div className='flex justify-center h-max select-none'>
+            <div className='h-[40%] cursor-pointer transition-all duration-200 hover:scale-105 rounded-md'>
+              <div className='h-[70%] '>
+                <Tooltip id="download" className='z-50' />
+                <img src={apk} alt="" data-tooltip-id='download' data-tooltip-content="Download APK" className='h-9 cursor-pointer contrast-75' srcset="" />
+              </div>
+            </div>
+          </div>
         </div>
         {/* <div className=' w-full ml-2 flex items-center'><span onClick={() => openModal2()} className='bg-gray-200 px-4 py-1 cursor-pointer transition-all duration-200 hover:shadow-md'>Modules</span> </div> */}
         <div className='flex items-center sm:gap-4 gap-2'>
           <span className='sm:visible flex items-center '>
-          <Tooltip anchorId="logout" className='z-50' />
+            <Tooltip anchorId="logout" className='z-50' />
             <button id='logout' data-tooltip-content="Log Out" onClick={() => openModal()} className='text-2xl font-semibold'><BiLogOutCircle /></button></span>
           <Tooltip anchorId="notification_icon" className='z-50' />
           <BsBell id='notification_icon' data-tooltip-content="Show all notifications." onClick={() => setnotificationState(true)} className="cursor-pointer inline text-2xl font-semibold" />

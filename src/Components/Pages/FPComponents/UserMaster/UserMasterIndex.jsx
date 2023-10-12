@@ -119,6 +119,8 @@ const UserMaster = () => {
           formik.setFieldValue('address', data?.address)
           formik.setFieldValue('signature', data?.signature)
 
+          setSignDoc(data?.signature)
+
         }
 
       } break;
@@ -175,13 +177,13 @@ const UserMaster = () => {
       Header: "#",
       Cell: ({ row }) => <div className="pr-2">{row?.index + 1}</div>,
     },
-    {
-      Header: "Profile",
-      accessor: "profile",
-      Cell: ({ cell }) => <>
-        <img className="border drop-shadow-lg h-8 rounded-sm"  src={cell.row.original?.profile} alt="profile" srcset="" />
-      </>
-    },
+    // {
+    //   Header: "Profile",
+    //   accessor: "profile",
+    //   Cell: ({ cell }) => <>
+    //     <img className="border drop-shadow-lg h-8 rounded-sm"  src={cell.row.original?.profile} alt="profile" srcset="" />
+    //   </>
+    // },
     {
       Header: "Name",
       accessor: "user_name",
@@ -212,13 +214,13 @@ const UserMaster = () => {
       accessor: "address",
       Cell: ({ cell }) => (nullToNA(cell.row.original?.address)),
     },
-    {
-      Header: "Signature",
-      accessor: "signature",
-      Cell: ({ cell }) => <>
-        <img  className="border drop-shadow-lg h-8 rounded-sm" src={cell.row.original?.signature} alt="signature" srcset="" />
-      </>
-    },
+    // {
+    //   Header: "Signature",
+    //   accessor: "signature",
+    //   Cell: ({ cell }) => <>
+    //     <img  className="border drop-shadow-lg h-8 rounded-sm" src={cell.row.original?.signature} alt="signature" srcset="" />
+    //   </>
+    // },
     {
       Header: "Created At",
       accessor: "date",
@@ -229,12 +231,12 @@ const UserMaster = () => {
       accessor: "id",
       Cell: ({ cell }) => (
         <div className="flex flex-row flex-wrap gap-2">
-          <button
+          {/* <button
             onClick={() => handleModal('edit', cell?.row?.original)}
             className={editButton}
           >
             Edit
-          </button>
+          </button> */}
 
           <button
             onClick={() => handleModal('delete', cell?.row?.original?.id)}
@@ -318,22 +320,22 @@ const UserMaster = () => {
       hint: "Enter designation",
       required: mType == 'user' && true
     },
-    {
-      title: "Upload Profile Picture",
-      key: "profile",
-      width: `md:w-[48%] w-full ${mType == 'user' ? 'block ' : 'hidden '}`,
-      type: 'file',
-      hint: "Enter employee code",
-      required: false
-    },
-    {
-      title: "Upload Signature",
-      key: "signature",
-      width: `md:w-[48%] w-full ${mType == 'user' ? 'block ' : 'hidden '}`,
-      type: 'file',
-      hint: "Enter employee code",
-      required: false
-    },
+    // {
+    //   title: "Upload Profile Picture",
+    //   key: "profile",
+    //   width: `md:w-[48%] w-full ${mType == 'user' ? 'block ' : 'hidden '}`,
+    //   type: 'file',
+    //   hint: "Enter employee code",
+    //   required: false
+    // },
+    // {
+    //   title: "Upload Signature",
+    //   key: "signature",
+    //   width: `md:w-[48%] w-full ${mType == 'user' ? 'block ' : 'hidden '}`,
+    //   type: 'file',
+    //   hint: "Enter employee code",
+    //   required: false
+    // },
     {
       title: "Address",
       key: "address",
@@ -472,8 +474,8 @@ const UserMaster = () => {
           fd.append('designation', values?.designation)
           fd.append('employeeCode', values?.employeeCode)
           fd.append('address', values?.address)
-          fd.append('signature', signDoc)
-          fd.append('profile', profileDoc)
+          signDoc && fd.append('signature', signDoc)
+          profileDoc && fd.append('profile', profileDoc)
 
           url = api_addUser
         }
@@ -491,17 +493,17 @@ const UserMaster = () => {
         }
         if (mType == 'user') {
 
-          fd.append('id', editData?.id)
+          fd.append('userId', editData?.id)
           fd.append('firstName', values?.firstName)
           fd.append('middleName', values?.middleName)
           fd.append('lastName', values?.lastName)
           fd.append('mobileNo', values?.mobileNo)
           fd.append('email', values?.email)
-          fd.append('designatioin', values?.designatioin)
+          fd.append('designation', values?.designatioin)
           fd.append('employeeCode', values?.employeeCode)
           fd.append('address', values?.address)
-          fd.append('signature', signDoc)
-          fd.append('profile', profileDoc)
+          signDoc && fd.append('signature', signDoc)
+          profileDoc && fd.append('profile', profileDoc)
 
           url = api_updateUser
         }
@@ -518,9 +520,7 @@ const UserMaster = () => {
         }
         if (mType == 'user') {
           url = api_deletedUser
-          payload = {
-            userId: dId
-          }
+            fd.append('userId',  dId)
         }
 
       } break;

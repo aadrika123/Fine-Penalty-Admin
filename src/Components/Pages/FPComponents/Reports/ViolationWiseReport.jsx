@@ -29,7 +29,7 @@ const ViolationWiseReport = () => {
     useSetTitle("Violation Wise Report")
 
     // 👉 API constant 👈
-    const { api_ViolationWiseReport, api_getViolationList, api_getSectionList, api_getDepartmentList, api_violationMasterList } = ProjectApiList()
+    const { api_ViolationWiseReport, api_getViolationList, api_getSectionList, api_listDepartment, api_violationMasterList } = ProjectApiList()
     const [violationList, setViolationList] = useState([])
     const [violationSectionList, setViolationSectionList] = useState([])
     const [departmentList, setDepartmentList] = useState([])
@@ -98,8 +98,8 @@ const ViolationWiseReport = () => {
     const formDataList = [
         { title: "From Date", key: "fromDate", width: 'md:w-[20%] w-full', type: 'date', hint: "", required: true, options: '', okey: '', ovalue: '' },
         { title: "Upto Date", key: "uptoDate", width: 'md:w-[20%] w-full', type: 'date', hint: "", required: true, options: '', okey: '', ovalue: '' },
-        // { title: "Department", key: "department", width:'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: departmentList, okey: 'id', ovalue: 'department_name' },
-        // { title: "Violation Section", key: "violationSection", width:'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: violationSectionList, okey: 'id', ovalue: 'section' },
+        { title: "Department", key: "department", width:'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: departmentList, okey: 'id', ovalue: 'department_name' },
+        { title: "Violation Section", key: "violationSection", width:'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: violationSectionList, okey: 'id', ovalue: 'violation_section' },
         { title: "Violation Made", key: "violationMade", width: 'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: violationList, okey: 'id', ovalue: 'violation_name' },
     ]
 
@@ -177,7 +177,7 @@ const ViolationWiseReport = () => {
         setsLoader(true)
 
         AxiosInterceptors
-            .post(api_getDepartmentList, {}, ApiHeader())
+            .post(api_listDepartment, {}, ApiHeader())
             .then((res) => {
                 if (res?.data?.status) {
                     setDepartmentList(res?.data?.data)
@@ -228,7 +228,7 @@ const ViolationWiseReport = () => {
         }
 
         AxiosInterceptors
-            .post(api_violationMasterList, {}, ApiHeader())
+            .post(api_getViolationList, payload, ApiHeader())
             .then((res) => {
                 if (res?.data?.status) {
                     setViolationList(res?.data?.data)
@@ -259,8 +259,8 @@ const ViolationWiseReport = () => {
     }
 
     useEffect(() => {
-        // getDepartmentList()
-        getViolationList()
+        getDepartmentList()
+        // getViolationList()
     }, [])
 
     return (
