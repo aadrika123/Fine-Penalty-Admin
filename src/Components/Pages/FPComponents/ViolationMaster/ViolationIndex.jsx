@@ -733,6 +733,13 @@ const ViolationIndex = () => {
                             })
                         }
 
+                        {formik.values?.violationMade != '' && <div className='flex flex-wrap gap-2 text-sm w-full'>
+
+                            <span className='block w-full md:w-[15%]'>Violation Name :</span>
+                            {formik.values.violationMade}<span className="animate-ping">|</span>
+
+                        </div>}
+
                     </section>
 
                     <footer className="mt-4 flex justify-center">

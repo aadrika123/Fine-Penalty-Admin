@@ -98,8 +98,8 @@ const ViolationWiseReport = () => {
     const formDataList = [
         { title: "From Date", key: "fromDate", width: 'md:w-[20%] w-full', type: 'date', hint: "", required: true, options: '', okey: '', ovalue: '' },
         { title: "Upto Date", key: "uptoDate", width: 'md:w-[20%] w-full', type: 'date', hint: "", required: true, options: '', okey: '', ovalue: '' },
-        { title: "Department", key: "department", width:'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: departmentList, okey: 'id', ovalue: 'department_name' },
-        { title: "Violation Section", key: "violationSection", width:'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: violationSectionList, okey: 'id', ovalue: 'violation_section' },
+        { title: "Department", key: "department", width: 'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: departmentList, okey: 'id', ovalue: 'department_name' },
+        { title: "Violation Section", key: "violationSection", width: 'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: violationSectionList, okey: 'id', ovalue: 'violation_section' },
         { title: "Violation Made", key: "violationMade", width: 'md:w-[20%] w-full', type: 'select', hint: "Enter your name", options: violationList, okey: 'id', ovalue: 'violation_name' },
     ]
 
@@ -278,6 +278,17 @@ const ViolationWiseReport = () => {
                             return inputBox(elem?.key, elem?.title, elem?.type, elem?.width, elem?.hint, elem?.required, elem?.options, elem?.okey, elem?.ovalue)
                         })
                     }
+
+                    {formik.values?.violationMade != '' && <div className='flex flex-wrap gap-2 text-sm'>
+
+                        <span className='block w-full md:w-[10%]'>Violation Made :</span>
+                        {
+                            violationList?.map((elem) => <>
+                                {formik.values.violationMade == elem?.id && <span className='block w-full md:w-[85%] font-semibold'>{elem?.violation_name}</span>}
+                            </>)
+                        }
+                    </div>}
+
                     {/* 👉 Submit Button 👈 */}
                     <div className="mt-4 w-full md:w-[30%] flex flex-row flex-wrap items-center gap-x-4 gap-y-2 md:mt-4">
                         <div className=" ">{

@@ -687,6 +687,16 @@ const InfractionForm = (props) => {
                         )
                     }
 
+                    {formik.values?.violationMade != '' && <div className='flex flex-wrap gap-2 text-sm'>
+
+                        <span className='block w-full md:w-[10%]'>Violation Made :</span>
+                        {
+                            violationList?.map((elem) => <>
+                                {formik.values.violationMade == elem?.id && <span className='block w-full md:w-[85%] font-semibold'>{elem?.violation_name}</span>}
+                            </>)
+                        }
+                    </div>}
+
                 </section>
 
                 {/* 👉 Witness Details 👈 */}
