@@ -253,9 +253,8 @@ function Login() {
                             <div className='flex gap-2'> <span className='w-7'><img src={ulb_data()?.ulb_logo} alt="" srcset="" /></span> <span className="font-bold text-xl">Ranchi Nagar Nigam, Ranchi</span></div>
                         </a>
 
-
                         <div className=' flex justify-center h-max select-none'>
-                            <div className='h-[40%] cursor-pointer py-2 flex items-center gap-4 text-gray-100 bg-gray-800 pl-4 pr-6 drop-shadow-lg transition-all duration-200 hover:scale-105 rounded-md'>
+                            <a href='./Fines.apk' download  className='h-[40%] cursor-pointer py-2 flex items-center gap-4 text-gray-100 bg-gray-800 pl-4 pr-6 drop-shadow-lg transition-all duration-200 hover:scale-105 rounded-md'>
                                 <div className='h-[70%] '>
                                     <img src={apk} alt="" className='h-8 cursor-pointer' srcset="" />
                                 </div>
@@ -263,7 +262,7 @@ function Login() {
                                     <span className='text-sm font-semibold'>Download</span>
                                     <span className='text-sm font-semibold'>Android APK</span>
                                 </div>
-                            </div>
+                            </a>
                         </div>
 
                     </nav>
