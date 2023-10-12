@@ -283,7 +283,7 @@ const ViolationWiseReport = () => {
 
                         <span className='block w-full md:w-[10%]'>Violation Made :</span>
                         {
-                            violationList?.map((elem) => <>
+                            Array.isArray(violationList) && violationList?.map((elem) => <>
                                 {formik.values.violationMade == elem?.id && <span className='block w-full md:w-[85%] font-semibold'>{elem?.violation_name}</span>}
                             </>)
                         }
