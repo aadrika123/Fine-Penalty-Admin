@@ -128,7 +128,7 @@ function PaymentCard(props) {
 
         { (name == 'paymentMode') && setPaymentMode(value) }
 
-        { name == 'remarks' && formik.setFieldValue("remarks", allowNumberCharacterInput(value, formik.values.remarks, 100)) }
+        { name == 'remarks' && formik.setFieldValue("remarks", allowCharacterSpaceCommaInput(value, formik.values.remarks, 100)) }
         { name == 'bankName' && formik.setFieldValue("bankName", allowCharacterSpaceCommaInput(value, formik.values.bankName, 100)) }
         { name == 'branchName' && formik.setFieldValue("branchName", allowCharacterSpaceCommaInput(value, formik.values.branchName, 100)) }
         { name == 'cheque_dd_no' && formik.setFieldValue("cheque_dd_no", allowCharacterNumberInput(value, formik.values.cheque_dd_no, 20)) }

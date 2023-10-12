@@ -50,12 +50,12 @@ function PilotWorkflowDocumentRow(props) {
                                 <FcDocument />
                             </div>
                         }
-                        {(props?.docList?.doc_path?.split('.')[props?.docList?.doc_path?.split('.')?.length - 1] == 'jpg' || props?.docList?.doc_path?.split('.')[props?.docList?.doc_path?.split('.')?.length - 1] == 'jpg/') &&
+                        {(props?.docList?.doc_path?.split('.')[props?.docList?.doc_path?.split('.')?.length - 1] != 'pdf' && props?.docList?.doc_path?.split('.')[props?.docList?.doc_path?.split('.')?.length - 1] != 'pdf/') &&
                             <div className="flex-shrink-0 px-1 py-2">
                                 <img src={checkImage(props?.docList?.id) ? photo : props?.docList?.doc_path} onError={() => seterrorImage(prev => [...prev, props?.docList?.id])} className="md:w-[2vw] w-[5vw]" alt="" srcset="" />
                             </div>
                         }
-                        {(props?.docList?.doc_path?.split('.')[props?.docList?.doc_path?.split('.')?.length - 1] == 'jpeg' || props?.docList?.doc_path?.split('.')[props?.docList?.doc_path?.split('.')?.length - 1] == 'jpeg/') &&
+                        {/* {(props?.docList?.doc_path?.split('.')[props?.docList?.doc_path?.split('.')?.length - 1] == 'jpeg' || props?.docList?.doc_path?.split('.')[props?.docList?.doc_path?.split('.')?.length - 1] == 'jpeg/') &&
                             <div className="flex-shrink-0 px-1 py-2">
                                 <img src={checkImage(props?.docList?.id) ? photo : props?.docList?.doc_path} onError={() => seterrorImage(prev => [...prev, props?.docList?.id])} className="md:w-[2vw] w-[5vw]" alt="" srcset="" />
                             </div>
@@ -64,7 +64,7 @@ function PilotWorkflowDocumentRow(props) {
                             <div className="flex-shrink-0 px-1 py-2">
                                 <img src={checkImage(props?.docList?.id) ? photo : props?.docList?.doc_path} onError={() => seterrorImage(prev => [...prev, props?.docList?.id])} className="md:w-[2vw] w-[5vw]" alt="" srcset="" />
                             </div>
-                        }
+                        } */}
 
                     </div>
                 </td>
