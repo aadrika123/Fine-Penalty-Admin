@@ -75,12 +75,16 @@ const CollectionReport = () => {
         {
             Header: "Transaction No",
             accessor: "tran_no",
-            Cell: ({ cell }) => (nullToNA(cell.row.original?.tran_no))
+            Cell: ({ cell }) => (
+                <div className='underline cursor-pointer' onClick={() => cell.row.original?.tran_no && navigate(`/fp-receipt/${cell.row.original?.tran_no}`)}>
+                    {nullToNA(cell.row.original?.tran_no)}
+                </div>
+                )
         },
         {
             Header: "Transaction Date",
             accessor: "tran_date",
-            Cell: ({ cell }) => (nullToNA(cell.row.original?.tran_date))
+            Cell: ({ cell }) => (indianDate(cell.row.original?.tran_date))
         },
         {
             Header: "Payment Mode",

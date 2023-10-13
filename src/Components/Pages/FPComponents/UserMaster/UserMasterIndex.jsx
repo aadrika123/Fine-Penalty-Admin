@@ -46,6 +46,7 @@ const UserMaster = () => {
     api_updateUser,
     api_deletedUser,
     api_listUser,
+    api_assignRole
   } = ProjectApiList()
 
 
@@ -66,10 +67,12 @@ const UserMaster = () => {
   const [mType, setMType] = useState('role')
   const [signDoc, setSignDoc] = useState(null)
   const [profileDoc, setProfileDoc] = useState(null)
+  const [roleId, setRoleId] = useState(null)
 
   // 👉 CSS constants 👈
   const editButton = "border border-sky-800 text-sky-800 mx-1 px-3 py-1 rounded-sm shadow-lg hover:shadow-xl hover:bg-sky-800 hover:text-white"
-  const deleteButton = "border border-red-300 text-red-400 mx-1 px-3 py-1 rounded-sm shadow-lg hover:shadow-xl hover:bg-red-800 hover:text-white"
+  const assignButton = "border border-amber-700 text-amber-700 mx-1 px-3 py-1 rounded-sm shadow-lg hover:shadow-xl hover:bg-amber-700 hover:text-white"
+  const deleteButton = "border border-red-400 text-red-400 mx-1 px-3 py-1 rounded-sm shadow-lg hover:shadow-xl hover:bg-red-800 hover:text-white"
   const addButton = "float-right bg-[#1A4D8C] px-3 py-1 rounded-sm shadow-lg hover:shadow-xl hover:bg-[#113766] hover:text-white text-white flex items-center"
   const labelStyle = 'text-gray-800 text-sm'
   const inputStyle = 'border focus:outline-none drop-shadow-sm focus:drop-shadow-md px-4 py-1 text-gray-700 shadow-black placeholder:text-sm'
@@ -94,7 +97,7 @@ const UserMaster = () => {
 
     setModalType(type)
 
-    console.log(type, ":::::::::", data)
+    console.log(type, ":::::::::", mType, data)
 
     switch (type) {
       case 'add': {
@@ -109,17 +112,16 @@ const UserMaster = () => {
         }
         if (mType == 'user') {
 
-          formik.setFieldValue('firstName', data?.first_name)
-          formik.setFieldValue('middleName', data?.middle_name)
-          formik.setFieldValue('lastName', data?.last_name)
-          formik.setFieldValue('mobileNo', data?.mobile_no)
+          formik.setFieldValue('firstName', data?.first_name || '')
+          formik.setFieldValue('middleName', data?.middle_name || '')
+          formik.setFieldValue('lastName', data?.last_name || '')
+          formik.setFieldValue('mobileNo', data?.mobile)
           formik.setFieldValue('email', data?.email)
           formik.setFieldValue('designation', data?.designation)
           formik.setFieldValue('employeeCode', data?.employee_code)
           formik.setFieldValue('address', data?.address)
           formik.setFieldValue('signature', data?.signature)
-
-          setSignDoc(data?.signature)
+          formik.setFieldValue('profile', data?.profile_image)
 
         }
 
@@ -128,6 +130,13 @@ const UserMaster = () => {
       case 'delete': {
         setdId(data)
       } break;
+
+      case 'assign': {
+        setEditData(data)
+        setdId(data?.id)
+        setRoleId(data?.wf_role_id || '')
+      } break;
+
     }
 
     dialogRef.current.showModal()
@@ -177,17 +186,22 @@ const UserMaster = () => {
       Header: "#",
       Cell: ({ row }) => <div className="pr-2">{row?.index + 1}</div>,
     },
-    // {
-    //   Header: "Profile",
-    //   accessor: "profile",
-    //   Cell: ({ cell }) => <>
-    //     <img className="border drop-shadow-lg h-8 rounded-sm"  src={cell.row.original?.profile} alt="profile" srcset="" />
-    //   </>
-    // },
+    {
+      Header: "Profile",
+      accessor: "profile",
+      Cell: ({ cell }) => <>
+        {cell.row.original?.profile_image ? <img className="border drop-shadow-lg h-8 rounded-sm" src={cell.row.original?.profile_image} alt="profile" srcset="" /> : "N/A"}
+      </>
+    },
     {
       Header: "Name",
       accessor: "user_name",
       Cell: ({ cell }) => (nullToNA(cell.row.original?.user_name)),
+    },
+    {
+      Header: "Role",
+      accessor: "role_name",
+      Cell: ({ cell }) => (nullToNA(cell.row.original?.role_name)),
     },
     {
       Header: "Mobile No.",
@@ -214,13 +228,13 @@ const UserMaster = () => {
       accessor: "address",
       Cell: ({ cell }) => (nullToNA(cell.row.original?.address)),
     },
-    // {
-    //   Header: "Signature",
-    //   accessor: "signature",
-    //   Cell: ({ cell }) => <>
-    //     <img  className="border drop-shadow-lg h-8 rounded-sm" src={cell.row.original?.signature} alt="signature" srcset="" />
-    //   </>
-    // },
+    {
+      Header: "Signature",
+      accessor: "signature",
+      Cell: ({ cell }) => <>
+        {cell.row.original?.signature ? <img className="border drop-shadow-lg h-8 rounded-sm" src={cell.row.original?.signature} alt="signature" srcset="" /> : "N/A"}
+      </>
+    },
     {
       Header: "Created At",
       accessor: "date",
@@ -230,13 +244,13 @@ const UserMaster = () => {
       Header: "Action",
       accessor: "id",
       Cell: ({ cell }) => (
-        <div className="flex flex-row flex-wrap gap-2">
-          {/* <button
+        <div className="flex items-center flex-wrap flex-row gap-1">
+          <button
             onClick={() => handleModal('edit', cell?.row?.original)}
             className={editButton}
           >
             Edit
-          </button> */}
+          </button>
 
           <button
             onClick={() => handleModal('delete', cell?.row?.original?.id)}
@@ -244,6 +258,14 @@ const UserMaster = () => {
           >
             Delete
           </button>
+
+          <button
+            onClick={() => handleModal('assign', cell?.row?.original)}
+            className={assignButton}
+          >
+            Assign Role
+          </button>
+
         </div>
       ),
     },
@@ -320,22 +342,22 @@ const UserMaster = () => {
       hint: "Enter designation",
       required: mType == 'user' && true
     },
-    // {
-    //   title: "Upload Profile Picture",
-    //   key: "profile",
-    //   width: `md:w-[48%] w-full ${mType == 'user' ? 'block ' : 'hidden '}`,
-    //   type: 'file',
-    //   hint: "Enter employee code",
-    //   required: false
-    // },
-    // {
-    //   title: "Upload Signature",
-    //   key: "signature",
-    //   width: `md:w-[48%] w-full ${mType == 'user' ? 'block ' : 'hidden '}`,
-    //   type: 'file',
-    //   hint: "Enter employee code",
-    //   required: false
-    // },
+    {
+      title: "Upload Profile Picture",
+      key: "profile",
+      width: `md:w-[48%] w-full ${mType == 'user' ? 'block ' : 'hidden '}`,
+      type: 'file',
+      hint: "Enter employee code",
+      required: false
+    },
+    {
+      title: "Upload Signature",
+      key: "signature",
+      width: `md:w-[48%] w-full ${mType == 'user' ? 'block ' : 'hidden '}`,
+      type: 'file',
+      hint: "Enter employee code",
+      required: false
+    },
     {
       title: "Address",
       key: "address",
@@ -406,15 +428,22 @@ const UserMaster = () => {
           setDataList(res?.data?.data)
         } else {
           activateBottomErrorCard(true, checkErrorMessage(res?.data?.message))
+          setDataList([])
         }
         console.log('user role list response => ', res)
       })
       .catch((err) => {
         activateBottomErrorCard(true, 'Server Error! Please try again later.')
+        setDataList([])
         console.log('error user role list => ', err)
       })
       .finally(() => {
         setLoader(false)
+        setEditData(null)
+        setSignDoc(null)
+        setProfileDoc(null)
+        setRoleId(null)
+        dialogRef.current.close()
       })
   }
 
@@ -424,7 +453,7 @@ const UserMaster = () => {
       <div className={`flex flex-col ${width} `}>
         {title != '' && <label htmlFor={key} className={labelStyle}>{title} {required && <span className='text-red-500 text-xs font-bold'>*</span>} : </label>}
         {type != 'select' && type != 'file' && <input {...formik.getFieldProps(key)} type={type} className={inputStyle + ` ${(formik.touched[key] && formik.errors[key]) ? ' border-red-200 placeholder:text-red-400 ' : ' focus:border-zinc-300 border-zinc-200'}`} name={key} id="" placeholder={hint} />}
-        {type == 'file' && <input {...formik.getFieldProps(key)} type={type} className={fileStyle + `${(formik.touched[key] && formik.errors[key]) ? ' border-red-200 placeholder:text-red-400 text-red-400 file:border-red-200 file:text-red-400' : ' focus:border-zinc-300 border-zinc-200 file:border-zinc-300 file:text-gray-600'}`} name={key} id="" placeholder={hint} accept=".jpg, .jpeg, .png" />}
+        {type == 'file' && <input type='file' className={fileStyle + `${(formik.touched[key] && formik.errors[key]) ? ' border-red-200 placeholder:text-red-400 text-red-400 file:border-red-200 file:text-red-400' : ' focus:border-zinc-300 border-zinc-200 file:border-zinc-300 file:text-gray-600'}`} name={key} id="" placeholder={hint} accept=".jpg, .jpeg, .png" />}
         {type == 'select' && <select {...formik.getFieldProps(key)} className={inputStyle + ` ${(formik.touched[key] && formik.errors[key]) ? ' border-red-200 placeholder:text-red-400 text-red-400' : ' focus:border-zinc-300 border-zinc-200 '}`}>
           {
             sLoader ?
@@ -448,8 +477,6 @@ const UserMaster = () => {
     setLoader2(true)
 
     dialogRef.current.close()
-
-    console.log(modalType, values)
 
     let payload;
     let url;
@@ -499,7 +526,7 @@ const UserMaster = () => {
           fd.append('lastName', values?.lastName)
           fd.append('mobileNo', values?.mobileNo)
           fd.append('email', values?.email)
-          fd.append('designation', values?.designatioin)
+          fd.append('designation', values?.designation)
           fd.append('employeeCode', values?.employeeCode)
           fd.append('address', values?.address)
           signDoc && fd.append('signature', signDoc)
@@ -520,7 +547,7 @@ const UserMaster = () => {
         }
         if (mType == 'user') {
           url = api_deletedUser
-            fd.append('userId',  dId)
+          fd.append('userId', dId)
         }
 
       } break;
@@ -572,7 +599,7 @@ const UserMaster = () => {
     const name = e.target.name;
     const value = e.target.value;
 
-    {name == 'mobileNo' && formik.setFieldValue("mobileNo", allowNumberInput(value, formik.values.mobileNo, 10))}
+    { name == 'mobileNo' && formik.setFieldValue("mobileNo", allowNumberInput(value, formik.values.mobileNo, 10)) }
 
     if (name == 'signature') {
       let file = e?.target?.files[0];
@@ -591,6 +618,40 @@ const UserMaster = () => {
       }
       setProfileDoc(file)
     }
+
+    if (name == 'roleAssign') {
+      setRoleId(value)
+    }
+
+  }
+
+  const roleAssignFun = () => {
+
+    setLoader(true)
+
+    let payload = {
+      userId: dId,
+      roleId: roleId
+    }
+
+    AxiosInterceptors.post(api_assignRole, payload, ApiHeader())
+      .then((res) => {
+        if (res?.data?.status) {
+          toast.success('Role Assigned Successfully !!!')
+          getUserList()
+        } else {
+          activateBottomErrorCard(true, checkErrorMessage(res?.data?.message))
+        }
+        console.log('fp role assign response => ', res)
+      })
+      .catch((err) => {
+       activateBottomErrorCard(true, 'Server Error! Please try again later.')
+        console.log('error fp role assign => ', err)
+      })
+      .finally(() => {
+        setLoader(false)
+        dialogRef.current.close()
+      })
 
   }
 
@@ -670,26 +731,26 @@ const UserMaster = () => {
       </div>
 
       {/* 👉 Dialog form 👈 */}
-      <dialog ref={dialogRef} className={`relative overflow-clip animate__animated animate__zoomIn animate__faster w-full ${mType != 'user' ? 'md:w-[20rem]' : 'md:w-[50rem]'}`}>
+      <dialog ref={dialogRef} className={`relative overflow-clip animate__animated animate__zoomIn animate__faster w-full ${mType == 'department' && 'md:w-[20rem]'} ${mType == 'user' && 'md:w-[50rem]'} ${modalType == 'delete' && 'md:w-[21rem]'} ${modalType == 'assign' && 'md:w-[40rem]'}`}>
 
         {/* 👉 Cross button 👈 */}
-        {modalType != 'delete' && <span onClick={() => (dialogRef.current.close(), formik.resetForm())} className="block p-1 bg-red-100 hover:bg-red-500 rounded-full hover:text-white cursor-pointer transition-all duration-200 absolute top-2 right-2"><RxCross2 /></span>}
+        {modalType != 'delete' && <span onClick={() => (dialogRef.current.close(), formik.resetForm(), setRoleId(null))} className="block p-1 bg-red-100 hover:bg-red-500 rounded-full hover:text-white cursor-pointer transition-all duration-200 absolute top-2 right-2"><RxCross2 /></span>}
 
         {/* 👉 Form 👈 */}
-        {modalType != 'delete' && <form onChange={(e) => (formik.handleChange(e), handleChange(e))} onSubmit={formik.handleSubmit} className="p-4 px-8 py-6 shadow-lg">
+        {modalType != 'delete' && modalType != 'assign' && <form onChange={(e) => (formik.handleChange(e), handleChange(e))} onSubmit={formik.handleSubmit} className="p-4 px-8 py-6 shadow-lg">
           <section className='flex flex-row justify-between gap-4 flex-wrap'>
 
             <header className='w-full font-semibold text-xl capitalize text-sky-700 border-b pb-1 text-center'>
               {modalType} {mType}
             </header>
 
-            {modalType == 'edit' && mType == 'user' && 
-            <>
-            <div className="w-full grid grid-cols-12 items-center gap-4 mb-4 mt-2">
-            <div className="md:col-span-6 col-span-12 flex gap-2 items-center flex-wrap text-sm">Profile: <img src={editData?.profile} className="ml-4 h-12 border drop-shadow-md rounded-sm" alt="Profile" srcset="" /></div>
-            <div className="md:col-span-6 col-span-12 flex gap-2 items-center flex-wrap text-sm">Signature: <img src={editData?.signature} className="ml-4 h-12 border drop-shadow-md rounded-sm" alt="Signature" srcset="" /></div>
-            </div>
-            </>
+            {modalType == 'edit' && mType == 'user' &&
+              <>
+                <div className="w-full grid grid-cols-12 items-center gap-4 mb-4 mt-2">
+                  <div className="md:col-span-6 col-span-12 flex gap-2 items-center flex-wrap text-sm">Profile Image : <img src={editData?.profile_image || ''} className="ml-4 h-20 border drop-shadow-md rounded-sm p-1" alt="Profile" srcset="" /></div>
+                  <div className="md:col-span-6 col-span-12 flex gap-2 items-center flex-wrap text-sm">Signature : <img src={editData?.signature || ''} className="ml-4 h-20 border drop-shadow-md rounded-sm p-1" alt="Signature" srcset="" /></div>
+                </div>
+              </>
             }
 
             {
@@ -722,6 +783,71 @@ const UserMaster = () => {
                 <button className='text-white bg-slate-400 hover:bg-slate-500 px-4 py-1 text-sm ' onClick={() => dialogRef.current.close()}>No</button>
                 <button className='text-white bg-red-500 hover:bg-red-600 px-4 py-1 text-sm ' onClick={() => submitFun()}>Yes</button>
               </div>
+            </div>
+          </>
+        }
+
+        {/* 👉 Delete Box 👈 */}
+        {
+          modalType == 'assign' &&
+          <>
+
+            <div className="p-4 px-8 py-6 shadow-lg">
+
+              <header className='w-full font-semibold text-xl capitalize text-sky-700 border-b pb-1 mt-4 text-center'>
+                Assign Role to <span className="text-amber-600">{editData?.user_name}</span>
+              </header>
+
+              {!loader && Array.isArray(roleList) && roleList?.length > 0 &&
+                <div className=' mt-4 animate__animated animate__fadeIn animate__faster'>
+                  <button onClick={() => roleAssignFun()} className='float-right bg-green-500 px-3 py-1 rounded-sm shadow-lg hover:shadow-xl hover:bg-green-600 hover:text-white text-white flex items-center mb-1'>Assign</button>
+                </div>
+              }
+
+              <div className='flex flex-col h-[40vh] w-full overflow-y-auto md:overflow-x-hidden mt-6'>
+
+                {/* 👉 List Heading 👈 */}
+                <div className='w-full grid grid-cols-12 items-center gap-2 bg-slate-500 text-white font-semibold border border-slate-200 px-4 py-2'>
+                  <div className='col-span-3'>Sl. No.</div>
+                  <div className='col-span-6'>Role Name</div>
+                  <div className='col-span-3 text-end'>
+                    <span>Action</span>
+                  </div>
+                </div>
+
+                {/* 👉 List Loader 👈 */}
+                {
+                  loader && <ShimmerEffectInline />
+                }
+
+                {/* 👉 All List 👈 */}
+                {
+                  !loader && Array.isArray(roleList) &&
+                  roleList?.map((elem, index) =>
+                    <>
+                      <div key={index} className='w-full grid grid-cols-12 items-center gap-2 bg-slate-100 border-b hover:bg-white pb-1 p-4 animate__animated animate__fadeIn animate__faster'>
+                        <div className='col-span-1'>{index + 1}</div>
+                        <div className='col-span-10'>{elem?.role_name}</div>
+                        <div className='col-span-1'>
+                          <label class="inline-flex items-center px-4">
+                            <input type="radio" name='roleAssign' checked={roleId == elem?.id || ''} value={elem?.id} onChange={handleChange} class="cursor-pointer form-radio h-5 w-5 text-slate-800" />
+                          </label>
+                        </div>
+                      </div>
+                    </>
+                  )
+                }
+
+                {/* 👉 Message for list when no data available 👈 */}
+                {
+                  !loader && Array.isArray(roleList) && roleList?.length == 0 &&
+                  <div className='w-full text-center text-red-400 font-semibold pb-1 p-4'>
+                    No Roles Available
+                  </div>
+                }
+
+              </div>
+
             </div>
           </>
         }

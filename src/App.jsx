@@ -13,6 +13,7 @@ import { contextVar } from '@/Components/context/contextVar';
 import { getLocalStorageItemJsonParsed } from '@/Components/Common/localstorage';
 import UserMaster from './Components/Pages/FPComponents/UserMaster/UserMasterIndex';
 import NewPassowd from './Components/Pages/Others/NewPassowd';
+import CashVerificationIndex from './Components/Pages/FPComponents/CashVerification/CashVerificationIndex';
 
 const Login                   = lazy(() => import('@/Components/Pages/Others/Login'));
 const ProtectedRoutes         = lazy(() => import('@/Components/Pages/Others/ProtectedRoutes'));
@@ -84,7 +85,8 @@ function App() {
     { path: '/collection-report',           element: <CollectionReport />        },
     { path: '/comparision-report',          element: <DifferenceReport />        },
     { path: '/comparision-report/:id',      element: <DifferenceDetails />       },
-    { path: '/user-master',                 element: <UserMaster />       },
+    { path: '/user-master',                 element: <UserMaster />              },
+    { path: '/cash-verification',           element: <CashVerificationIndex />   },
 
   ]
 

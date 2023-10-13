@@ -105,7 +105,7 @@ function ListTable2(props) {
                 <div className='flex-1'><span className='opacity-50'>Total Result :&nbsp;</span><span className='font-semibold'>{props?.totalCount}</span> </div>
             </div>
             {props?.feedback != null && <div ><span className='text-xs bg-gray-200 opacity-50 pr-2 pl-1 py-1 rounded-sm'><BsExclamationCircleFill className="inline text-xs text-gray-400 mr-2" />{props.feedback}</span></div>}
-            <div className=" py-2 overflow-x-auto bg-white">
+            <div className=" p-2 overflow-x-auto bg-white">
                 <div className="inline-block min-w-full rounded-lg overflow-hidden bg-white">
                     <table {...getTableBodyProps} className="min-w-full leading-normal">
                         <thead className='font-bold text-left text-sm bg-sky-50'>

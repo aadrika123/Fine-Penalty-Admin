@@ -67,7 +67,6 @@ function ListTable(props) {
     // }
 
     const makeExportFun = () => {
-        console.log(props?.columns);
         let data = props?.dataList?.map((elem, index) => {
           // Map over the columns for each element in dataList
           const rowData = props?.columns?.map((col, columnIndex) => {

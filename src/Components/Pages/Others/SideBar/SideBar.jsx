@@ -65,7 +65,7 @@ const SideBar = (props) => {
                 <div class="text-sm text-gray-200 flex flex-col items-start justify-center relative">
                   <span className='flex justify-center w-full'> <span className='text-[50px] flex justify-center py-2 text-white'><GiTakeMyMoney /></span></span>
                   <span className='flex justify-center w-full'>{userDetails?.user_name}</span>
-                  <span className='flex justify-center w-full'>{userDetails?.roles?.map((elem) => elem)}</span>
+                  <span className='flex justify-center w-full uppercase text-xs font-semibold'>( {userDetails?.role_name || "Role Name"} )</span>
                 </div>
                 <hr className='my-4' />
               </div>

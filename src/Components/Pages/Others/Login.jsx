@@ -151,6 +151,7 @@ function Login() {
                             { name: 'Search Challan', path: '/search-challan', children: [] },
                             { name: 'Violation Master', path: '/violation-master', children: [] },
                             { name: 'User Role Master', path: '/user-master', children: [] },
+                            { name: 'Cash Verification', path: '/cash-verification', children: [] },
                             {
                                 name: 'Reports', path: '', children: [
                                     { name: 'Challan Generated Report', path: '/challan-generated-report' },

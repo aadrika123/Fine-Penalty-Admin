@@ -72,6 +72,7 @@ export default function ProjectApiList() {
         api_getInfractionList     : `${baseUrl}/api/penalty-record/crud/active-all`,        
         
         api_getViolationList     : `${baseUrl}/api/violation/crud/list`,        
+        api_getWardList          : `${baseUrl}/api/ward-list`,        
         
         api_violationMasterList : `${baseUrl}/api/violation/crud/list`,  
         api_getViolationById     : `${baseUrl}/api/violation/crud/get`,
@@ -103,6 +104,8 @@ export default function ProjectApiList() {
         api_assignViolation:     `${baseUrl}/api/violation/onspot`,
         api_getDepartmentList:   `${baseUrl}/api/department/list`,
         api_getUserList:         `${baseUrl}/api/user-list`,
+        
+        api_getViolationByDept:  `${baseUrl}/api/violation/by-department`,
 
         api_listDepartment: `${baseUrl}/api/department/crud/list`,
         api_addDepartment: `${baseUrl}/api/department/crud/save`,
@@ -125,6 +128,13 @@ export default function ProjectApiList() {
         api_updateUser:     `${baseUrl}/api/user/crud/edit`,
         api_deletedUser:    `${baseUrl}/api/user/crud/delete`,
         api_listUser:       `${baseUrl}/api/user/crud/list`,
+
+        api_assignRole:     `${baseUrl}/api/user/role-assign`,
+
+        // Cash Verification
+        api_cashVerificaionList : `${baseUrl}/api/fines/cash-verification-list`,
+        api_cashVerificaionById : `${baseUrl}/api/fines/cash-verification-dtl`,
+        api_verifyCash : `${baseUrl}/api/fines/verify-cash`,
 
     }
 
