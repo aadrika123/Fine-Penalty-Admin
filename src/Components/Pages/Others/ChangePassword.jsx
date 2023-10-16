@@ -73,12 +73,12 @@ const ChangePassword = () => {
 
         setLoaderStatus(true)
 
-        AxiosInterceptors.post(type == 'change' ? api_changePassword : api_forgotPassword, body, ApiHeader())
+        AxiosInterceptors.post(api_changePassword, body, ApiHeader())
             .then((res) => {
                 if (res?.data?.status == true) {
                     console.log("successfully changed => ", res)
                     toast.success('Password changed successfully !!!')
-                    type == 'change' ? navigate('/home') : navigate('/login')
+                    navigate('/home')
                 }
 
 

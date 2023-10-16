@@ -136,6 +136,26 @@ function Login() {
                     setLocalStorageItem('token', response?.data?.data?.token)
                     setLocalStorageItemStrigified('userDetails', response?.data?.data?.userDetails)
 
+                    if (response?.data?.data?.userDetails?.user_type == 'ADMIN') {
+                        setLocalStorageItemStrigified('menuList', [
+                            { name: 'Home', path: '/home', children: [] },
+                            { name: 'Application List', path: '/fp-list', children: [] },
+                            { name: 'Search Challan', path: '/search-challan', children: [] },
+                            { name: 'Workflow', path: '/fp-workflow', children: [] },
+                            { name: 'Violation Master', path: '/violation-master', children: [] },
+                            { name: 'User Role Master', path: '/user-master', children: [] },
+                            { name: 'Cash Verification', path: '/cash-verification', children: [] },
+                            {
+                                name: 'Reports', path: '', children: [
+                                    { name: 'Challan Generated Report', path: '/challan-generated-report' },
+                                    { name: 'Violation Wise Report', path: '/violation-wise-report' },
+                                    { name: 'Collection Report', path: '/collection-report' },
+                                    { name: 'Comparision Report', path: '/comparision-report' }
+                                ]
+                            },
+                        ])
+                    }
+
                     if (response?.data?.data?.userDetails?.user_type == 'CO') {
                         setLocalStorageItemStrigified('menuList', [
                             { name: 'Home', path: '/home', children: [] },
@@ -255,7 +275,7 @@ function Login() {
                         </a>
 
                         <div className=' flex justify-center h-max select-none'>
-                            <a href='./Fines.apk' download  className='h-[40%] cursor-pointer py-2 flex items-center gap-4 text-gray-100 bg-gray-800 pl-4 pr-6 drop-shadow-lg transition-all duration-200 hover:scale-105 rounded-md'>
+                            <a href='./Fines.apk' download className='h-[40%] cursor-pointer py-2 flex items-center gap-4 text-gray-100 bg-gray-800 pl-4 pr-6 drop-shadow-lg transition-all duration-200 hover:scale-105 rounded-md'>
                                 <div className='h-[70%] '>
                                     <img src={apk} alt="" className='h-8 cursor-pointer' srcset="" />
                                 </div>

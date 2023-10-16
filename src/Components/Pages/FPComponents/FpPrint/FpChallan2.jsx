@@ -118,7 +118,7 @@ const FpChallan2 = () => {
                          : 
                         <>*/}
 
-                {(userDetails?.user_type == "JSK" && !challanDetails?.payment_status) && <button
+                {((userDetails?.user_type == "JSK" || userDetails?.user_type == "ADMIN") && !challanDetails?.payment_status) && <button
                     onClick={() => {
                         navigate(`/fp-pay/${id}`)
                     }}
