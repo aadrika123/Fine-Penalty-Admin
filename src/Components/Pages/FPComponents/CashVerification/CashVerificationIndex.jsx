@@ -266,17 +266,24 @@ const CashVerificationIndex = () => {
   }
 
   const verifyFun = () => {
-    setloader(true)
+
+    if(cvIds?.length == 0){
+      return;
+    }
+
+    setloader2(true)
 
     let payload = {
       id: cvIds,
+      tcId: cvData?.tcId,
+      date: cvData?.date,
     }
 
     AxiosInterceptors.post(api_verifyCash, payload, ApiHeader())
       .then((res) => {
         if (res?.data?.status) {
           toast.success('Cash Verified Successfully !!!')
-          fetchData({ data: formik.values.date })
+          fetchData({ data: cvData?.date })
         } else {
           activateBottomErrorCard(true, checkErrorMessage(res?.data?.message))
         }
@@ -287,8 +294,10 @@ const CashVerificationIndex = () => {
         console.log('error fp cash verification => ', err)
       })
       .finally(() => {
-        setloader(false)
+        setloader2(false)
         dialogRef.current.close()
+        setAllCheck(false)
+        setCvIds([])
       })
   }
 
@@ -347,7 +356,7 @@ const CashVerificationIndex = () => {
       {/* 👉 Dialog form 👈 */}
       <dialog ref={dialogRef} className="relative overflow-clip animate__animated animate__zoomIn animate__faster focus:outline-none backdrop:backdrop-brightness-75">
 
-        {!loader && <span onClick={() => dialogRef.current.close()} className="block p-1 bg-red-100 hover:bg-red-500 rounded-full hover:text-white cursor-pointer transition-all duration-200 absolute top-2 right-2"><RxCross2 /></span>}
+        {!loader && <span onClick={() => (dialogRef.current.close(), setCvIds([]), setAllCheck(false))} className="block p-1 bg-red-100 hover:bg-red-500 rounded-full hover:text-white cursor-pointer transition-all duration-200 absolute top-2 right-2"><RxCross2 /></span>}
         <div className=' z-50 px-6 py-4 flex flex-col gap-4 '>
           <div className='flex flex-col items-between justify-center'>
             <div className='w-full flex flex-col items-center mb-4 pb-2 border-b'>
@@ -386,7 +395,7 @@ const CashVerificationIndex = () => {
               {/* 👉 List Screen 👈 */}
               <div className='flex flex-col h-[60vh] w-full overflow-y-auto md:overflow-x-hidden'>
 
-               
+
 
                 {!loader2 && Array.isArray(cvData?.tranDtl) && cvData?.tranDtl?.length > 0 &&
                   <div className='px-2 animate__animated animate__fadeIn animate__faster'>
@@ -404,13 +413,13 @@ const CashVerificationIndex = () => {
                     <span>Action</span>
                     {Array.isArray(cvData?.tranDtl) && cvData?.tranDtl?.length > 0 &&
                       <label class="inline-flex items-center px-4 animate__animated animate__fadeIn animate__faster">
-                        <input type="checkbox" name='cashAll' onChange={(e) => handleCheckBox(e)} class="cursor-pointer form-checkbox h-5 w-5 text-slate-800" />
+                        <input type="checkbox" name='cashAll' checked={allCheck} onChange={(e) => handleCheckBox(e)} class="cursor-pointer form-checkbox h-5 w-5 text-slate-800" />
                       </label>}
                   </div>
                 </div>
 
 
- {/* 👉 List Loader 👈 */}
+                {/* 👉 List Loader 👈 */}
                 {
                   loader2 && <ShimmerEffectInline />
                 }
