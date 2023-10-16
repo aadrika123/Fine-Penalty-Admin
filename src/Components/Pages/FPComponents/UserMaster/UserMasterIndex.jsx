@@ -731,7 +731,7 @@ const UserMaster = () => {
       </div>
 
       {/* 👉 Dialog form 👈 */}
-      <dialog ref={dialogRef} className={`relative overflow-clip animate__animated animate__zoomIn animate__faster w-full ${mType == 'department' && 'md:w-[20rem]'} ${mType == 'user' && 'md:w-[50rem]'} ${modalType == 'delete' && 'md:w-[21rem]'} ${modalType == 'assign' && 'md:w-[40rem]'}`}>
+      <dialog ref={dialogRef} className={`relative overflow-clip animate__animated animate__zoomIn animate__faster w-full ${mType == 'role' && 'md:w-[21rem]'} ${(mType == 'user' && modalType != 'delete') && 'md:w-[50rem]'} ${(modalType == 'delete') && 'md:w-[21rem]'} ${modalType == 'assign' && 'md:w-[40rem]'}`}>
 
         {/* 👉 Cross button 👈 */}
         {modalType != 'delete' && <span onClick={() => (dialogRef.current.close(), formik.resetForm(), setRoleId(null))} className="block p-1 bg-red-100 hover:bg-red-500 rounded-full hover:text-white cursor-pointer transition-all duration-200 absolute top-2 right-2"><RxCross2 /></span>}
