@@ -295,7 +295,7 @@ function Login() {
                     <div className="mx-auto px-4 ">
                         <div className="flex flex-wrap flex-row justify-center gap-2 items-center">
 
-                            <div className=" px-4 w-full md:w-[30%]">
+                            <div className=" px-4 w-full md:w-[40%] 2xl:w-[30%]">
                                 {/* login form */}
                                 <div className="max-w-full w-full px-2 sm:px-12 lg:pr-20 mb-10 lg:mb-0">
                                     <div className="relative">
