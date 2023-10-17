@@ -68,7 +68,7 @@ export default function ProjectApiList() {
         // 👉 ================ Fines & Penalties API List =================== 👈
         api_submitInfractionForm : `${baseUrl}/api/penalty-record/crud/save`,
         api_updateInfractionForm : `${baseUrl}/api/penalty-record/crud/edit`,
-        api_getInfractionById    : `${baseUrl}/api/penalty-record/crud/show`,
+        api_getInfractionById    : `${baseUrl}/api/v2/penalty-record/crud/show`,
         api_getInfractionList     : `${baseUrl}/api/penalty-record/crud/active-all`,        
         
         api_getViolationList     : `${baseUrl}/api/violation/crud/list`,        

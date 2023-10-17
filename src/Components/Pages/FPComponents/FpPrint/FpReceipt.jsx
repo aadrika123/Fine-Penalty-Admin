@@ -164,9 +164,9 @@ const FpReceipt = () => {
                                 <div>की राशि </div>
                                 <div className="w-[45%] border-dashed border-b-2 border-gray-500 font-normal ">{nullToNA(receiptDetails?.amount_in_words)}</div>
                                 <div>(शब्दों में)। नकद/चेक/डिमांड ड्राफ्ट/बैंकर्स चेक संख्या द्वारा </div>
-                                <div className="w-[25%] border-dashed border-b-2 border-gray-500 font-normal ">{nullToNA(receiptDetails?.cheque_dd_no)}</div>
+                                <div className="w-[25%] border-dashed border-b-2 border-gray-500 font-normal ">{nullToNA(receiptDetails?.payment_mode)}</div>
                                 <div>की ओर </div>
-                                <div className="w-[25%] border-dashed border-b-2 border-gray-500 font-normal ">{nullToNA(receiptDetails?.cheque_dd_date)}</div>
+                                <div className="w-[25%] border-dashed border-b-2 border-gray-500 font-normal ">{indianDate(receiptDetails?.tran_date)}</div>
                                 <div>दिनांक पर अंकित </div>
                                 <div className="w-[25%] border-dashed border-b-2 border-gray-500 font-normal ">{nullToNA(receiptDetails?.bank_name)}</div>
                                 <div>बैंक,</div>

@@ -59,11 +59,11 @@ const CashVerificationIndex = () => {
       accessor: "mobile",
       Cell: ({ cell }) => (nullToNA(cell.row.original?.mobile))
     },
-    {
-      Header: "Role Name",
-      accessor: "role_name",
-      Cell: ({ cell }) => (nullToNA(cell.row.original?.role_name))
-    },
+    // {
+    //   Header: "Role Name",
+    //   accessor: "role_name",
+    //   Cell: ({ cell }) => (nullToNA(cell.row.original?.role_name))
+    // },
     {
       Header: "Total Amount",
       accessor: "penalty_amount",
@@ -267,7 +267,7 @@ const CashVerificationIndex = () => {
 
   const verifyFun = () => {
 
-    if(cvIds?.length == 0){
+    if (cvIds?.length == 0) {
       return;
     }
 
@@ -377,10 +377,10 @@ const CashVerificationIndex = () => {
                 <div className='col-span-6'>{nullToNA(getData?.mobile)}</div>
               </div>
 
-              <div className='col-span-12 md:col-span-6 grid grid-cols-12 items-center gap-x-1'>
+              {/* <div className='col-span-12 md:col-span-6 grid grid-cols-12 items-center gap-x-1'>
                 <div className='col-span-6 font-semibold'>Role Name: </div>
                 <div className='col-span-6'>{nullToNA(getData?.role_name)}</div>
-              </div>
+              </div> */}
 
               <div className='col-span-12 md:col-span-6 grid grid-cols-12 items-center gap-x-1'>
                 <div className='col-span-6 font-semibold'>Total Amount: </div>
@@ -390,18 +390,18 @@ const CashVerificationIndex = () => {
             </div>
 
             <div className='w-full mt-4 mb-2'>
-              <span className='font-semibold '>Collection List (Date : {getData?.date})</span>
+              <div className='font-semibold '>
+
+                <span>Collection List (Date : {getData?.date})</span>
+
+                {!loader2 && Array.isArray(cvData?.tranDtl) && cvData?.tranDtl?.length > 0 &&
+                  <button onClick={() => verifyFun()} className='font-normal text-sm float-right bg-green-500 px-3 py-1 rounded-sm shadow-lg hover:shadow-xl hover:bg-green-600 hover:text-white text-white flex items-center mb-1'>Verify</button>
+                }
+
+              </div>
 
               {/* 👉 List Screen 👈 */}
               <div className='flex flex-col h-[60vh] w-full overflow-y-auto md:overflow-x-hidden'>
-
-
-
-                {!loader2 && Array.isArray(cvData?.tranDtl) && cvData?.tranDtl?.length > 0 &&
-                  <div className='px-2 animate__animated animate__fadeIn animate__faster'>
-                    <button onClick={() => verifyFun()} className='float-right bg-green-500 px-3 py-1 rounded-sm shadow-lg hover:shadow-xl hover:bg-green-600 hover:text-white text-white flex items-center mb-1'>Verify</button>
-                  </div>
-                }
 
                 {/* 👉 List Heading 👈 */}
                 <div className='w-full grid grid-cols-12 items-center gap-2 bg-slate-500 text-white font-semibold border border-slate-200 px-4 py-2'>
@@ -411,7 +411,7 @@ const CashVerificationIndex = () => {
                   <div className="col-span-2 text-sm">Amount</div>
                   <div className='col-span-2 text-sm flex'>
                     <span>Action</span>
-                    {Array.isArray(cvData?.tranDtl) && cvData?.tranDtl?.length > 0 &&
+                    {!loader2 && Array.isArray(cvData?.tranDtl) && cvData?.tranDtl?.length > 0 &&
                       <label class="inline-flex items-center px-4 animate__animated animate__fadeIn animate__faster">
                         <input type="checkbox" name='cashAll' checked={allCheck} onChange={(e) => handleCheckBox(e)} class="cursor-pointer form-checkbox h-5 w-5 text-slate-800" />
                       </label>}
