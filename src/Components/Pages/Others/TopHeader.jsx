@@ -8,13 +8,13 @@ import { localstorageRemoveEntire } from '@/Components/Common/localstorage'
 import ulb_data from '@/Components/Common/DynamicData'
 import { AiOutlineBars } from 'react-icons/ai'
 import { BiLogOutCircle } from 'react-icons/bi';
-import PermittedModuleCard from './PermittedModuleCard';
+// import PermittedModuleCard from './PermittedModuleCard';
 import { Tooltip } from 'react-tooltip';
 import { BsBell } from 'react-icons/bs';
 import NotificationComponent from './NotificationComponent';
 import axios from 'axios';
 import ProjectApiList from '@/Components/api/ProjectApiList';
-import apk from '@/Components/assets/download.png'
+// import apk from '@/Components/assets/download.png'
 
 const TopHeader = (props) => {
 
@@ -84,12 +84,12 @@ const TopHeader = (props) => {
           </div>
 
           <div className='flex justify-center h-max select-none'>
-            <a href='../public/Fines.apk' download className='h-[40%] cursor-pointer transition-all duration-200 hover:scale-105 rounded-md'>
+            {/* <a href='../public/Fines.apk' download className='h-[40%] cursor-pointer transition-all duration-200 hover:scale-105 rounded-md'>
               <div className='h-[70%] '>
                 <Tooltip id="download" className='z-50' />
                 <img src={apk} alt="" data-tooltip-id='download' data-tooltip-content="Download APK" className='h-9 cursor-pointer contrast-75' srcset="" />
               </div>
-            </a>
+            </a> */}
           </div>
         </div>
         {/* <div className=' w-full ml-2 flex items-center'><span onClick={() => openModal2()} className='bg-gray-200 px-4 py-1 cursor-pointer transition-all duration-200 hover:shadow-md'>Modules</span> </div> */}
