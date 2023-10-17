@@ -64,7 +64,7 @@ const DifferenceReport = () => {
             Cell: ({ cell }) => (indianDate(cell.row.original?.challan_date))
         },
         {
-            Header: "Violatioin Name",
+            Header: "Violation Name",
             accessor: "violation_name",
             Cell: ({ cell }) => (nullToNA(cell.row.original?.violation_name))
         },

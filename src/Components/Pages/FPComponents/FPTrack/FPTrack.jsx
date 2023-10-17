@@ -70,7 +70,7 @@ const FPTrack = () => {
             className: 'w-[7%]'
         },
         {
-            Header: "Violatioin Name",
+            Header: "Violation Name",
             accessor: "violation_name",
             Cell: ({ cell }) => (nullToNA(cell.row.original?.violation_name))
         },

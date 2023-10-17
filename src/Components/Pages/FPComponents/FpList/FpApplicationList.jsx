@@ -59,7 +59,7 @@ const FpApplicationList = () => {
             Cell: ({ cell }) => (nullToNA(cell.row.original?.application_no))
         },
         {
-            Header: "Violatioin Name",
+            Header: "Violation Name",
             accessor: "violation_name",
             Cell: ({ cell }) => (nullToNA(cell.row.original?.violation_name))
         },
