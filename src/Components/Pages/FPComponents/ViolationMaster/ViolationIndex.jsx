@@ -304,7 +304,7 @@ const ViolationIndex = () => {
             title: "Violation Section",
             key: "violationSection",
             width: `${mType == 'section' ? ' md:w-[45%] ' : ' md:w-[20%] '} w-full ${mType != 'department' ? 'block ' : 'hidden '}`,
-            type: (mType == 'section' ? 'text' : 'select'),
+            type: (mType == 'section' ? 'number' : 'select'),
             hint: "Enter violation section",
             required: mType != 'department' && true,
             options: violationSectionList,

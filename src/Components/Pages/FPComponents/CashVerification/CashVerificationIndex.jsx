@@ -283,7 +283,7 @@ const CashVerificationIndex = () => {
       .then((res) => {
         if (res?.data?.status) {
           toast.success('Cash Verified Successfully !!!')
-          fetchData({ data: cvData?.date })
+          fetchData({ date: cvData?.date })
         } else {
           activateBottomErrorCard(true, checkErrorMessage(res?.data?.message))
         }
