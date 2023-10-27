@@ -14,6 +14,7 @@ import { BsBell } from 'react-icons/bs';
 import NotificationComponent from './NotificationComponent';
 import axios from 'axios';
 import ProjectApiList from '@/Components/api/ProjectApiList';
+import ApiHeader from '@/Components/api/ApiHeader';
 // import apk from '@/Components/assets/download.png'
 
 const TopHeader = (props) => {
@@ -27,7 +28,7 @@ const TopHeader = (props) => {
 
   const { toggleBar, settoggleBar, userDetails } = useContext(contextVar)
 
-  const { api_moduleList } = ProjectApiList()
+  const { api_moduleList, api_logout } = ProjectApiList()
 
   const { brand_tag, brand_logo } = ulb_data()
 
@@ -46,6 +47,7 @@ const TopHeader = (props) => {
   }
   // CALLBACK FUNCTION 
   const logoutCallback = () => {
+    logoutFun()
     setisLoading(false)
     localstorageRemoveEntire()
     navigate('/')
@@ -54,6 +56,14 @@ const TopHeader = (props) => {
   const LogOutUser = () => {
     closeModal()
     logoutCallback()
+  }
+
+  const logoutFun = () => {
+    axios.post(api_logout, {}, ApiHeader())
+      .then((res) => {
+        console.log("log out response :: ", res)
+      })
+      .finally(() => {})
   }
 
   const fetchModuleList = () => {

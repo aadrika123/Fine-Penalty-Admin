@@ -12,6 +12,7 @@ export default function ProjectApiList() {
         api_getFreeMenuList: `${baseUrl}/api/menu/by-module`,
 
         api_login: `${baseUrl}/api/login`,
+        api_logout: `${baseUrl}/api/logout`,
         api_setPassword: `${baseUrl}/api/user/set-password`,
     
        
