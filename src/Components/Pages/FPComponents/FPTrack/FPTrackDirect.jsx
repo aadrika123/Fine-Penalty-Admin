@@ -34,9 +34,6 @@ const FPTrackDirect = () => {
     // 👉 Navigate constant 👈
     const navigate = useNavigate()
 
-    // 👉 Storing localstorage data in constant 👈
-    const userDetails = getLocalStorageItemJsonParsed('userDetails')
-
     // 👉 Column constant 👈
     const columns = [
         {
@@ -69,11 +66,11 @@ const FPTrackDirect = () => {
             Cell: ({ cell }) => (indianDate(cell.row.original?.challan_date)),
             className: 'w-[7%]'
         },
-        {
-            Header: "Violation Name",
-            accessor: "violation_name",
-            Cell: ({ cell }) => (nullToNA(cell.row.original?.violation_name))
-        },
+        // {
+        //     Header: "Violation Name",
+        //     accessor: "violation_name",
+        //     Cell: ({ cell }) => (nullToNA(cell.row.original?.violation_name))
+        // },
         {
             Header: "Penalty Amount",
             accessor: "total_amount",
@@ -116,7 +113,7 @@ const FPTrackDirect = () => {
                         <FaRegEye /> Challan
                     </button>
                     
-                        {userDetails?.user_type == 'JSK' && !cell?.row?.original?.payment_status && <button
+                        {!cell?.row?.original?.payment_status && <button
                             onClick={() => {
                                 navigate(`/fp-pay/${cell?.row?.original?.id}/direct`)
                             }}
@@ -126,7 +123,7 @@ const FPTrackDirect = () => {
                            <BiMoney /> Pay
                         </button>}
 
-                    {userDetails?.user_type == 'JSK' && cell?.row?.original?.payment_status && 
+                    {cell?.row?.original?.payment_status && 
                     <button
                     onClick={() => {
                         navigate(`/payment-receipt/${cell?.row?.original?.transaction_no}/direct`)

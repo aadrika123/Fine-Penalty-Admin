@@ -137,6 +137,11 @@ export default function ProjectApiList() {
         api_cashVerificaionById : `${baseUrl}/api/fines/cash-verification-dtl`,
         api_verifyCash : `${baseUrl}/api/fines/verify-cash`,
 
+        // ════════════════════║ ONLINE PAYMENT APIS  ║═════════════════════════
+        // api_generateOrderId : `${baseUrl}/api/fines/razorpay/initiate-payment`,
+        api_generateOrderId : `${baseUrl}/api/fines/citizen-online-payment`,
+        api_verifyPaymentStatus: `${baseUrl}/`, 
+
     }
 
 

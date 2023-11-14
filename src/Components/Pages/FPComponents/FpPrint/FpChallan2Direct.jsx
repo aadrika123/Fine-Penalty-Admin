@@ -118,7 +118,7 @@ const FpChallan2Direct = () => {
                          : 
                         <>*/}
 
-                {((userDetails?.user_type == "JSK" || userDetails?.user_type == "ADMIN") && !challanDetails?.payment_status) && <button
+                { !challanDetails?.payment_status && <button
                     onClick={() => {
                         navigate(`/fp-pay/${id}/direct`)
                     }}
@@ -128,14 +128,14 @@ const FpChallan2Direct = () => {
                     <BiMoney /> Pay
                 </button>
                 }
-                {(userDetails?.user_type != "JSK" && !challanDetails?.payment_status) &&
+                {/* {(userDetails?.user_type != "JSK" && !challanDetails?.payment_status) &&
                     <div
                         className="border border-red-600 w-max px-4 py-1 rounded-sm shadow-md bg-red-500
                             text-white flex items-center justify-center gap-1 "
                     >
                         <BiMoney /> Payment Not Done
                     </div>
-                }
+                } */}
                 {/* </>} */}
 
                 {challanDetails?.payment_status &&

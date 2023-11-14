@@ -21,6 +21,7 @@ import AxiosInterceptors from '@/Components/Common/AxiosInterceptors'
 import PaymentCard from './PaymentCard'
 import useSetTitle from '@/Components/Common/useSetTitle'
 import ApiHeader from '@/Components/api/ApiHeader'
+import PaymentCardDirect from './PaymentCardDirect'
 
 const FpPaymentDirect = () => {
 
@@ -156,7 +157,7 @@ const FpPaymentDirect = () => {
                                         </div>
                                     </div>
                                     :
-                                    <PaymentCard demand={details} />
+                                    <PaymentCardDirect demand={details} />
                             }
                         </>}
 
