@@ -18,6 +18,7 @@ import FpPaymentDirect from "./Components/Pages/FPComponents/FpPaymentDirect";
 import FPTrackDirect from "./Components/Pages/FPComponents/FPTrack/FPTrackDirect";
 import FpChallan2Direct from "./Components/Pages/FPComponents/FpPrint/FpChallan2Direct";
 import FpReceiptDirect from "./Components/Pages/FPComponents/FpPrint/FpReceiptDirect";
+import BackButton from "./Components/Pages/Others/BackButton";
 
 const Login = lazy(() => import("@/Components/Pages/Others/Login"));
 const ProtectedRoutes = lazy(() =>
@@ -140,7 +141,7 @@ function App() {
     { path: "/cash-verification", element: <CashVerificationIndex /> },
   ];
 
-  
+
 
   return (
     <>
@@ -148,12 +149,15 @@ function App() {
 
       <contextVar.Provider value={contextData}>
         <Routes>
-          
+
           {/* ════════════════════║ THIS BLOCK IS FOR CITIZEN ║═════════════════════════   */}
           <Route path="/search-challan/direct" element={<FPTrackDirect />} />
-          <Route path="/challan-show/:id/direct" element={<FpChallan2Direct />} />
-          <Route path="/fp-pay/:id/direct" element={<FpPaymentDirect />} />
-          <Route path="/payment-receipt/:tranNo/direct" element={<FpReceiptDirect />} />
+
+          <Route element={<BackButton />}>
+            <Route path="/challan-show/:id/direct" element={<FpChallan2Direct />} />
+            <Route path="/fp-pay/:id/direct" element={<FpPaymentDirect />} />
+            <Route path="/payment-receipt/:tranNo/direct" element={<FpReceiptDirect />} />
+          </Route>
 
 
           <Route index element={<Login />} />

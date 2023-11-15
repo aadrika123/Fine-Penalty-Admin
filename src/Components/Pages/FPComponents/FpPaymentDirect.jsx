@@ -81,93 +81,93 @@ const FpPaymentDirect = () => {
 
     return (
         <>
-   <div className="w-full bg-gray-200 h-screen md:pt-10">
-     <div className="md:w-4/5 mx-auto shadow-xl bg-white md:py-10">
-            {/* 👉 Loader 👈 */}
-            {
-                loader && <BarLoader />
-            }
+            <div className="w-full bg-gray-200 h-screen md:pt-10">
+                <div className="md:w-4/5 mx-auto shadow-xl bg-white md:py-10">
+                    {/* 👉 Loader 👈 */}
+                    {
+                        loader && <BarLoader />
+                    }
 
-            {/* 👉 Error Card 👈 */}
-            {errorState && <BottomErrorCard activateBottomErrorCard={activateBottomErrorCard} errorTitle={errorMessage} />}
+                    {/* 👉 Error Card 👈 */}
+                    {errorState && <BottomErrorCard activateBottomErrorCard={activateBottomErrorCard} errorTitle={errorMessage} />}
 
-            {!loader &&
+                    {!loader &&
 
-                // 👉 Main Section 👈
-                <div className='animate__animated animate__fadeIn animate__faster overflow-x-hidden overflow-y-scroll w-[99%] mx-auto rounded-md gap-6 h-full p-[1vw]'>
+                        // 👉 Main Section 👈
+                        <div className='animate__animated animate__fadeIn animate__faster overflow-x-hidden overflow-y-scroll w-[99%] mx-auto rounded-md gap-6 h-full p-[1vw]'>
 
-                    {/* 👉 Heading 👈 */}
-                    <div className='flex justify-center mb-6'>
-                        <h1 className='bg-white shadow-lg shadow-indigo-300 text-indigo-400 w-max font-semibold text-2xl px-6 py-2 border border-indigo-400'>Fines & Penalties Payment</h1>
-                    </div>
+                            {/* 👉 Heading 👈 */}
+                            <div className='flex justify-center mb-6'>
+                                <h1 className='bg-white shadow-lg shadow-indigo-300 text-indigo-400 w-max font-semibold text-2xl px-6 py-2 border border-indigo-400'>Fines & Penalties Payment</h1>
+                            </div>
 
-                    {/* 👉 Details sections 👈 */}
-                    <div className='flex items-center flex-wrap w-full text-sm bg-white p-4  gap-2 mt-4'>
-                        <div className='flex flex-col flex-wrap justify-center w-full md:w-[27%]'>
-                            <div>Name</div>
-                            <div className='font-semibold text-base'>{nullToNA(details?.full_name)}</div>
-                        </div>
-                        <div className='flex flex-col flex-wrap justify-center w-full md:w-[22%]'>
-                            <div>Mobile No.</div>
-                            <div className='font-semibold text-base'>{nullToNA(details?.mobile)}</div>
-                        </div>
-                        <div className='flex flex-col flex-wrap justify-center w-full md:w-[22%]'>
-                            <div>Challan No. </div>
-                            <div className='font-semibold text-base'>{nullToNA(details?.challan_no)}</div>
-                        </div>
-                        <div className='flex flex-col flex-wrap justify-center w-full md:w-[22%]'>
-                            <div>Challan Date </div>
-                            <div className='font-semibold text-base'>{indianDate(details?.challan_date)}</div>
-                        </div>
-                        <div className='hidden md:flex flex-col flex-wrap justify-center w-full'>
-                            <div>Violation Made </div>
-                            <div className='font-semibold text-base'>{nullToNA(details?.violation_name)}</div>
-                        </div>
-                        <div className='flex flex-col flex-wrap justify-center w-full md:w-[22%]'>
-                            <div>Violation Section </div>
-                            <div className='font-semibold text-base'>{nullToNA(details?.violation_section)}</div>
-                        </div>
-                        <div className='flex flex-col flex-wrap justify-center w-full md:w-[22%]'>
-                            <div>Penalty Amount </div>
-                            <div className='font-bold text-base'>{indianAmount(details?.amount)}</div>
-                        </div>
-                    </div>
-
-                    {/* 👉 Payment Card 👈 */}
-                    <div>
-
-                        {details?.is_bpl ? <>
-                            <div className="w-full h-full bg-white sm:p-20 p-2">
-                                <div>
-                                    <div className="text-center font-semibold text-3xl">As you belongs to BPL category, so you don't need to pay. And your application is sent for verification.</div>
-                                    <div className="text-center mt-6">
-                                        <button className={`mr-4 bg-white border border-indigo-500 text-indigo-500 px-4 py-1 shadow-lg hover:scale-105 rounded-sm`} onClick={() => navigate(`/fp-details/${id}`)}>View Application</button>
-                                    </div>
+                            {/* 👉 Details sections 👈 */}
+                            <div className='flex items-center flex-wrap w-full text-sm bg-white p-4  gap-2 mt-4'>
+                                <div className='flex flex-col flex-wrap justify-center w-full md:w-[27%]'>
+                                    <div>Name</div>
+                                    <div className='font-semibold text-base'>{nullToNA(details?.full_name)}</div>
+                                </div>
+                                <div className='flex flex-col flex-wrap justify-center w-full md:w-[22%]'>
+                                    <div>Mobile No.</div>
+                                    <div className='font-semibold text-base'>{nullToNA(details?.mobile)}</div>
+                                </div>
+                                <div className='flex flex-col flex-wrap justify-center w-full md:w-[22%]'>
+                                    <div>Challan No. </div>
+                                    <div className='font-semibold text-base'>{nullToNA(details?.challan_no)}</div>
+                                </div>
+                                <div className='flex flex-col flex-wrap justify-center w-full md:w-[22%]'>
+                                    <div>Challan Date </div>
+                                    <div className='font-semibold text-base'>{indianDate(details?.challan_date)}</div>
+                                </div>
+                                <div className='hidden md:flex flex-col flex-wrap justify-center w-full'>
+                                    <div>Violation Made </div>
+                                    <div className='font-semibold text-base'>{nullToNA(details?.violation_name)}</div>
+                                </div>
+                                <div className='flex flex-col flex-wrap justify-center w-full md:w-[22%]'>
+                                    <div>Violation Section </div>
+                                    <div className='font-semibold text-base'>{nullToNA(details?.violation_section)}</div>
+                                </div>
+                                <div className='flex flex-col flex-wrap justify-center w-full md:w-[22%]'>
+                                    <div>Penalty Amount </div>
+                                    <div className='font-bold text-base'>{indianAmount(details?.amount)}</div>
                                 </div>
                             </div>
-                        </> : <>
-                            {
-                                details?.payment_status ?
+
+                            {/* 👉 Payment Card 👈 */}
+                            <div>
+
+                                {details?.is_bpl ? <>
                                     <div className="w-full h-full bg-white sm:p-20 p-2">
                                         <div>
-                                            <div className="text-center font-semibold text-3xl">Payment Already Done. You can view your receipt or challan.</div>
+                                            <div className="text-center font-semibold text-3xl">As you belongs to BPL category, so you don't need to pay. And your application is sent for verification.</div>
                                             <div className="text-center mt-6">
-                                                <button className={`mr-4 bg-indigo-500  text-white px-6 py-1 shadow-lg hover:scale-105 rounded-sm`} onClick={() => navigate(`/fp-receipt/${encodeURIComponent(details?.tran_no)}`)}>View Receipt</button>
-                                                <button className={`mr-4 bg-white border border-indigo-500 text-indigo-500 px-4 py-1 shadow-lg hover:scale-105 rounded-sm`} onClick={() => navigate(`/challan/${id}`)}>View Challan</button>
+                                                <button className={`mr-4 bg-white border border-indigo-500 text-indigo-500 px-4 py-1 shadow-lg hover:scale-105 rounded-sm`} onClick={() => navigate(`/fp-details/${id}`)}>View Application</button>
                                             </div>
                                         </div>
                                     </div>
-                                    :
-                                    <PaymentCardDirect demand={details} />
-                            }
-                        </>}
+                                </> : <>
+                                    {
+                                        details?.payment_status ?
+                                            <div className="w-full h-full bg-white sm:p-20 p-2">
+                                                <div>
+                                                    <div className="text-center font-semibold text-3xl">Payment Already Done. You can view your receipt or challan.</div>
+                                                    <div className="text-center mt-6">
+                                                        <button className={`mr-4 bg-indigo-500  text-white px-6 py-1 shadow-lg hover:scale-105 rounded-sm`} onClick={() => navigate(`/fp-receipt/${encodeURIComponent(details?.tran_no)}`)}>View Receipt</button>
+                                                        <button className={`mr-4 bg-white border border-indigo-500 text-indigo-500 px-4 py-1 shadow-lg hover:scale-105 rounded-sm`} onClick={() => navigate(`/challan/${id}`)}>View Challan</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            :
+                                            <PaymentCardDirect demand={details} />
+                                    }
+                                </>}
 
-                    </div>
+                            </div>
+
+                        </div>
+                    }
 
                 </div>
-            }
-
-            </div>
             </div>
 
         </>
