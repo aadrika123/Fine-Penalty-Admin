@@ -142,6 +142,15 @@ export default function ProjectApiList() {
         api_generateOrderId : `${baseUrl}/api/fines/citizen-online-payment`,
         api_verifyPaymentStatus: `${baseUrl}/`, 
 
+        // ════════════════════║ API TO SEARCH CHALLAN DIRECT  ║═════════════════════════
+        api_searchChallanDirect : `${baseUrl}/api/penalty-record/citizen-challan-search`,
+
+        // ════════════════════║ API TO GET TRANSACTION NUMBER FROM ORDER ID  ║═════════════════════════
+        api_getTransactionNo : `${baseUrl}/api/penalty-record/get-tran-no`,
+
+        // ═════════════║ API TO GET SEND ONLINE PAYMENT RESPONSE ║══════════════════ 
+        api_sendOnlineResponse: `${baseUrl}/api/fines/razorpay/save-response`,
+
     }
 
 

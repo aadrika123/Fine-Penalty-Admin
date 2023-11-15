@@ -219,7 +219,7 @@ const ListTableConnect = (props) => {
 
                     <>
                             {/* 👉 Listtable 👈 */}
-                            <ListTable2 search={props?.search} currentPage={currentPage} lastPage={lastPage} goFirst={firstPageFun} goLast={lastPageFun} count1={totalCount} columns={props?.columns} dataList={dataList} exportStatus={true} perPage={perPageCount} perPageC={perPageFun} totalCount={totalCount} nextPage={nextPageFun} prevPage={prevPageFun} exportDataF={exportDataFun} exportData={exportData} gotoPage={(val) => gotoPageFun(val)} />
+                            <ListTable2 search={props?.search} currentPage={currentPage} lastPage={lastPage} goFirst={firstPageFun} goLast={lastPageFun} count1={totalCount} columns={props?.columns} dataList={dataList} exportStatus={props?.exportStatus} perPage={perPageCount} perPageC={perPageFun} totalCount={totalCount} nextPage={nextPageFun} prevPage={prevPageFun} exportDataF={exportDataFun} exportData={exportData} gotoPage={(val) => gotoPageFun(val)} />
                     </>
 
                     :

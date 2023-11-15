@@ -81,7 +81,8 @@ const FpPaymentDirect = () => {
 
     return (
         <>
-
+   <div className="w-full bg-gray-200 h-screen md:pt-10">
+     <div className="md:w-4/5 mx-auto shadow-xl bg-white md:py-10">
             {/* 👉 Loader 👈 */}
             {
                 loader && <BarLoader />
@@ -101,7 +102,7 @@ const FpPaymentDirect = () => {
                     </div>
 
                     {/* 👉 Details sections 👈 */}
-                    <div className='flex items-center flex-wrap w-full text-sm bg-white p-4 shadow-lg gap-2 mt-4'>
+                    <div className='flex items-center flex-wrap w-full text-sm bg-white p-4  gap-2 mt-4'>
                         <div className='flex flex-col flex-wrap justify-center w-full md:w-[27%]'>
                             <div>Name</div>
                             <div className='font-semibold text-base'>{nullToNA(details?.full_name)}</div>
@@ -118,7 +119,7 @@ const FpPaymentDirect = () => {
                             <div>Challan Date </div>
                             <div className='font-semibold text-base'>{indianDate(details?.challan_date)}</div>
                         </div>
-                        <div className='flex flex-col flex-wrap justify-center w-full'>
+                        <div className='hidden md:flex flex-col flex-wrap justify-center w-full'>
                             <div>Violation Made </div>
                             <div className='font-semibold text-base'>{nullToNA(details?.violation_name)}</div>
                         </div>
@@ -128,7 +129,7 @@ const FpPaymentDirect = () => {
                         </div>
                         <div className='flex flex-col flex-wrap justify-center w-full md:w-[22%]'>
                             <div>Penalty Amount </div>
-                            <div className='font-semibold text-base'>{indianAmount(details?.amount)}</div>
+                            <div className='font-bold text-base'>{indianAmount(details?.amount)}</div>
                         </div>
                     </div>
 
@@ -165,6 +166,9 @@ const FpPaymentDirect = () => {
 
                 </div>
             }
+
+            </div>
+            </div>
 
         </>
     )

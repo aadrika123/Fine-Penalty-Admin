@@ -31,6 +31,7 @@ import { RxCross1 } from 'react-icons/rx'
 import QRCode from 'react-qr-code';
 import ApiHeader from '@/Components/api/ApiHeader';
 import RazorpayPaymentScreen from '@/Components/Common/RazorpayPaymentScreen';
+import RazorpayPaymentScreenUpdated from '@/Components/Common/RazorpayPaymentScreenUpdated';
 
 // 👉 CSS constant for Modal 👈
 const customStyles = {
@@ -52,7 +53,7 @@ function PaymentCardDirect(props) {
     const { id } = useParams()
 
     // 👉 API constant 👈
-    const { api_challanOfflinePayment,api_generateOrderId } = ProjectApiList()
+    const { api_challanOfflinePayment,api_generateOrderId,api_getTransactionNo,api_sendOnlineResponse } = ProjectApiList()
 
     // 👉 Navigation constant 👈
     const navigate = useNavigate()
@@ -117,21 +118,6 @@ function PaymentCardDirect(props) {
         seterroState(state)
     }
 
-    // 👉 Function 2 👈
-    const handleChange = (e) => {
-        let name = e.target.name
-        let value = e.target.value
-
-
-        { (name == 'paymentMode') && setPaymentMode(value) }
-
-        { name == 'remarks' && formik.setFieldValue("remarks", allowCharacterSpaceCommaInput(value, formik.values.remarks, 100)) }
-        { name == 'bankName' && formik.setFieldValue("bankName", allowCharacterSpaceCommaInput(value, formik.values.bankName, 100)) }
-        { name == 'branchName' && formik.setFieldValue("branchName", allowCharacterSpaceCommaInput(value, formik.values.branchName, 100)) }
-        { name == 'cheque_dd_no' && formik.setFieldValue("cheque_dd_no", allowCharacterNumberInput(value, formik.values.cheque_dd_no, 20)) }
-        { name == 'advanceAmount' && formik.setFieldValue("advanceAmount", allowNumberInput(value, formik.values.advanceAmount, 10)) }
-    }
-
     // 👉 Function 3 👈
     const closeModal = () => setIsOpen(false);
 
@@ -160,11 +146,9 @@ function PaymentCardDirect(props) {
         return true
     }
 
-    const paymentResponse = ()=>{
-        console.log('payment response....')
-    }
+   
 
-    // ════════════════════║ THIS FUNCTION GENERATES THE ORDER ID   ║═════════════════════════
+    // ════════════════════║ THIS FUNCTION GENERATES THE ORDER ID AND CALLS THE ONLINE PAYMENT   ║═════════════════════════
     const getOrderId = async (values) => {
         setisLoading(true)
     
@@ -181,7 +165,7 @@ function PaymentCardDirect(props) {
             console.log("Order Id Response ", res?.data);
             if (res?.data?.status === true) {
               console.log("OrderId Generated True", res?.data?.data);
-              RazorpayPaymentScreen(res?.data?.data?.order_id, paymentResponse); //Send Response Data as Object (amount, orderId, ulbId, departmentId, applicationId, workflowId, userId, name, email, contact) will call razorpay payment function to show payment popup
+              RazorpayPaymentScreenUpdated(res?.data?.data?.order_id, sendPaymentResponse); //Send Response Data as Object (amount, orderId, ulbId, departmentId, applicationId, workflowId, userId, name, email, contact) will call razorpay payment function to show payment popup
             }
             else {
               // props.showLoader(false)
@@ -196,41 +180,80 @@ function PaymentCardDirect(props) {
           });
       };
 
+    // ════════════════════║ THIS FUNCTION IS CALLBACK FROM ONLINE PAYMENT TO SEND PAYMENT DATA TO BACKEND   ║═════════════════════════
+      const sendPaymentResponse = ()=>{
+        console.log('payment response....')
+      // return
+    setisLoading(true)
 
-    // 👉 Function 6 👈
-    // const makePayment = (data) => {
-    //     seterroState(false)
+    let requestBody = {
+      applicationId: currenApplicationId,
+      challanId: currentChallanId,
+      amount: currentAmount,
+      date: values?.receipt?.receiptDate,
+      transactionId: values?.txn?.txnId,
+      status: values?.txn?.status,
+      cardNo: values?.card?.maskedCardNo,
+      authCode: values?.txn?.authCode,
+      tid: values?.txn?.tid,
+      mid: values?.txn?.mid,
+      rrNo: values?.txn?.rrNumber,
+      batchNo: values?.txn?.batchNumber,
+      orderId: values?.references?.reference1,
+    }
+
+    console.log('======== 2 before sending response of onlie payment...', requestBody)
+    AxiosInterceptors.post(api_sendOnlineResponse, requestBody, ApiHeader())
+      .then((res) => {
+        console.log('===== 3 response after onlin payment api....', JSON.stringify(res?.data, null, 2))
+        if (res?.data?.status === true) {
+          // send inside to trach challan details
+          console.log('payment success')
+        } else {
+          console.log("Login Failed", res?.data?.message)
+        }
+      })
+      .catch(err => {
+        console.log("-Exception--", err)
+
+      }).finally(() => {
+        setisLoading(false)
+      })
+    }
+
+    // ════════════════════║ THIS FUNCTION FETCHES THE TRANSACTION NO.   ║═════════════════════════
+    // const getTransactionNo = async (values) => {
     //     setisLoading(true)
-    //     let url
-    //     let requestBody
+    
+    //  let requestBody = {
+    //     orderId:'order_Mp9yh7eKZe8kMT'
+    //  }
+    
+    //     console.log( "before trnansaction no. find..", requestBody);
 
+    //     AxiosInterceptors.post(api_getTransactionNo, requestBody, ApiHeader()) // This API will generate Order ID
+    //       .then((res) => {
+    //         console.log("transaction no Response ", res?.data);
+    //         if (res?.data?.status === true) {
+    //         }
+    //         else {
+    //           // props.showLoader(false)
+    //           alert(res?.data?.message)
+    //         }
+    //       })
+    //       .catch((err) => {
+    //         alert('Error '?.message)
+    //         console.log("ERROR :-  Unable to Generate Order Id ", err)
+    //       }).finally(()=>{
+    //         setisLoading(false)
+    //       });
+    //   };
 
-    //     url = api_challanOfflinePayment
-    //     requestBody = {
-    //         applicationId: props?.demand?.application_id,
-    //         challanId : id,
-    //         paymentMode: data?.paymentMode,
-    //     }
+    //   useEffect(() => {
+    //     getTransactionNo()
+    //   }, [])
+      
 
-    //     console.log('before make payment..', requestBody)
-    //     AxiosInterceptors.post(url, requestBody, ApiHeader3())
-    //         .then(function (response) {
-    //             console.log('fine and penalty payment response...', response?.data)
-    //             if (response?.data?.status) {
-    //                 settranNo(response?.data?.data?.tran_no)
-    //                 setResponseScreenStatus(response?.data?.status)
-    //             } else {
-    //                 activateBottomErrorCard(true, response?.data?.message)
-    //             }
-
-    //             setisLoading(false)
-    //         })
-    //         .catch(function (error) {
-    //             console.log('fine and penalty payment error..', error)
-    //             activateBottomErrorCard(true, 'Error occured. Please try again later.')
-    //             setisLoading(false)
-    //         })
-    // }
 
     // 👉 Function 7 👈
     const goPayment = () => {
@@ -288,16 +311,16 @@ function PaymentCardDirect(props) {
             {erroState && <BottomErrorCard activateBottomErrorCard={activateBottomErrorCard} errorTitle={erroMessage} />}
 
             {/* 👉 Main Section 👈 */}
-            <div className={` block sm:p-4 mt-4 w-full md:py-4 md:px-40 md:pb-0 md:pt-0 rounded-lg shadow-lg bg-white md:w-full mx-auto  overflow-x-auto mb-20 `}>
+            <div className={` block sm:p-4 mt-4 w-full md:py-4 md:px-40 md:pb-0 md:pt-0 rounded-lg  bg-white md:w-full mx-auto  overflow-x-auto mb-20 `}>
 
                 <div className="p-4 w-full md:py-6 rounded-lg bg-white mx-auto flex justify-center items-center flex-col">
 
                             {/* 👉 line break 👈 */}
                             <div className="md:px-4">
-                                <span>Total Payable Amount :</span> <span className='font-mono font-semibold text-xl'>{indianAmount(props?.demand?.amount)}</span>
+                                <span>Total Payable Amount :</span> <span className='font-mono font-bold text-xl'>{indianAmount(props?.demand?.amount)}</span>
                             </div>
                     <div className='mt-4'>
-                                    <button onClick={getOrderId} type='button' className="sm:ml-4 font-bold sm:px-6 px-1.5 py-2 bg-indigo-500 text-white text-xs sm:text-sm leading-tight uppercase rounded  hover:bg-indigo-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out shadow-xl border border-white"><span className='sm:mr-2 mr-1'>Pay </span>
+                                    <button onClick={getOrderId} type='button' className="sm:ml-4 font-bold px-6 py-3 md:py-2 bg-indigo-500 text-white text-xs sm:text-sm leading-tight uppercase rounded  hover:bg-indigo-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out shadow-xl border border-white"><span className='sm:mr-2 mr-1'>Pay </span>
                                         {indianAmount(props?.demand?.amount)}
                                     </button>
                                    

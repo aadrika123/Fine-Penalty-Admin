@@ -83,7 +83,7 @@ function ListTable2(props) {
         <>
 
 
-            {props?.search == false ?
+            {props?.exportStatus !==false && (props?.search == false ?
                 <div className="absolute -mt-[1vh] right-[2.3vw]">
                     <div className='flex-initial ml-2'><button className='bg-sky-400 px-3 pr-3  shadow-lg rounded py-1 text-white hover:shadow-2xl hover:bg-green-600 text-center relative' onMouseEnter={() => setbounce('')} onMouseLeave={() => setbounce('hidden')} onClick={props.exportDataF}>
                         Export
@@ -99,7 +99,7 @@ function ListTable2(props) {
                         <div className={bounce + ' absolute h-full top-3 text-sm left-0 text-center animate-bounce'}><AiOutlineArrowDown /></div></button></div>
                     <div className='flex-1'>{props.children}</div>
 
-                </div>
+                </div>)
             }
             <div className="flex w-full">
                 <div className='flex-1'><span className='opacity-50'>Total Result :&nbsp;</span><span className='font-semibold'>{props?.totalCount}</span> </div>
