@@ -49,13 +49,12 @@ const ListTableConnect = (props) => {
            typeof(props.loader) == 'function' && props.loader(true)
         }
 
-        console.log(`data before hitting api (${props?.api}) => `, { ...props?.requestBody, perPage: perPageCount, page: pageCount })
 
         axios.post(
             props?.api, { ...props?.requestBody, perPage: perPageCount, page: pageCount }, ApiHeader())
             .then((res) => {
                 if (res?.data?.status == true) {
-                    console.log('search success => ', res)
+                    console.log('success getting list => ', res)
                     props?.getData && props?.allData(res?.data?.data)
                     setdataList(res?.data?.data?.data)
                     settotalCount(res?.data?.data?.total)
@@ -63,12 +62,12 @@ const ListTableConnect = (props) => {
                     setlastPage(res?.data?.data?.last_page)
                     seterrorState(false)
                 } else {
-                    console.log('error while search => ', res)
+                    console.log('false error while getting list => ', res)
                     seterrorState(true)
                 }
 
             })
-            .catch((err) => (console.log('error while search => ', err), seterrorState(true)))
+            .catch((err) => (console.log('error while getting list => ', err), seterrorState(true)))
             .finally(() => {
                 setloader(false)
                 if (Object.keys(props?.requestBody).length !== 0) {
