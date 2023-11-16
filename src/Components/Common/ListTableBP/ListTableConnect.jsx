@@ -46,7 +46,7 @@ const ListTableConnect = (props) => {
         setloader(true)
 
         if (Object.keys(props?.requestBody).length !== 0) {
-            props.loader(true)
+           typeof(props.loader) == 'function' && props.loader(true)
         }
 
         console.log(`data before hitting api (${props?.api}) => `, { ...props?.requestBody, perPage: perPageCount, page: pageCount })
@@ -72,7 +72,7 @@ const ListTableConnect = (props) => {
             .finally(() => {
                 setloader(false)
                 if (Object.keys(props?.requestBody).length !== 0) {
-                    props.loader(false)
+                   typeof(props.loader) == 'function' && props.loader(false)
                 }
                 seterrorState(false)
             })
@@ -136,26 +136,23 @@ const ListTableConnect = (props) => {
         let data = dataList?.map((elem, index) => {
             // Map over the columns for each element in dataList
             const rowData = props?.columns?.map((col, columnIndex) => {
-
                 
                 var value = elem[col?.accessor];
                 
                 if (col?.option && col?.option?.length > 0) {
-                    const matchingOption = col?.option?.find(option => option.hasOwnProperty(elem[col?.accessor]));
                     
-                    console.log('matching option ', matchingOption)
+                    const matchingOption = col?.option?.find(option => option.hasOwnProperty(elem[col?.accessor]));
                     
                     if (matchingOption) {
                         value = matchingOption[elem[col?.accessor]];
                     } else {
                         value = elem[col?.accessor]
                     }
+
                 }
-                
-                console.log('columns => ', col)
-                console.log('incoming value => ', value)
 
                 return col?.Header.toLowerCase() != "action" && { [col?.Header]: col?.accessor ? value : index + 1 };
+
             });
 
             // Combine rowData for each element into a single object
