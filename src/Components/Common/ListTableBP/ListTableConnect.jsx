@@ -132,18 +132,38 @@ const ListTableConnect = (props) => {
 
      // 👉 Function 8 👈
     const makeExportFun = (dataList) => {
-        console.log(props?.columns);
+             
         let data = dataList?.map((elem, index) => {
-          // Map over the columns for each element in dataList
-          const rowData = props?.columns?.map((col, columnIndex) => {
-            return col?.Header != "Action" && { [col?.Header]: col?.accessor ? elem[col?.accessor] : index + 1 };
-          });
-      
-          // Combine rowData for each element into a single object
-          return Object.assign({}, ...rowData);
+            // Map over the columns for each element in dataList
+            const rowData = props?.columns?.map((col, columnIndex) => {
+
+                
+                var value = elem[col?.accessor];
+                
+                if (col?.option && col?.option?.length > 0) {
+                    const matchingOption = col?.option?.find(option => option.hasOwnProperty(elem[col?.accessor]));
+                    
+                    console.log('matching option ', matchingOption)
+                    
+                    if (matchingOption) {
+                        value = matchingOption[elem[col?.accessor]];
+                    } else {
+                        value = elem[col?.accessor]
+                    }
+                }
+                
+                console.log('columns => ', col)
+                console.log('incoming value => ', value)
+
+                return col?.Header.toLowerCase() != "action" && { [col?.Header]: col?.accessor ? value : index + 1 };
+            });
+
+            // Combine rowData for each element into a single object
+            return Object.assign({}, ...rowData);
         });
-      
+
         return data;
+
       };
 
     // 👉 Function 9 👈
