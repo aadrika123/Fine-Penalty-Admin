@@ -46,16 +46,15 @@ const ListTableConnect = (props) => {
         setloader(true)
 
         if (Object.keys(props?.requestBody).length !== 0) {
-            props.loader(true)
+           typeof(props.loader) == 'function' && props.loader(true)
         }
 
-        console.log(`data before hitting api (${props?.api}) => `, { ...props?.requestBody, perPage: perPageCount, page: pageCount })
 
         axios.post(
             props?.api, { ...props?.requestBody, perPage: perPageCount, page: pageCount }, ApiHeader())
             .then((res) => {
                 if (res?.data?.status == true) {
-                    console.log('search success => ', res)
+                    console.log('success getting list => ', res)
                     props?.getData && props?.allData(res?.data?.data)
                     setdataList(res?.data?.data?.data)
                     settotalCount(res?.data?.data?.total)
@@ -63,16 +62,16 @@ const ListTableConnect = (props) => {
                     setlastPage(res?.data?.data?.last_page)
                     seterrorState(false)
                 } else {
-                    console.log('error while search => ', res)
+                    console.log('false error while getting list => ', res)
                     seterrorState(true)
                 }
 
             })
-            .catch((err) => (console.log('error while search => ', err), seterrorState(true)))
+            .catch((err) => (console.log('error while getting list => ', err), seterrorState(true)))
             .finally(() => {
                 setloader(false)
                 if (Object.keys(props?.requestBody).length !== 0) {
-                    props.loader(false)
+                   typeof(props.loader) == 'function' && props.loader(false)
                 }
                 seterrorState(false)
             })
@@ -132,18 +131,35 @@ const ListTableConnect = (props) => {
 
      // 👉 Function 8 👈
     const makeExportFun = (dataList) => {
-        console.log(props?.columns);
+             
         let data = dataList?.map((elem, index) => {
-          // Map over the columns for each element in dataList
-          const rowData = props?.columns?.map((col, columnIndex) => {
-            return col?.Header != "Action" && { [col?.Header]: col?.accessor ? elem[col?.accessor] : index + 1 };
-          });
-      
-          // Combine rowData for each element into a single object
-          return Object.assign({}, ...rowData);
+            // Map over the columns for each element in dataList
+            const rowData = props?.columns?.map((col, columnIndex) => {
+                
+                var value = elem[col?.accessor];
+                
+                if (col?.option && col?.option?.length > 0) {
+                    
+                    const matchingOption = col?.option?.find(option => option.hasOwnProperty(elem[col?.accessor]));
+                    
+                    if (matchingOption) {
+                        value = matchingOption[elem[col?.accessor]];
+                    } else {
+                        value = elem[col?.accessor]
+                    }
+
+                }
+
+                return col?.Header.toLowerCase() != "action" && { [col?.Header]: col?.accessor ? value : index + 1 };
+
+            });
+
+            // Combine rowData for each element into a single object
+            return Object.assign({}, ...rowData);
         });
-      
+
         return data;
+
       };
 
     // 👉 Function 9 👈

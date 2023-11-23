@@ -60,7 +60,7 @@ function ListTable(props) {
     //             props?.columns?.map((col, index) => {
     //                return {[col?.Header] : col?.accessor ? elem[col?.accessor] : index + 1}
     //             })
-                
+
     //         }
     //     })
     //     console.log(data)
@@ -68,18 +68,35 @@ function ListTable(props) {
 
     const makeExportFun = () => {
         let data = props?.dataList?.map((elem, index) => {
-          // Map over the columns for each element in dataList
-          const rowData = props?.columns?.map((col, columnIndex) => {
-            return col?.Header != "Action" && { [col?.Header]: col?.accessor ? elem[col?.accessor] : index + 1 };
-          });
-      
-          // Combine rowData for each element into a single object
-          return Object.assign({}, ...rowData);
+            // Map over the columns for each element in dataList
+            const rowData = props?.columns?.map((col, columnIndex) => {
+
+                var value;
+
+                if (col?.option && col?.option?.length > 0) {
+                    const matchingOption = col?.option?.find(option => option.hasOwnProperty(elem[col?.accessor]));
+
+                    console.log('matching option ', matchingOption)
+
+                    if (matchingOption) {
+                        value = matchingOption[elem[col?.accessor]];
+                    } else {
+                        value = elem[col?.accessor]
+                    }
+                }
+
+                console.log('incoming value => ', value)
+
+                return col?.Header.toLowerCase() != "action" && { [col?.Header]: col?.accessor ? value : index + 1 };
+            });
+
+            // Combine rowData for each element into a single object
+            return Object.assign({}, ...rowData);
         });
-      
+
         return data;
-      };
-      
+    };
+
 
     return (
         <>
