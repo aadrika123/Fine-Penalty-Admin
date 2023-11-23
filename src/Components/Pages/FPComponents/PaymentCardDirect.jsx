@@ -146,7 +146,6 @@ function PaymentCardDirect(props) {
         return true
     }
 
-   
 
     // ════════════════════║ THIS FUNCTION GENERATES THE ORDER ID AND CALLS THE ONLINE PAYMENT   ║═════════════════════════
     const getOrderId = async (values) => {

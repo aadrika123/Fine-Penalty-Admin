@@ -17,7 +17,7 @@ export default async function RazorpayPaymentScreenUpdated(orderId, dreturn) {
     image: Logo,
     currency: 'INR',
     // key: '82d12be6-c5be-4f73-b94e-4793d7b99c10', //saying auth failed means working but wrong auth key
-    key: 'rzp_test_3MPOKRI8WOd54p',
+    key: 'rzp_test_NXHWEn0nSMDcnm',
     amount: 5000,
     name: 'Fines',
     order_id: orderId,
