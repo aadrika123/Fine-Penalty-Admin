@@ -93,10 +93,10 @@ const FpChallan2Direct = () => {
             {isLoading && <BarLoader />}
 
             <div className="w-full bg-gray-200 h-screen md:pt-10">
-                <div className="md:w-4/5 mx-auto shadow-xl bg-white md:py-10">
+                <div className="md:w-4/5 mx-auto shadow-none md:shadow-xl bg-white md:py-10">
 
                     {/* 👉 Print Button 👈 */}
-                    <div className='fixed bottom-10 text-center flex justify-center items-center gap-4  w-screen z-40'>
+                    <div className='fixed bottom-1 md:bottom-10 text-center flex justify-center items-center gap-4  w-screen z-40'>
                         <button onClick={() => window.print()} className="border border-indigo-600 w-24 py-1 rounded-sm shadow-md hover:shadow-xl bg-indigo-500 hover:bg-indigo-600 
                             text-white flex items-center justify-center gap-1 ">
                             <AiFillPrinter className='inline text-lg' />
@@ -160,11 +160,11 @@ const FpChallan2Direct = () => {
                     <div className="mx-auto print:block flex justify-center print:w-[98vw] print:drop-shadow-none print:shadow-none print:appearance-none" id="printableArea">
 
 
-                        <div className="w-[70%] print:w-auto overflow-x-hidden border-2 border-dashed border-black py-4 px-3 relative h-[80vh] print:h-full print:border-2 print:border-black font-semibold">
+                        <div className="md:w-[70%] md:m-0 m-2 print:w-auto overflow-x-hidden border-2 border-dashed border-black py-4 px-3 relative h-full md:h-[80vh] print:h-full print:border-2 print:border-black font-semibold">
 
                             {/* 👉 Logo & Heading 👈 */}
                             <div className=''>
-                                <div className="flex flex-col justify-center items-center gap-x-4 absolute print:top-[4%] top-[5%] left-[25%] print:left-[5%]">
+                                <div className="flex flex-col justify-center items-center gap-x-4 md:absolute print:top-[4%] top-[5%] left-[25%] print:left-[5%]">
                                     <img src={rmclogo} alt="Logo" srcset="" className="h-16 w-16 appearance-none mix-blend-darken" />
                                     <span className="text-3xl font-bold uppercase">{challanDetails?.ulbDetails?.ulb_name}</span>
                                 </div>
