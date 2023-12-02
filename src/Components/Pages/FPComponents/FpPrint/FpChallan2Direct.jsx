@@ -184,17 +184,17 @@ const FpChallan2Direct = () => {
                             {/* 👉 Challan Details 👈 */}
                             <div className='grid grid-cols-12 items-center text-sm mt-4 border-b pb-2 border-gray-700'>
 
-                                <div className="col-span-8 flex gap-2">
+                                <div className="col-span-12 md:col-span-8 print:col-span-8 flex gap-2">
                                     <div className="">रसीद क्रमांक:- </div>
                                     <div className="font-normal">{nullToNA(challanDetails?.challan_no)}</div>
                                 </div>
 
-                                <div className="col-span-4 flex gap-2">
+                                <div className="col-span-12 md:col-span-4 print:col-span-4 flex gap-2">
                                     <div className="">दिनांक:- </div>
                                     <div className="font-normal">{indianDate(challanDetails?.challan_date)}</div>
                                 </div>
 
-                                <div className="col-span-6 flex gap-2">
+                                <div className="col-span-12 md:col-span-6 print:col-span-6 flex gap-2">
                                     <div className="">शाखा का नाम:- </div>
                                     <div className="">सिटी इंफोर्स्मेंट सेल</div>
                                 </div>
@@ -205,18 +205,18 @@ const FpChallan2Direct = () => {
 
                             {/* 👉 Basic Details 👈 */}
                             <div className='flex justify-between mb-2 pt-2 gap-2'>
-                                <div className="text-start text-sm w-full flex flex-wrap gap-y-1 ">
+                                <div className="text-start text-sm w-full flex flex-wrap gap-y-1 gap-x-1 md:gap-x-0 print:gap-x-0 ">
 
-                                    <div className="w-[2%]">1.</div>
-                                    <div className="w-[98%] flex gap-2">
+                                    <div className="w-[2%] mr-1 md:mr-0 print:mr-0">1.</div>
+                                    <div className="md:w-[98%] print:w-[98%] w-[95%] flex gap-2">
                                         <div className="w-[23%]">दोषी व्यक्ति का नाम :- </div>
                                         <div className="w-[83%]">
                                             <div className='w-full flex gap-2'><div className='w-[20%]'>श्री/ श्रीमती/सुश्री </div> <div className="w-[80%] border-b-2 border-dashed border-gray-500 font-normal">{nullToNA(challanDetails?.full_name)}</div></div>
                                         </div>
                                     </div>
 
-                                    <div className="w-[2%]">2.</div>
-                                    <div className="w-[98%] flex gap-2">
+                                    <div className="w-[2%] mr-1 md:mr-0 print:mr-0">2.</div>
+                                    <div className="md:w-[98%] print:w-[98%] w-[95%] flex gap-2">
                                         <div className="w-[23%]">पिता / पति का नाम :-  </div>
                                         <div className="w-[83%]">
                                             <div className='w-full flex gap-2'><div className='w-[20%]'>श्री/स्व </div> <div className="w-[80%] border-b-2 border-dashed border-gray-500 font-normal">
@@ -225,8 +225,8 @@ const FpChallan2Direct = () => {
                                         </div>
                                     </div>
 
-                                    <div className="w-[2%]">3.</div>
-                                    <div className="w-[98%] flex gap-2">
+                                    <div className="w-[2%] mr-1 md:mr-0 print:mr-0">3.</div>
+                                    <div className="md:w-[98%] print:w-[98%] w-[95%] flex gap-2">
                                         <div className="w-[23%]">पता :-  </div>
                                         <div className="w-[83%]">
                                             <div className='w-full flex gap-2'><div className="w-full border-b-2 border-dashed border-gray-500 font-normal flex gap-2">
@@ -238,14 +238,14 @@ const FpChallan2Direct = () => {
                                         </div>
                                     </div>
 
-                                    <div className="w-[2%]">4.</div>
-                                    <div className="w-[98%] flex gap-2">
+                                    <div className="w-[2%] mr-1 md:mr-0 print:mr-0">4.</div>
+                                    <div className="md:w-[98%] print:w-[98%] w-[95%] flex gap-2">
                                         <div className="w-[23%]">कृत्य का प्रकार  :- </div>
                                         <div className="w-[83%] border-b-2 border-gray-500 border-dashed font-normal">{nullToNA(challanDetails?.violation_name)}</div>
                                     </div>
 
-                                    <div className="w-[2%]">5.</div>
-                                    <div className="w-[98%] flex gap-2 flex-wrap">
+                                    <div className="w-[2%] mr-1 md:mr-0 print:mr-0">5.</div>
+                                    <div className="md:w-[98%] print:w-[98%] w-[95%] flex gap-2 flex-wrap">
                                         <div className="">झारखंड नगरपालिका अधिनियम 2011 की धारा </div>
                                         <div className="w-[15%] border-dashed border-b-2 border-gray-500 font-normal ">{nullToNA(challanDetails?.violation_section)}</div>
                                         <div>के अधीन या उप नियम / विनियम की कंडिका</div>
@@ -253,14 +253,14 @@ const FpChallan2Direct = () => {
                                         <div>के अधीन दण्ड शुल्क अधिरोपित।  </div>
                                     </div>
 
-                                    <div className="w-[2%]">6.</div>
-                                    <div className="w-[98%] flex gap-2">
+                                    <div className="w-[2%] mr-1 md:mr-0 print:mr-0">6.</div>
+                                    <div className="md:w-[98%] print:w-[98%] w-[95%] flex gap-2">
                                         <div className="w-[23%]">कृत्य स्थल :- </div>
                                         <div className="w-[83%] border-b-2 border-gray-500 border-dashed font-normal">{nullToNA(challanDetails?.violation_place)}</div>
                                     </div>
 
-                                    <div className="w-[2%]">7.</div>
-                                    <div className="w-[98%] flex gap-2">
+                                    <div className="w-[2%] mr-1 md:mr-0 print:mr-0">7.</div>
+                                    <div className="md:w-[98%] print:w-[98%] w-[95%] flex gap-2">
                                         <div className="w-[23%]">निर्धारित दण्ड शुल्क :- </div>
                                         <div className="w-[83%]">
                                             <div className='w-full flex gap-2'><div className='w-[12%]'>(अंको में )</div> <div className="w-[86%] border-b-2 border-dashed border-gray-500 font-normal">{indianAmount(challanDetails?.amount)}</div></div>
