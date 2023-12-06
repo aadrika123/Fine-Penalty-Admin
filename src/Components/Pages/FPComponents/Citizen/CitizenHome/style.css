@@ -1,0 +1,5 @@
+.banner{
+    background: url('../assets/fp.jpg');
+    background-size: cover;
+    /* backdrop-filter: ; */
+}

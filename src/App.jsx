@@ -20,7 +20,7 @@ import FpChallan2Direct from "./Components/Pages/FPComponents/FpPrint/FpChallan2
 import FpReceiptDirect from "./Components/Pages/FPComponents/FpPrint/FpReceiptDirect";
 import BackButton from "./Components/Pages/Others/BackButton";
 import CitizenRoutes from "./Components/Pages/Others/CitizenRoutes";
-import CitizenIndex from "./Components/Pages/FPComponents/Citizen/CitizenIndex";
+import CitizenIndex from "./Components/Pages/FPComponents/Citizen/CitizenHome/CitizenIndex";
 
 const Login = lazy(() => import("@/Components/Pages/Others/Login"));
 const ProtectedRoutes = lazy(() =>
