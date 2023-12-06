@@ -19,6 +19,8 @@ import FPTrackDirect from "./Components/Pages/FPComponents/FPTrack/FPTrackDirect
 import FpChallan2Direct from "./Components/Pages/FPComponents/FpPrint/FpChallan2Direct";
 import FpReceiptDirect from "./Components/Pages/FPComponents/FpPrint/FpReceiptDirect";
 import BackButton from "./Components/Pages/Others/BackButton";
+import CitizenRoutes from "./Components/Pages/Others/CitizenRoutes";
+import CitizenIndex from "./Components/Pages/FPComponents/Citizen/CitizenIndex";
 
 const Login = lazy(() => import("@/Components/Pages/Others/Login"));
 const ProtectedRoutes = lazy(() =>
@@ -151,19 +153,26 @@ function App() {
         <Routes>
 
           {/* ════════════════════║ THIS BLOCK IS FOR CITIZEN ║═════════════════════════   */}
-          <Route path="/search-challan/direct" element={<FPTrackDirect />} />
+          <Route element={<CitizenRoutes />}>
 
-          <Route element={<BackButton />}>
-            <Route path="/challan-show/:id/direct" element={<FpChallan2Direct />} />
-            <Route path="/fp-pay/:id/direct" element={<FpPaymentDirect />} />
-            <Route path="/payment-receipt/:tranNo/direct" element={<FpReceiptDirect />} />
+            <Route path="/citizen-home" element={<CitizenIndex />} />
+            <Route path="/search-challan/direct" element={<FPTrackDirect />} />
+
+            <Route element={<BackButton />}>
+              <Route path="/challan-show/:id/direct" element={<FpChallan2Direct />} />
+              <Route path="/fp-pay/:id/direct" element={<FpPaymentDirect />} />
+              <Route path="/payment-receipt/:tranNo/direct" element={<FpReceiptDirect />} />
+            </Route>
+
+            <Route path="/set-password/:token?/:id?" element={<NewPassowd />} />
+            <Route path="/challan/:id/direct" element={<FpChallan2 />} />
+            <Route path="/fp-receipt/:tranNo/direct" element={<FpReceipt />} />
+
           </Route>
 
 
+
           <Route index element={<Login />} />
-          <Route path="/set-password/:token?/:id?" element={<NewPassowd />} />
-          <Route path="/challan/:id/direct" element={<FpChallan2 />} />
-          <Route path="/fp-receipt/:tranNo/direct" element={<FpReceipt />} />
 
 
           <Route element={<ProtectedRoutes />}>
