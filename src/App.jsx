@@ -21,6 +21,9 @@ import FpReceiptDirect from "./Components/Pages/FPComponents/FpPrint/FpReceiptDi
 import BackButton from "./Components/Pages/Others/BackButton";
 import CitizenRoutes from "./Components/Pages/Others/CitizenRoutes";
 import CitizenIndex from "./Components/Pages/FPComponents/Citizen/CitizenIndex";
+import EnforcementCell from "./Components/Pages/FPComponents/Citizen/EnforcementCell";
+import EnforcementOfficer from "./Components/Pages/FPComponents/Citizen/EnforcementOfficer";
+import CitizenViolationList from "./Components/Pages/FPComponents/Citizen/CitizenViolationList";
 
 const Login = lazy(() => import("@/Components/Pages/Others/Login"));
 const ProtectedRoutes = lazy(() =>
@@ -157,6 +160,9 @@ function App() {
 
             <Route path="/citizen-home" element={<CitizenIndex />} />
             <Route path="/search-challan/direct" element={<FPTrackDirect />} />
+            <Route path="/enforcement-Officer" element={<EnforcementOfficer />} />
+            <Route path="/enforcement-cell" element={<EnforcementCell />} />
+            <Route path="/violation-list" element={<CitizenViolationList />} />
 
             <Route element={<BackButton />}>
               <Route path="/challan-show/:id/direct" element={<FpChallan2Direct />} />
