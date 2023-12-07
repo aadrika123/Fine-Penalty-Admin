@@ -131,7 +131,8 @@ const Banner = () => {
 
 
                         <div className='max-w-[1366px]'>
-                            <h1 className='text-7xl font-bold font-serif w-full text-center mb-4'>Fines &amp; Penalties</h1>
+                            <h5 className='text-center font-semibold'>Ranchi Municipal Corporation</h5>
+                            <h1 className='text-6xl font-bold font-serif w-full text-center mb-4'>Fines &amp; Penalties</h1>
 
                             <article className='text-xl text-gray-100'>
                                 E-Governance initiative to streamline and simplify the citizen-centric services provided by the Urban Local Bodies (ULBs) in Jharkhand.
