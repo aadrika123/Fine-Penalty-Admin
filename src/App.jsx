@@ -11,76 +11,41 @@ import { Route, Routes } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import { contextVar } from "@/Components/context/contextVar";
 import { getLocalStorageItemJsonParsed } from "@/Components/Common/localstorage";
-import UserMaster from "./Components/Pages/FPComponents/UserMaster/UserMasterIndex";
-import NewPassowd from "./Components/Pages/Others/NewPassowd";
-import CashVerificationIndex from "./Components/Pages/FPComponents/CashVerification/CashVerificationIndex";
-import FpPaymentDirect from "./Components/Pages/FPComponents/FpPaymentDirect";
-import FPTrackDirect from "./Components/Pages/FPComponents/FPTrack/FPTrackDirect";
-import FpChallan2Direct from "./Components/Pages/FPComponents/FpPrint/FpChallan2Direct";
-import FpReceiptDirect from "./Components/Pages/FPComponents/FpPrint/FpReceiptDirect";
-import BackButton from "./Components/Pages/Others/BackButton";
-import CitizenRoutes from "./Components/Pages/Others/CitizenRoutes";
-import CitizenIndex from "./Components/Pages/FPComponents/Citizen/CitizenIndex";
-import EnforcementCell from "./Components/Pages/FPComponents/Citizen/EnforcementCell";
-import EnforcementOfficer from "./Components/Pages/FPComponents/Citizen/EnforcementOfficer";
-import CitizenViolationList from "./Components/Pages/FPComponents/Citizen/CitizenViolationList";
+
+const UserMaster = lazy(() => import("@/Components/Pages/FPComponents/UserMaster/UserMasterIndex"));
+const NewPassowd = lazy(() => import("@/Components/Pages/Others/NewPassowd"));
+const CashVerificationIndex = lazy(() => import("@/Components/Pages/FPComponents/CashVerification/CashVerificationIndex"));
+const FpPaymentDirect = lazy(() => import("@/Components/Pages/FPComponents/FpPaymentDirect"));
+const FPTrackDirect = lazy(() => import("@/Components/Pages/FPComponents/FPTrack/FPTrackDirect"));
+const FpChallan2Direct = lazy(() => import("@/Components/Pages/FPComponents/FpPrint/FpChallan2Direct"));
+const FpReceiptDirect = lazy(() => import("@/Components/Pages/FPComponents/FpPrint/FpReceiptDirect"));
+const BackButton = lazy(() => import("@/Components/Pages/Others/BackButton"));
+const CitizenRoutes = lazy(() => import("@/Components/Pages/Others/CitizenRoutes"));
+const CitizenIndex = lazy(() => import("@/Components/Pages/FPComponents/Citizen/CitizenHome/CitizenIndex"));
+const EnforcementCell = lazy(() => import("@/Components/Pages/FPComponents/Citizen/EnforcementCell"));
+const EnforcementOfficer = lazy(() => import("@/Components/Pages/FPComponents/Citizen/EnforcementOfficer"));
+const CitizenViolationList = lazy(() => import("@/Components/Pages/FPComponents/Citizen/CitizenViolationList"));
 
 const Login = lazy(() => import("@/Components/Pages/Others/Login"));
-const ProtectedRoutes = lazy(() =>
-  import("@/Components/Pages/Others/ProtectedRoutes")
-);
+const ProtectedRoutes = lazy(() => import("@/Components/Pages/Others/ProtectedRoutes"));
 const ErrorPage = lazy(() => import("@/Components/Pages/Others/404/ErrorPage"));
-const TransferPage = lazy(() =>
-  import("@/Components/Pages/Others/TransferPage")
-);
-const FPDashboard = lazy(() =>
-  import("@/Components/Pages/FPComponents/FPDashboard/FPDashboard")
-);
-const ChangePassword = lazy(() =>
-  import("@/Components/Pages/Others/ChangePassword")
-);
-const FPTrack = lazy(() =>
-  import("@/Components/Pages/FPComponents/FPTrack/FPTrack")
-);
-const InfractionForm = lazy(() =>
-  import("@/Components/Pages/FPComponents/FPForm/InfractionForm")
-);
-const ViolationIndex = lazy(() =>
-  import("@/Components/Pages/FPComponents/ViolationMaster/ViolationIndex")
-);
-const FpApplicationList = lazy(() =>
-  import("@/Components/Pages/FPComponents/FpList/FpApplicationList")
-);
-const FpWorkflowEntry = lazy(() =>
-  import("@/Components/Pages/FPComponents/FpWorkflowEntry")
-);
-const FpChallan2 = lazy(() =>
-  import("@/Components/Pages/FPComponents/FpPrint/FpChallan2")
-);
-const FpDetails = lazy(() =>
-  import("@/Components/Pages/FPComponents/FpDetails")
-);
-const ChallanGeneratingReport = lazy(() =>
-  import("@/Components/Pages/FPComponents/Reports/ChallanGeneratingReport")
-);
-const ViolationWiseReport = lazy(() =>
-  import("@/Components/Pages/FPComponents/Reports/ViolationWiseReport")
-);
-const CollectionReport = lazy(() =>
-  import("@/Components/Pages/FPComponents/Reports/CollectionReport")
-);
-const FpPayment = lazy(() =>
-  import("@/Components/Pages/FPComponents/FpPayment")
-);
-const FpReceipt = lazy(() =>
-  import("@/Components/Pages/FPComponents/FpPrint/FpReceipt")
-);
-const DifferenceReport = lazy(() =>
-  import("@/Components/Pages/FPComponents/Reports/DifferenceReport")
-);
-const DifferenceDetails = lazy(() =>
-  import("@/Components/Pages/FPComponents/DifferenceDetails")
-);
+const TransferPage = lazy(() => import("@/Components/Pages/Others/TransferPage"));
+const FPDashboard = lazy(() => import("@/Components/Pages/FPComponents/FPDashboard/FPDashboard"));
+const ChangePassword = lazy(() => import("@/Components/Pages/Others/ChangePassword"));
+const FPTrack = lazy(() => import("@/Components/Pages/FPComponents/FPTrack/FPTrack"));
+const InfractionForm = lazy(() => import("@/Components/Pages/FPComponents/FPForm/InfractionForm"));
+const ViolationIndex = lazy(() => import("@/Components/Pages/FPComponents/ViolationMaster/ViolationIndex"));
+const FpApplicationList = lazy(() => import("@/Components/Pages/FPComponents/FpList/FpApplicationList"));
+const FpWorkflowEntry = lazy(() => import("@/Components/Pages/FPComponents/FpWorkflowEntry"));
+const FpChallan2 = lazy(() => import("@/Components/Pages/FPComponents/FpPrint/FpChallan2"));
+const FpDetails = lazy(() => import("@/Components/Pages/FPComponents/FpDetails"));
+const ChallanGeneratingReport = lazy(() => import("@/Components/Pages/FPComponents/Reports/ChallanGeneratingReport"));
+const ViolationWiseReport = lazy(() => import("@/Components/Pages/FPComponents/Reports/ViolationWiseReport"));
+const CollectionReport = lazy(() => import("@/Components/Pages/FPComponents/Reports/CollectionReport"));
+const FpPayment = lazy(() => import("@/Components/Pages/FPComponents/FpPayment"));
+const FpReceipt = lazy(() => import("@/Components/Pages/FPComponents/FpPrint/FpReceipt"));
+const DifferenceReport = lazy(() => import("@/Components/Pages/FPComponents/Reports/DifferenceReport"));
+const DifferenceDetails = lazy(() => import("@/Components/Pages/FPComponents/DifferenceDetails"));
 
 function App() {
   // 👉 State constants 👈
@@ -160,8 +125,8 @@ function App() {
 
             <Route path="/citizen-home" element={<CitizenIndex />} />
             <Route path="/search-challan/direct" element={<FPTrackDirect />} />
-            <Route path="/enforcement-Officer" element={<EnforcementOfficer />} />
-            <Route path="/enforcement-cell" element={<EnforcementCell />} />
+            <Route path="/enforcement-officer-list" element={<EnforcementOfficer />} />
+            <Route path="/enforcement-cell-list" element={<EnforcementCell />} />
             <Route path="/violation-list" element={<CitizenViolationList />} />
 
             <Route element={<BackButton />}>

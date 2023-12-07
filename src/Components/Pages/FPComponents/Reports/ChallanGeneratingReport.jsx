@@ -94,7 +94,11 @@ const ChallanGeneratingReport = () => {
         {
             Header: "Penalty Amount",
             accessor: "total_amount",
-            Cell: ({ cell }) => (indianAmount(cell.row.original?.total_amount))
+            Cell: ({ cell }) => (
+                <>
+                    <span className={`${cell?.row?.original?.payment_status ? 'bg-green-500' : 'bg-red-400'} text-white px-2 py-0.5 drop-shadow-md`}>{indianAmount(cell.row.original?.total_amount)}</span>
+                </>
+            )
         },
     ]
 
