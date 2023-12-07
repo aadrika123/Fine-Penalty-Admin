@@ -708,6 +708,7 @@ const EnforcementCell = () => {
                   <ListTable
                     columns={RCOLUMNS}
                     dataList={dataList}
+                    exportStatus={false}
                   />
                 }
                 {
@@ -715,6 +716,7 @@ const EnforcementCell = () => {
                   <ListTable
                     columns={UCOLUMNS}
                     dataList={dataList}
+                    exportStatus={false}
                   />
                 }
 

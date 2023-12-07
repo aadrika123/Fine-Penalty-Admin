@@ -194,9 +194,9 @@ const FPTrackDirect = () => {
 
   return (
     <>
-     <div className="w-full bg-gray-200 h-screen md:pt-10">
-     <div className="md:w-4/5 mx-auto shadow-xl bg-white md:py-10">
-     <div className="text-3xl font-bold text-center mt-10">Fines & Penalties</div>
+     <div className="w-full bg- h-screen md:pt-10">
+     <div className="md:w-4/5 mx-auto shadow-xl bg-gray-50 md:py-10">
+     <div className="text-3xl font-bold text-center mt-10">Fines &amp; Penalties</div>
       <div className=" text-center">Ranchi Municipal Corporation, Ranchi</div>
       {/* 👉 Main Screen 👈 */}
       <div className="w-full flex flex-col gap-5 justify-center items-center p-4 md:p-6 transition-all duration-200">

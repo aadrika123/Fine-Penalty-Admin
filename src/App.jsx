@@ -124,9 +124,9 @@ function App() {
           <Route element={<CitizenRoutes />}>
 
             <Route path="/" element={<CitizenIndex />} />
-            <Route path="/search-challan/direct" element={<FPTrackDirect />} />
 
             <Route element={<BackButton />}>
+              <Route path="/search-challan/direct" element={<FPTrackDirect />} />
               <Route path="/enforcement-officer-list" element={<EnforcementOfficer />} />
               <Route path="/enforcement-cell-list" element={<EnforcementCell />} />
               <Route path="/violation-list" element={<CitizenViolationList />} />

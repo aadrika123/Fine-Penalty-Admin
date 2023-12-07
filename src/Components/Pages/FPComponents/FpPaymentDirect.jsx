@@ -81,8 +81,8 @@ const FpPaymentDirect = () => {
 
     return (
         <>
-            <div className="w-full bg-gray-200 h-screen md:pt-10">
-                <div className="md:w-4/5 mx-auto shadow-xl bg-white md:py-10">
+            <div className="w-full h-screen md:pt-10">
+                <div className="md:w-4/5 mx-auto shadow-xl bg-gray-50 md:py-10">
                     {/* 👉 Loader 👈 */}
                     {
                         loader && <BarLoader />

@@ -439,6 +439,7 @@ const CitizenViolationList = () => {
                                     <ListTable
                                         columns={VCOLUMNS}
                                         dataList={violationDataList}
+                                        exportStatus={false}
                                     />
                                 }
 

@@ -5,16 +5,19 @@ import { FcDocument } from 'react-icons/fc'
 import actPdf from '../../../../assets/PDF/Act&Rules.pdf'
 import { useNavigate } from 'react-router-dom'
 import secretary from '../assets/secretary.jpg'
+import banner from '../assets/banner.png'
+import shape from '../assets/shape.svg'
 
 const Banner = () => {
 
     const navigate = useNavigate()
 
-    const linkStyle = color => `flex gap-1 text-sm items-center bg-${color}-100 text-gray-800 px-4 py-1 rounded-md drop-shadow-md hover:scale-105 transition-all duration-250 cursor-pointer`
+    const linkStyle = color => `flex gap-1 text-xs items-center bg-${color}-100 text-gray-800 px-4 py-1 rounded-md drop-shadow-md hover:scale-105 transition-all duration-250 cursor-pointer`
 
     const quickLinks = [
-        { label: "Know Your Enforcement Officer List", link: "enforcement-officer-list" },
-        { label: "Know Your Enforcement Cell List", link: "enforcement-cell-list" },
+        { label: "Search Challan", link: "search-challan/direct" },
+        { label: "Know Your Enforcement Officer", link: "enforcement-officer-list" },
+        { label: "Know Your Enforcement Cell", link: "enforcement-cell-list" },
         { label: "Violation List", link: "violation-list" }
     ]
 
@@ -29,16 +32,68 @@ const Banner = () => {
 
     return (
         <>
-            <main className='banner h-[90vh]'>
-                <div className='backdrop-brightness-50 h-[90vh] text-white flex justify-center items-center relative'>
 
-                    <div className='flex items-center justify-center max-w-[1366px] h-full p-4 '>
+            {/* <div className='w-full'>
+                <img src={banner} className=" object-contain w-full border-4 border-slate-100" alt="" srcset="" />
+            </div> */}
 
-                        <div className='w-[30%]'>
-                            <img src={secretary} alt="" srcset="" className='w-[60%] border-8' />
+
+            {/* <div className='w-full h-[90vh] md:h-[90vh]  flex relative overflow-hidden' >
+
+              
+
+                <img className='h-0 md:h-[97vh] absolute top-7 left-0 -mt-10 z-50' src={shape ?? ''} />
+
+                <div className='flex-initial px-6 md:px-8 relative h-[100%] flex justify-center items-center z-50'>
+                    <div className='flex w-[140%] items-center justify-between -right-44 absolute top-4 '>
+                    <img src={secretary} alt="" srcset="" className='w-[9%]' />
+                    <div className='flex gap-2'>
+                        <a onClick={() => window.open('/citizen', '_blank')} className={linkStyle('indigo')}>Citizen Login</a>
+                        <a onClick={() => navigate('/login')} className={linkStyle('indigo')}>Admin Login</a>
+                        <a href='https://youtu.be/5n_iTWCfg-k' target="_blank" className={linkStyle('red')}><SiYoutube size={26} className='text-red-600' /> Manual Video</a>
+                        <a href={actPdf} target="_blank" className={linkStyle('sky')}><FcDocument size={26} /> View Manual</a>
+                    </div>
+                </div>
+
+                    <div className='w-full '>
+
+                        <div className="text-3xl md:text-4xl font-bold mb-2 text-[#99B37C]">Fines &amp; Penalties</div>
+                        <hr className='border-2 w-20 mb-2 border-[#99B37C]' />
+                        <h1 className="text-lg text-black font-PublicSans md:w-[350px] mb-6"> E-Governance initiative to streamline and simplify the citizen-centric services provided by the Urban Local Bodies (ULBs) in Jharkhand.</h1>
+
+                        <div>
+                            <button className='flex md:text-base text-sm bg-amber-500 hover:bg-amber-600 hover:shadow-xl px-14 py-2 rounded-full shadow-md text-white' onClick={() => navigate('/search-challan/direct')}>
+                                Search Challan
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                                </svg>
+
+                            </button>
+
+                            <div className='flex flex-col w-max flex-wrap gap-2 mt-4'>
+                                <button className='flex w-max md:text-base text-sm bg-green-700 hover:bg-green-800 hover:shadow-xl px-10 py-2 rounded-full shadow-md text-white' onClick={() => navigate('/violation-list')}>Violation List</button>
+                                <button className='flex md:text-base text-sm bg-zinc-50 border hover:bg-zinc-100 hover:shadow-xl px-10 py-2 rounded-full shadow-md text-green-700' onClick={() => navigate('/enforcement-officer-list')}>Know Your Enforcement Officer</button>
+                                <button className='flex md:text-base text-sm bg-zinc-50 border hover:bg-zinc-100 hover:shadow-xl px-10 py-2 rounded-full shadow-md text-green-700' onClick={() => navigate('/enforcement-cell-list')}>Know Your Enforcement Cell</button>
+                            </div>
                         </div>
 
-                        <div className='w-[70%]'>
+                    </div>
+                </div>
+
+                <div>
+                    <img src={banner} alt="" srcset="" className='ml-36' />
+                </div>
+            </div> */}
+
+
+
+            <main className='banner h-[90vh]'>
+                <div className=' h-[90vh] text-white flex justify-center items-center relative'>
+
+                    <div className='w-full flex items-center justify-center h-full p-4 backdrop-brightness-[0.3]'>
+
+
+                        <div className='max-w-[1366px]'>
                             <h1 className='text-7xl font-bold font-serif w-full text-center mb-4'>Fines &amp; Penalties</h1>
 
                             <article className='text-xl text-gray-100'>
@@ -58,16 +113,17 @@ const Banner = () => {
                             </div>
                         </div>
 
-                        <div className='flex gap-4 my-4 absolute top-0 right-2'>
-                            <a onClick={() => window.open('/citizen', '_blank')} className={linkStyle('indigo')}>Citizen Login</a>
-                            <a onClick={() =>navigate('/login')} className={linkStyle('indigo')}>Admin Login</a>
-                            <a href='https://youtu.be/5n_iTWCfg-k' target="_blank" className={linkStyle('red')}><SiYoutube size={26} className='text-red-600' /> Manual Video</a>
-                            <a href={actPdf} target="_blank" className={linkStyle('sky')}><FcDocument size={26} /> View Manual</a>
+                        <div className='flex w-[70%]  items-center justify-between gap-4 absolute top-4 '>
+                            <img src={secretary} alt="" srcset="" className='w-[4.5%] border' />
+                            <div className='flex gap-2'>
+                                <a onClick={() => window.open('/citizen', '_blank')} className={linkStyle('indigo')}>Citizen Login</a>
+                                <a onClick={() => navigate('/login')} className={linkStyle('indigo')}>Admin Login</a>
+                                <a href='https://youtu.be/5n_iTWCfg-k' target="_blank" className={linkStyle('red')}><SiYoutube size={26} className='text-red-600' /> Manual Video</a>
+                                <a href={actPdf} target="_blank" className={linkStyle('sky')}><FcDocument size={26} /> View Manual</a>
+                            </div>
                         </div>
 
                     </div>
-
-
 
                 </div>
             </main>
