@@ -123,13 +123,13 @@ function App() {
           {/* ════════════════════║ THIS BLOCK IS FOR CITIZEN ║═════════════════════════   */}
           <Route element={<CitizenRoutes />}>
 
-            <Route path="/citizen-home" element={<CitizenIndex />} />
+            <Route path="/" element={<CitizenIndex />} />
             <Route path="/search-challan/direct" element={<FPTrackDirect />} />
-            <Route path="/enforcement-officer-list" element={<EnforcementOfficer />} />
-            <Route path="/enforcement-cell-list" element={<EnforcementCell />} />
-            <Route path="/violation-list" element={<CitizenViolationList />} />
 
             <Route element={<BackButton />}>
+              <Route path="/enforcement-officer-list" element={<EnforcementOfficer />} />
+              <Route path="/enforcement-cell-list" element={<EnforcementCell />} />
+              <Route path="/violation-list" element={<CitizenViolationList />} />
               <Route path="/challan-show/:id/direct" element={<FpChallan2Direct />} />
               <Route path="/fp-pay/:id/direct" element={<FpPaymentDirect />} />
               <Route path="/payment-receipt/:tranNo/direct" element={<FpReceiptDirect />} />
@@ -143,7 +143,7 @@ function App() {
 
 
 
-          <Route index element={<Login />} />
+          <Route path="/fines/login" element={<Login />} />
 
 
           <Route element={<ProtectedRoutes />}>
