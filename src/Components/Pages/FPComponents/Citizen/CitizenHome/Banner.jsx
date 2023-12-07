@@ -12,7 +12,7 @@ const Banner = () => {
 
     const navigate = useNavigate()
 
-    const linkStyle = color => `flex gap-1 text-xs items-center bg-${color}-100 text-gray-800 px-4 py-1 rounded-md drop-shadow-md hover:scale-105 transition-all duration-250 cursor-pointer`
+    const linkStyle = color => `flex gap-1 text-sm items-center bg-${color}-100 text-gray-800 px-4 py-1 rounded-md drop-shadow-sm border border-white hover:scale-105 transition-all duration-250 cursor-pointer`
 
     const quickLinks = [
         { label: "Search Challan", link: "search-challan/direct" },
@@ -25,7 +25,7 @@ const Banner = () => {
         return (
             <div onClick={() => navigate(`/${elem?.link}`)} className={`flex gap-2 items-center text-base cursor-pointer group w-max`}>
                 <span className='col-span-1'>{index + 1}.</span>
-                <span className='col-span-11 group-hover:underline'>{elem?.label}</span>
+                <span className='col-span-11 group-hover:underline bg-green-50 hover:bg-[#99B37C] hover:text-white rounded-sm text-black px-4 py-0.5'>{elem?.label}</span>
             </div>
         )
     }
@@ -33,8 +33,45 @@ const Banner = () => {
     return (
         <>
 
-            {/* <div className='w-full'>
-                <img src={banner} className=" object-contain w-full border-4 border-slate-100" alt="" srcset="" />
+            {/* <div className=' w-full h-[90vh] border-4 flex flex-col'>
+
+                <div className='flex items-center justify-end w-full h-max p-2 '>
+                    <div className='flex gap-2'>
+                        <a onClick={() => window.open('/citizen', '_blank')} className={linkStyle('indigo')}>Citizen Login</a>
+                        <a onClick={() => navigate('/login')} className={linkStyle('indigo')}>Admin Login</a>
+                        <a href='https://youtu.be/5n_iTWCfg-k' target="_blank" className={linkStyle('red')}><SiYoutube size={26} className='text-red-600' /> Manual Video</a>
+                        <a href={actPdf} target="_blank" className={linkStyle('sky')}><FcDocument size={26} /> View Manual</a>
+                    </div>
+                </div>
+
+                <div className='flex h-full items-center'>
+
+                <img src={banner} className=" w-[45%] m-6 ml-14 object-contain drop-shadow-lg border-4 border-green-700 h-max border-double" alt="" srcset="" />
+
+
+                    <div className='w-1/2 flex items-center flex-col justify-center p-4 h-full'>
+                        <h1 className='text-7xl font-bold font-serif w-full text-start mb-4'>Fines &amp; Penalties</h1>
+
+                        <article className='text-xl text-gray-700'>
+                            E-Governance initiative to streamline and simplify the citizen-centric services provided by the Urban Local Bodies (ULBs) in Jharkhand.
+                        </article>
+
+
+                        <div className='flex flex-wrap w-full my-4'>
+                            <h5 className='italic text-start text-2xl font-semibold font-sans border-b border-dashed w-max pr-2'>Quick Links</h5>
+
+                            <div className='w-full flex flex-col flex-wrap pl-28 my-2'>
+                                {
+                                    quickLinks?.map((elem, index) => linksBlock(elem, index))
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
             </div> */}
 
 
@@ -90,7 +127,7 @@ const Banner = () => {
             <main className='banner h-[90vh]'>
                 <div className=' h-[90vh] text-white flex justify-center items-center relative'>
 
-                    <div className='w-full flex items-center justify-center h-full p-4 backdrop-brightness-[0.3]'>
+                    <div className='w-full flex items-center justify-center h-full p-4 backdrop-brightness-[0.4]'>
 
 
                         <div className='max-w-[1366px]'>
@@ -104,7 +141,7 @@ const Banner = () => {
                             <div className='flex flex-wrap w-full my-4'>
                                 <h5 className='italic text-start text-2xl font-semibold font-sans border-b border-dashed w-max pr-2'>Quick Links</h5>
 
-                                <div className='w-full flex flex-col flex-wrap pl-28 my-2'>
+                                <div className='w-full flex flex-col flex-wrap pl-28 my-2 gap-2'>
                                     {
                                         quickLinks?.map((elem, index) => linksBlock(elem, index))
                                     }
@@ -113,8 +150,8 @@ const Banner = () => {
                             </div>
                         </div>
 
-                        <div className='flex w-[70%]  items-center justify-between gap-4 absolute top-4 '>
-                            <img src={secretary} alt="" srcset="" className='w-[4.5%] border' />
+                        <div className='flex w-[70%]  items-center justify-end gap-4 absolute top-4 '>
+                            {/* <img src={secretary} alt="" srcset="" className='w-[4.5%] border' /> */}
                             <div className='flex gap-2'>
                                 <a onClick={() => window.open('/citizen', '_blank')} className={linkStyle('indigo')}>Citizen Login</a>
                                 <a onClick={() => navigate('/login')} className={linkStyle('indigo')}>Admin Login</a>

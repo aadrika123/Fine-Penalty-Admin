@@ -1,5 +1,5 @@
 .banner{
     background: url('../assets/banner2.png');
     background-size: cover;
-    /* backdrop-filter: ; */
+    /* backdrop-filter: brightness(0.4); */
 }

@@ -1,13 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import cm from '../assets/cm.png'
+import secretary from '../assets/secretary.jpg'
 
 const Branding = () => {
+
+    const [toggle, setToggle] = useState(false)
+
+    setTimeout(() => {
+        setToggle(!toggle)
+    }, 2000);
+
     return (
         <>
             <div className='relative w-full h-full bg-[#99B37C]'>
                 <div className='absolute h-full w-full top-0 opacity-20'> </div>
                 <div className='flex justify-between px-2 sm:px-20 py-1.5 items-center'>
-                    <img src={cm} alt="" className='w-16 sm:w-20 h-16 sm:h-20 block border-2 shadow-md rounded-full transform -scale-x-100' />
+                    <img src={toggle ? secretary : cm} alt="" className={`w-16 sm:w-20 h-16 sm:h-20 block border-2 shadow-md animate__animated animate__fadIn rounded-full transform ${toggle ? "" : "-scale-x-100"}`} />
                     <div className='flex flex-col items-center justify-center'>
                         <span className='text-sm sm:text-4xl font-bold text-center uppercase'>Urban Development &amp; Housing Department</span>
                         <span className='text-xs sm:text-base'>Government of Jharkhand</span>
