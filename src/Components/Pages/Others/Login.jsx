@@ -411,7 +411,7 @@ function Login() {
         </div>
       </dialog>
 
-      <header className=" border-b border-gray-200 bg-white darks:bg-gray-800 darks:border-gray-800">
+      <header className=" border-b border-gray-200 bg-indigo-500 text-white darks:bg-gray-800 darks:border-gray-800">
         <div className="container mx-auto xl:max-w-6xl ">
           {/* Navbar */}
           <nav
@@ -423,7 +423,7 @@ function Login() {
               <div className="flex gap-2">
                 {" "}
                 <span className="w-7">
-                  <img src={ulb_data()?.ulb_logo} alt="" srcset="" />
+                  <img src={ulb_data()?.ulb_logo} alt="" srcset=""  className=""/>
                 </span>{" "}
                 <span className="font-bold text-xl">
                   Ranchi Nagar Nigam, Ranchi

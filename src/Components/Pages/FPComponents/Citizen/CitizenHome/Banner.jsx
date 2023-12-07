@@ -60,7 +60,7 @@ const Banner = () => {
 
                         <div className='flex gap-4 my-4 absolute top-0 right-2'>
                             <a onClick={() => window.open('/citizen', '_blank')} className={linkStyle('indigo')}>Citizen Login</a>
-                            <a onClick={() => window.open('/fines', "_blank")} className={linkStyle('indigo')}>Admin Login</a>
+                            <a onClick={() =>navigate('/login')} className={linkStyle('indigo')}>Admin Login</a>
                             <a href='https://youtu.be/5n_iTWCfg-k' target="_blank" className={linkStyle('red')}><SiYoutube size={26} className='text-red-600' /> Manual Video</a>
                             <a href={actPdf} target="_blank" className={linkStyle('sky')}><FcDocument size={26} /> View Manual</a>
                         </div>

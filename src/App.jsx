@@ -143,7 +143,7 @@ function App() {
 
 
 
-          <Route path="/fines/login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
 
 
           <Route element={<ProtectedRoutes />}>
