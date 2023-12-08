@@ -5,7 +5,10 @@ import { FcDocument } from 'react-icons/fc'
 import actPdf from '../../../../assets/PDF/Act&Rules.pdf'
 import { useNavigate } from 'react-router-dom'
 import secretary from '../assets/secretary.jpg'
-import banner from '../assets/banner.png'
+import banner from '../assets/bg.svg'
+import b1 from '../assets/b1.svg'
+import b2 from '../assets/b2.svg'
+import b3 from '../assets/b3.svg'
 import shape from '../assets/shape.svg'
 
 const Banner = () => {
@@ -25,7 +28,7 @@ const Banner = () => {
         return (
             <div onClick={() => navigate(`/${elem?.link}`)} className={`flex gap-2 items-center text-base cursor-pointer group w-max`}>
                 <span className='col-span-1'>{index + 1}.</span>
-                <span className='col-span-11 group-hover:underline bg-green-50 hover:bg-[#99B37C] hover:text-white rounded-sm text-black px-4 py-0.5'>{elem?.label}</span>
+                <span className='col-span-11 group-hover:underline border text-sm bg-green-50 hover:bg-[#99B37C] hover:text-white rounded-sm text-black px-4 py-0.5'>{elem?.label}</span>
             </div>
         )
     }
@@ -33,23 +36,33 @@ const Banner = () => {
     return (
         <>
 
-            {/* <div className=' w-full h-[90vh] border-4 flex flex-col'>
+            <div className=' w-full h-[88vh] flex flex-col'>
 
-                <div className='flex items-center justify-end w-full h-max p-2 '>
+                <div className='flex items-center justify-end w-full h-max p-2 border-b'>
                     <div className='flex gap-2'>
-                        <a onClick={() => window.open('/citizen', '_blank')} className={linkStyle('indigo')}>Citizen Login</a>
+                        <a onClick={() => navigate('/search-challan/direct')} className={linkStyle('indigo')}>Citizen</a>
                         <a onClick={() => navigate('/login')} className={linkStyle('indigo')}>Admin Login</a>
                         <a href='https://youtu.be/5n_iTWCfg-k' target="_blank" className={linkStyle('red')}><SiYoutube size={26} className='text-red-600' /> Manual Video</a>
                         <a href={actPdf} target="_blank" className={linkStyle('sky')}><FcDocument size={26} /> View Manual</a>
                     </div>
                 </div>
 
-                <div className='flex h-full items-center'>
+                <div className='flex h-full items-center justify-center'>
 
-                <img src={banner} className=" w-[45%] m-6 ml-14 object-contain drop-shadow-lg border-4 border-green-700 h-max border-double" alt="" srcset="" />
+                    <div className="w-[40%] relative flex flex-col items-center justify-start ">
+                        <img src={banner} className=" w-[60%] animate__animated animate__fadeIn animate__faster  m-2 object-contain drop-shadow-md  h-max border-double" alt="" srcset="" />
+                        {/* <img src={b1} alt="" srcset="" className='animate__animated animate__zoomIn animate__faster opacity-90 drop-shadow-md absolute w-[40%] -top-[40px] -right-4' /> */}
+                        {/* <img src={b3} alt="" srcset="" className='animate__animated animate__zoomIn animate__faster opacity-90 drop-shadow-md absolute w-[40%] top-[35%] right-[80px]' /> */}
+                        {/* <img src={b2} alt="" srcset="" className='animate__animated animate__zoomIn animate__faster opacity-90 drop-shadow-md absolute w-[35%] bottom-0 -right-[80px]' /> */}
+
+                            <img src={b1} alt="" srcset="" className='animate__animated animate__zoomIn animate__faster opacity-90 drop-shadow-md w-[30%] absolute -top-[50px] left-[150px]' />
+                            <img src={b3} alt="" srcset="" className='animate__animated animate__zoomIn animate__faster opacity-90 drop-shadow-md w-[33%] absolute top-[150px] -left-[50px]' />
+                            <img src={b2} alt="" srcset="" className='animate__animated animate__zoomIn animate__faster opacity-90 drop-shadow-md w-[35%] absolute -bottom-[100px] left-[0]' />
+                    </div>
 
 
-                    <div className='w-1/2 flex items-center flex-col justify-center p-4 h-full'>
+                    <div className='w-1/2 flex items-start flex-col justify-center p-4 h-full'>
+                        <h5 className='text-start font-semibold'>Ranchi Municipal Corporation</h5>
                         <h1 className='text-7xl font-bold font-serif w-full text-start mb-4'>Fines &amp; Penalties</h1>
 
                         <article className='text-xl text-gray-700'>
@@ -58,9 +71,9 @@ const Banner = () => {
 
 
                         <div className='flex flex-wrap w-full my-4'>
-                            <h5 className='italic text-start text-2xl font-semibold font-sans border-b border-dashed w-max pr-2'>Quick Links</h5>
+                            <h5 className='italic text-start text-2xl font-semibold font-sans border-b border-dashed border-gray-400 w-max pr-2'>Quick Links</h5>
 
-                            <div className='w-full flex flex-col flex-wrap pl-28 my-2'>
+                            <div className='w-full flex flex-col flex-wrap pl-28 my-2 gap-2'>
                                 {
                                     quickLinks?.map((elem, index) => linksBlock(elem, index))
                                 }
@@ -72,7 +85,7 @@ const Banner = () => {
 
                 </div>
 
-            </div> */}
+            </div>
 
 
             {/* <div className='w-full h-[90vh] md:h-[90vh]  flex relative overflow-hidden' >
@@ -124,7 +137,7 @@ const Banner = () => {
 
 
 
-            <main className='banner h-[90vh]'>
+            {/* <main className='banner h-[90vh]'>
                 <div className=' h-[90vh] text-white flex justify-center items-center relative'>
 
                     <div className='w-full flex items-center justify-center h-full p-4 backdrop-brightness-[0.4]'>
@@ -152,7 +165,6 @@ const Banner = () => {
                         </div>
 
                         <div className='flex w-[70%]  items-center justify-end gap-4 absolute top-4 '>
-                            {/* <img src={secretary} alt="" srcset="" className='w-[4.5%] border' /> */}
                             <div className='flex gap-2'>
                                 <a onClick={() => window.open('/citizen', '_blank')} className={linkStyle('indigo')}>Citizen Login</a>
                                 <a onClick={() => navigate('/login')} className={linkStyle('indigo')}>Admin Login</a>
@@ -164,7 +176,7 @@ const Banner = () => {
                     </div>
 
                 </div>
-            </main>
+            </main> */}
         </>
     )
 }

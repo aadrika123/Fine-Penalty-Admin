@@ -204,17 +204,17 @@ function Login() {
               { name: "Home", path: "/home", children: [] },
               { name: "Application List", path: "/fp-list", children: [] },
               { name: "Search Challan", path: "/search-challan", children: [] },
-              {
-                name: "Violation Master",
-                path: "/violation-master",
-                children: [],
-              },
-              { name: "User Role Master", path: "/user-master", children: [] },
-              {
-                name: "Cash Verification",
-                path: "/cash-verification",
-                children: [],
-              },
+              // {
+              //   name: "Violation Master",
+              //   path: "/violation-master",
+              //   children: [],
+              // },
+              // { name: "User Role Master", path: "/user-master", children: [] },
+              // {
+              //   name: "Cash Verification",
+              //   path: "/cash-verification",
+              //   children: [],
+              // },
               {
                 name: "Reports",
                 path: "",
@@ -411,7 +411,7 @@ function Login() {
         </div>
       </dialog>
 
-      <header className=" border-b border-gray-200 bg-indigo-500 text-white darks:bg-gray-800 darks:border-gray-800">
+      <header className=" border-b border-gray-200 bg-white darks:bg-gray-800 darks:border-gray-800">
         <div className="container mx-auto xl:max-w-6xl ">
           {/* Navbar */}
           <nav
@@ -422,11 +422,11 @@ function Login() {
             <a className="flex items-center py-2 ltr:mr-4 rtl:ml-4 text-xl cursor-default">
               <div className="flex gap-2">
                 {" "}
-                <span className="w-7">
+                <span className="w-9">
                   <img src={ulb_data()?.ulb_logo} alt="" srcset=""  className=""/>
                 </span>{" "}
                 <span className="font-bold text-xl">
-                  Ranchi Nagar Nigam, Ranchi
+                  Ranchi Municipal Corporation
                 </span>
               </div>
             </a>

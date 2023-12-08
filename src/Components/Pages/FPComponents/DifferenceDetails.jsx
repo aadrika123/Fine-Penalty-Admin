@@ -112,8 +112,8 @@ const DifferenceDetails = () => {
                                                 {/* 👉 Comparision Row 👈 */}
                                                 <tr className='col-span-12 grid grid-cols-12 items-center px-2 py-1.5 border-b gap-x-4'>
                                                     <td className='col-span-4 font-semibold'>{elem?.displayString}</td>
-                                                    <td className='col-span-4'>{nullToNA(elem?.applied)}</td>
-                                                    <td className='col-span-4'>{nullToNA(elem?.final)}</td>
+                                                    <td className={`col-span-4 ${nullToNA(elem?.final) != nullToNA(elem?.applied) && ' text-red-500'}`}>{nullToNA(elem?.applied)}</td>
+                                                    <td className={`col-span-4 ${nullToNA(elem?.final) != nullToNA(elem?.applied) && ' text-green-600'}`}>{nullToNA(elem?.final)}</td>
                                                 </tr>
 
                                             </>

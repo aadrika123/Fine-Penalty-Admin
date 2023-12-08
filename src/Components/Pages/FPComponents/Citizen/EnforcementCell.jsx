@@ -188,13 +188,13 @@ const EnforcementCell = () => {
       Header: "#",
       Cell: ({ row }) => <div className="pr-2">{row?.index + 1}</div>,
     },
-    // {
-    //   Header: "Profile",
-    //   accessor: "profile",
-    //   Cell: ({ cell }) => <>
-    //     {cell.row.original?.profile_image ? <img className="border drop-shadow-lg h-8 rounded-sm" src={cell.row.original?.profile_image} alt="profile" srcset="" /> : "N/A"}
-    //   </>
-    // },
+    {
+      Header: "Profile",
+      accessor: "profile",
+      Cell: ({ cell }) => <>
+        {cell.row.original?.profile_image ? <img className="border drop-shadow-lg h-8 rounded-sm" src={cell.row.original?.profile_image} alt="profile" srcset="" /> : "N/A"}
+      </>
+    },
     {
       Header: "Name",
       accessor: "user_name",

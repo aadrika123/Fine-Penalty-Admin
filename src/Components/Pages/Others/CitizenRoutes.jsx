@@ -1,11 +1,15 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import Branding from '../FPComponents/Citizen/CitizenHome/Branding'
+import BrandingRmc from './BrandingRmc'
 
 const CitizenRoutes = () => {
+
+  const location = useLocation()
+
   return (
     <>
-      <Branding />
+    {location?.pathname != '/' && <BrandingRmc />}
       <Outlet />
     </>
   )
