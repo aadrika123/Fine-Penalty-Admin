@@ -84,17 +84,18 @@ function ListTable2(props) {
 
 
             {props?.exportStatus !==false && (props?.search == false ?
-                <div className="absolute -mt-[1vh] right-[2.3vw]">
-                    <div className='flex-initial ml-2'><button className='bg-sky-400 px-3 pr-3  shadow-lg rounded py-1 text-white hover:shadow-2xl hover:bg-green-600 text-center relative' onMouseEnter={() => setbounce('')} onMouseLeave={() => setbounce('hidden')} onClick={props.exportDataF}>
-                        Export
+                <div className="absolute -mt-[1vh] right-[3.3vw] flex items-center gap-2">
+                    <div className='flex-initial ml-2'><button className='text-sm hover:bg-slate-500 px-3 pr-3  shadow-lg rounded py-0.5 border border-slate-500 text-slate-500 hover:text-white hover:shadow-2xl  text-center relative' onMouseEnter={() => setbounce('')} onMouseLeave={() => setbounce('hidden')} onClick={() => props?.exportDataF('csv')}>
+                        CSV
                         <div className={bounce + ' absolute h-full top-3 text-sm left-0 text-center animate-bounce'}><AiOutlineArrowDown /></div></button></div>
-                    <div className='flex-1'>{props.children}</div>
+                        <button onClick={() => props?.exportDataF('excel')} className='text-sm hover:bg-slate-500 px-3 pr-3  shadow-lg rounded py-0.5 border border-slate-500 text-slate-500 hover:text-white hover:shadow-2xl text-center relative'>Excel</button>
+                        {/* <button onClick={() => props?.exportDataF('pdf')} className='text-sm hover:bg-slate-500 px-3 pr-3  shadow-lg rounded py-0.5 border border-slate-500 text-slate-500 hover:text-white hover:shadow-2xl text-center relative'>PDF</button> */}
 
                 </div>
                 :
                 <div className="flex mb-2 pb-2">
                     <div className='flex-initial opacity-50'><GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} /></div>
-                    <div className='flex-initial ml-2'><button className='bg-sky-400 px-3 pr-3  shadow-lg rounded py-1 text-white hover:shadow-2xl hover:bg-green-600 text-center relative' onMouseEnter={() => setbounce('')} onMouseLeave={() => setbounce('hidden')} onClick={props.exportDataF}>
+                    <div className='flex-initial ml-2'><button className='text-sm hover:bg-slate-500 px-3 pr-3  shadow-lg rounded py-1 border border-slate-500 text-slate-500 hover:text-white hover:shadow-2xl text-center relative' onMouseEnter={() => setbounce('')} onMouseLeave={() => setbounce('hidden')} onClick={() => props?.exportDataF('csv')}>
                         Export
                         <div className={bounce + ' absolute h-full top-3 text-sm left-0 text-center animate-bounce'}><AiOutlineArrowDown /></div></button></div>
                     <div className='flex-1'>{props.children}</div>

@@ -23,20 +23,23 @@ import ApiHeader from '@/Components/api/ApiHeader'
 import { CSVDownload } from 'react-csv'
 import axios from 'axios'
 import ShimmerEffectInline from '@/Components/Common/Loaders/ShimmerEffectInline'
+import { saveAs } from 'file-saver';
+import * as XLSX from 'xlsx'
+// import html2pdf from 'html2pdf.js';
 
 const ListTableConnect = (props) => {
 
     // 👉 State constants 👈
-    const [perPageCount , setperPageCount] = useState(10)
-    const [pageCount    , setpageCount]    = useState(1)
-    const [currentPage  , setcurrentPage]  = useState(0)
-    const [lastPage     , setlastPage]     = useState(0)
-    const [totalCount   , settotalCount]   = useState(0)
-    const [exportData   , setexportData]   = useState()
-    const [csvStatus    , setcsvStatus]    = useState(false)
-    const [errorState   , seterrorState]   = useState(false)
-    const [dataList     , setdataList]     = useState([])
-    const [loader       , setloader]       = useState(false)
+    const [perPageCount, setperPageCount] = useState(10)
+    const [pageCount, setpageCount] = useState(1)
+    const [currentPage, setcurrentPage] = useState(0)
+    const [lastPage, setlastPage] = useState(0)
+    const [totalCount, settotalCount] = useState(0)
+    const [exportData, setexportData] = useState()
+    const [csvStatus, setcsvStatus] = useState(false)
+    const [errorState, seterrorState] = useState(false)
+    const [dataList, setdataList] = useState([])
+    const [loader, setloader] = useState(false)
 
     // 👉 Function 1 👈
     const searchOldFun = () => {
@@ -46,7 +49,7 @@ const ListTableConnect = (props) => {
         setloader(true)
 
         if (Object.keys(props?.requestBody).length !== 0) {
-           typeof(props.loader) == 'function' && props.loader(true)
+            typeof (props.loader) == 'function' && props.loader(true)
         }
 
 
@@ -71,7 +74,7 @@ const ListTableConnect = (props) => {
             .finally(() => {
                 setloader(false)
                 if (Object.keys(props?.requestBody).length !== 0) {
-                   typeof(props.loader) == 'function' && props.loader(false)
+                    typeof (props.loader) == 'function' && props.loader(false)
                 }
                 seterrorState(false)
             })
@@ -129,19 +132,19 @@ const ListTableConnect = (props) => {
         setpageCount(val)
     }
 
-     // 👉 Function 8 👈
+    // 👉 Function 8 👈
     const makeExportFun = (dataList) => {
-             
+
         let data = dataList?.map((elem, index) => {
             // Map over the columns for each element in dataList
             const rowData = props?.columns?.map((col, columnIndex) => {
-                
+
                 var value = elem[col?.accessor];
-                
+
                 if (col?.option && col?.option?.length > 0) {
-                    
+
                     const matchingOption = col?.option?.find(option => option.hasOwnProperty(elem[col?.accessor]));
-                    
+
                     if (matchingOption) {
                         value = matchingOption[elem[col?.accessor]];
                     } else {
@@ -160,10 +163,58 @@ const ListTableConnect = (props) => {
 
         return data;
 
-      };
+    };
+
+    //   Export To Excel
+    const exportToExcel = (data) => {
+        const worksheet = XLSX.utils.json_to_sheet(data);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet 1');
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
+        saveAs(blob, 'ExcelDataList.xlsx');
+    }
+
+//     // Export To PDF
+//     const exportToPDF = () => {
+//         const data = [
+//             { id: 1, name: 'John Doe', age: 30, city: 'New York' },
+//             { id: 2, name: 'Jane Doe', age: 25, city: 'San Francisco' },
+//             // Add more data as needed
+//         ];
+
+//         // Create an HTML string for the table
+//         const tableHtml = `
+//   <table>
+//     <thead>
+//       <tr>
+//         ${Object.keys(data[0]).map((header) => `<th>${header}</th>`).join('')}
+//       </tr>
+//     </thead>
+//     <tbody>
+//       ${data.map((row) => `<tr>${Object.values(row).map((value) => `<td>${value}</td>`).join('')}</tr>`).join('')}
+//     </tbody>
+//   </table>
+// `;
+
+//         // Options for html2pdf
+//         const options = {
+//             margin: 10,
+//             filename: 'exportedData.pdf',
+//             image: { type: 'jpeg', quality: 0.98 },
+//             html2canvas: { scale: 2 },
+//             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+//         };
+
+//         // Generate PDF from HTML
+//         html2pdf().from(tableHtml).set(options).outputPdf((pdf) => {
+//             saveAs(pdf, 'exportedData.pdf');
+//         });
+//     };
+
 
     // 👉 Function 9 👈
-    const exportDataFun = () => {
+    const exportDataFun = (type) => {
 
         setloader(true)
         setcsvStatus(false)
@@ -172,8 +223,16 @@ const ListTableConnect = (props) => {
             props?.api, { ...props?.requestBody, perPage: totalCount }, ApiHeader())
             .then((res) => {
                 if (res?.data?.status == true) {
-                    setexportData(makeExportFun(res?.data?.data?.data))
-                    downloadFun()
+                    if (type == 'csv') {
+                        setexportData(makeExportFun(res?.data?.data?.data))
+                        downloadFun()
+                    }
+                    if (type == 'excel') {
+                        exportToExcel(makeExportFun(res?.data?.data?.data))
+                    }
+                    if (type == 'pdf') {
+                        exportToPDF(makeExportFun(res?.data?.data?.data))
+                    }
                 } else {
                 }
 
@@ -234,8 +293,8 @@ const ListTableConnect = (props) => {
                 (!loader && dataList?.length > 0) ?
 
                     <>
-                            {/* 👉 Listtable 👈 */}
-                            <ListTable2 search={props?.search} currentPage={currentPage} lastPage={lastPage} goFirst={firstPageFun} goLast={lastPageFun} count1={totalCount} columns={props?.columns} dataList={dataList} exportStatus={props?.exportStatus} perPage={perPageCount} perPageC={perPageFun} totalCount={totalCount} nextPage={nextPageFun} prevPage={prevPageFun} exportDataF={exportDataFun} exportData={exportData} gotoPage={(val) => gotoPageFun(val)} />
+                        {/* 👉 Listtable 👈 */}
+                        <ListTable2 search={props?.search} currentPage={currentPage} lastPage={lastPage} goFirst={firstPageFun} goLast={lastPageFun} count1={totalCount} columns={props?.columns} dataList={dataList} exportStatus={props?.exportStatus} perPage={perPageCount} perPageC={perPageFun} totalCount={totalCount} nextPage={nextPageFun} prevPage={prevPageFun} exportDataF={exportDataFun} exportData={exportData} gotoPage={(val) => gotoPageFun(val)} />
                     </>
 
                     :
