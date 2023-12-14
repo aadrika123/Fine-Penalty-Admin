@@ -15,7 +15,7 @@ const Banner = () => {
 
     const navigate = useNavigate()
 
-    const linkStyle = color => `flex gap-1 text-sm items-center bg-${color}-100 text-gray-800 px-4 py-1 rounded-md drop-shadow-sm border border-white hover:scale-105 transition-all duration-250 cursor-pointer`
+    const linkStyle = color => `flex gap-1 text-xs md:text-sm items-center bg-${color}-100 text-gray-800 px-4 py-1 rounded-md drop-shadow-sm border border-white hover:scale-105 transition-all duration-250 cursor-pointer`
 
     const quickLinks = [
         { label: "Search Challan", link: "search-challan/direct" },
@@ -37,9 +37,8 @@ const Banner = () => {
         <>
 
             <div className=' w-full h-[88vh] flex flex-col'>
-
-                <div className='flex items-center justify-end w-full h-max p-2 border-b'>
-                    <div className='flex gap-2'>
+                <div className='flex items-center justify-center w-full h-max p-2 border-b '>
+                    <div className='flex'>
                         <a onClick={() => navigate('/search-challan/direct')} className={linkStyle('indigo')}>Citizen</a>
                         <a onClick={() => navigate('/login')} className={linkStyle('indigo')}>Admin Login</a>
                         <a href='https://youtu.be/5n_iTWCfg-k' target="_blank" className={linkStyle('red')}><SiYoutube size={26} className='text-red-600' /> Manual Video</a>
@@ -47,33 +46,38 @@ const Banner = () => {
                     </div>
                 </div>
 
-                <div className='flex h-full items-center justify-center'>
+                <div className='flex flex-col md:flex-row h-full items-center justify-center'>
 
-                    <div className="w-[40%] relative flex flex-col items-center justify-start ">
-                        <img src={banner} className=" w-[60%] animate__animated animate__fadeIn animate__faster  m-2 object-contain drop-shadow-md  h-max border-double" alt="" srcset="" />
+                    <div className="flex-1 md:w-[40%]  md:relative flex flex-col items-center justify-start">
+                        <img src={banner} className="w-[50%] absolute top-44 md:top-0 md:static  md:w-[60%] animate__animated animate__fadeIn animate__faster  m-2 object-contain drop-shadow-md  h-max border-double" alt="" srcset="" />
                         {/* <img src={b1} alt="" srcset="" className='animate__animated animate__zoomIn animate__faster opacity-90 drop-shadow-md absolute w-[40%] -top-[40px] -right-4' /> */}
                         {/* <img src={b3} alt="" srcset="" className='animate__animated animate__zoomIn animate__faster opacity-90 drop-shadow-md absolute w-[40%] top-[35%] right-[80px]' /> */}
                         {/* <img src={b2} alt="" srcset="" className='animate__animated animate__zoomIn animate__faster opacity-90 drop-shadow-md absolute w-[35%] bottom-0 -right-[80px]' /> */}
 
-                            <img src={b1} alt="" srcset="" className='animate__animated animate__zoomIn animate__faster opacity-90 drop-shadow-md w-[30%] absolute -top-[50px] left-[150px]' />
-                            <img src={b3} alt="" srcset="" className='animate__animated animate__zoomIn animate__faster opacity-90 drop-shadow-md w-[33%] absolute top-[150px] -left-[50px]' />
-                            <img src={b2} alt="" srcset="" className='animate__animated animate__zoomIn animate__faster opacity-90 drop-shadow-md w-[35%] absolute -bottom-[100px] left-[0]' />
+                            <img src={b1} alt="" srcset="" className='animate__animated animate__zoomIn animate__faster opacity-90 drop-shadow-md w-[30%] md:w-[30%] absolute top-[180px] left-[30px]  md:-top-[50px] md:left-[150px]' />
+                            <img src={b3} alt="" srcset="" className='animate__animated animate__zoomIn animate__faster opacity-90 drop-shadow-md w-[30%] md:w-[33%] absolute top-[280px] left-[30px] md:top-[150px] md:-left-[50px]' />
+                            <img src={b2} alt="" srcset="" className='animate__animated animate__zoomIn animate__faster opacity-90 drop-shadow-md w-[30%] md:w-[35%] hidden md:block md:absolute top-[330px] left-[200px] md:-bottom-[100px] md:left-[0]' />
+                    </div>
+
+                    {/* spacer */}
+                    <div className="mt-80 md:mt-0">
+
                     </div>
 
 
-                    <div className='w-1/2 flex items-start flex-col justify-center p-4 h-full'>
-                        <h5 className='text-start font-semibold'>Ranchi Municipal Corporation</h5>
-                        <h1 className='text-7xl font-bold font-serif w-full text-start mb-4'>Fines &amp; Penalties</h1>
+                    <div className='md:w-1/2 flex items-start flex-col justify-center p-4 h-full'>
+                        <h5 className='text-start font-semibold '>Ranchi Municipal Corporation</h5>
+                        <h1 className='text-3xl md:text-7xl font-bold font-serif w-full text-start mb-4 '>Fines &amp; Penalties</h1>
 
-                        <article className='text-xl text-gray-700'>
+                        <article className='text-xl text-gray-700 '>
                             E-Governance initiative to streamline and simplify the citizen-centric services provided by the Urban Local Bodies (ULBs) in Jharkhand.
                         </article>
 
 
-                        <div className='flex flex-wrap w-full my-4'>
-                            <h5 className='italic text-start text-2xl font-semibold font-sans border-b border-dashed border-gray-400 w-max pr-2'>Quick Links</h5>
+                        <div className='flex flex-wrap w-full my-4 '>
+                            <h5 className='italic text-start text-2xl font-semibold font-sans border-b border-dashed border-gray-400 w-max pr-2 '>Quick Links</h5>
 
-                            <div className='w-full flex flex-col flex-wrap pl-28 my-2 gap-2'>
+                            <div className='w-full flex flex-col flex-wrap md:pl-28 my-2 gap-2'>
                                 {
                                     quickLinks?.map((elem, index) => linksBlock(elem, index))
                                 }
